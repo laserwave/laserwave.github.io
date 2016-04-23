@@ -5,16 +5,16 @@
   
   <title>Sphinx在Windows下环境配置与使用 | LaserWave&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.官网下载任意解压包；2.解压剪切至d:\sphinx，并在d:\sphinx新建目录data与log；3.将d:\sphinx\sphinx.conf.in复制到d:\sphinx\bin\sphinx.conf.in，并重命名为sphinx.conf4.修改sphinx.conf">
+  <meta name="description" content="1.官网下载任意解压包；2.解压剪切至d:\sphinx，并在d:\sphinx新建目录data与log；">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Sphinx在Windows下环境配置与使用">
 <meta property="og:url" content="http://yoursite.com/2016/04/07/sphinx-java/index.html">
 <meta property="og:site_name" content="LaserWave's Blog">
-<meta property="og:description" content="1.官网下载任意解压包；2.解压剪切至d:\sphinx，并在d:\sphinx新建目录data与log；3.将d:\sphinx\sphinx.conf.in复制到d:\sphinx\bin\sphinx.conf.in，并重命名为sphinx.conf4.修改sphinx.conf">
-<meta property="og:updated_time" content="2016-04-23T15:12:22.051Z">
+<meta property="og:description" content="1.官网下载任意解压包；2.解压剪切至d:\sphinx，并在d:\sphinx新建目录data与log；">
+<meta property="og:updated_time" content="2016-04-23T15:37:25.780Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sphinx在Windows下环境配置与使用">
-<meta name="twitter:description" content="1.官网下载任意解压包；2.解压剪切至d:\sphinx，并在d:\sphinx新建目录data与log；3.将d:\sphinx\sphinx.conf.in复制到d:\sphinx\bin\sphinx.conf.in，并重命名为sphinx.conf4.修改sphinx.conf">
+<meta name="twitter:description" content="1.官网下载任意解压包；2.解压剪切至d:\sphinx，并在d:\sphinx新建目录data与log；">
   
     <link rel="alternative" href="/atom.xml" title="LaserWave&#39;s Blog" type="application/atom+xml">
   
@@ -183,7 +183,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><em>1.官网下载任意解压包；</em><br><em>2.解压剪切至d:\sphinx，并在d:\sphinx新建目录data与log；</em><br><em>3.将d:\sphinx\sphinx.conf.in复制到d:\sphinx\bin\sphinx.conf.in，并重命名为sphinx.conf</em><br><em>4.修改sphinx.conf</em><br><a id="more"></a><br>4.1 将@CONFDIR@替换成实际目录<br>4.2 修改source src1<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">type</span> = mysql   </span><br><span class="line"><span class="attr">sql_host</span> = localhost   </span><br><span class="line"><span class="attr">sql_user</span> = root   </span><br><span class="line"><span class="attr">sql_pass</span> =   </span><br><span class="line"><span class="attr">sql_db</span> = test   </span><br><span class="line"><span class="attr">sql_port</span> = <span class="number">3306</span>   </span><br><span class="line"><span class="attr">sql_query_pre</span> = SET NAMES utf-<span class="number">8</span></span><br></pre></td></tr></table></figure></p>
+        <p><em>1.官网下载任意解压包；</em><br><em>2.解压剪切至d:\sphinx，并在d:\sphinx新建目录data与log；</em><br><a id="more"></a><br><em>3.将d:\sphinx\sphinx.conf.in复制到d:\sphinx\bin\sphinx.conf.in，并重命名为sphinx.conf</em><br><em>4.修改sphinx.conf</em><br>4.1 将@CONFDIR@替换成实际目录<br>4.2 修改source src1<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">type</span> = mysql   </span><br><span class="line"><span class="attr">sql_host</span> = localhost   </span><br><span class="line"><span class="attr">sql_user</span> = root   </span><br><span class="line"><span class="attr">sql_pass</span> =   </span><br><span class="line"><span class="attr">sql_db</span> = test   </span><br><span class="line"><span class="attr">sql_port</span> = <span class="number">3306</span>   </span><br><span class="line"><span class="attr">sql_query_pre</span> = SET NAMES utf-<span class="number">8</span></span><br></pre></td></tr></table></figure></p>
 <p>4.3 修改index test1   </p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">path = <span class="symbol">D:</span>/sphinx/data/   </span><br><span class="line">ngram_len = <span class="number">1</span>   </span><br><span class="line">ngram_chars = U+<span class="number">3000</span>..U+<span class="number">2</span>FA1F</span><br></pre></td></tr></table></figure>
 <p><em>5.建好测试数据库</em><br><em>6.建索引（PS:先建索引，后安装服务，管理员权限）</em></p>
