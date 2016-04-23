@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  
+  <title>Sphinx在Windows下环境配置与使用 | LaserWave&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.官网下载任意解压包；2.解压剪切至d:\sphinx，并在d:\sphinx新建目录data与log；3.将d:\sphinx\sphinx.conf.in复制到d:\sphinx\bin\sphinx.conf.in，并重命名为sphinx.conf4.修改sphinx.conf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sphinx在Windows下环境配置与使用">
+<meta property="og:url" content="http://yoursite.com/2016/04/07/sphinx-java/index.html">
+<meta property="og:site_name" content="LaserWave's Blog">
+<meta property="og:description" content="1.官网下载任意解压包；2.解压剪切至d:\sphinx，并在d:\sphinx新建目录data与log；3.将d:\sphinx\sphinx.conf.in复制到d:\sphinx\bin\sphinx.conf.in，并重命名为sphinx.conf4.修改sphinx.conf">
+<meta property="og:updated_time" content="2016-04-23T15:12:22.051Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sphinx在Windows下环境配置与使用">
+<meta name="twitter:description" content="1.官网下载任意解压包；2.解压剪切至d:\sphinx，并在d:\sphinx新建目录data与log；3.将d:\sphinx\sphinx.conf.in复制到d:\sphinx\bin\sphinx.conf.in，并重命名为sphinx.conf4.修改sphinx.conf">
+  
+    <link rel="alternative" href="/atom.xml" title="LaserWave&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/xiduo.png">
+  
+  
+      <link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+  
+  <script src="//cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.9/clipboard.min.js"></script>
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false,
+          fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+          scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.0.9/scrollreveal.min.js"
+      }
+  </script>
+
+  
+      <script>
+          yiliaConfig.rootUrl = "/";
+      </script>
+  
+
+  
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/xiduo.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">laserwave</a></h1>
+        </hgroup>
+
+        
+                
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">最新动态</a></li>
+                        
+                            <li><a href="/archives/">全部文章</a></li>
+                        
+                            <li><a href="/tags/">分类</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">laserwave</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/xiduo.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">laserwave</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">最新动态</a></li>
+                
+                    <li><a href="/archives/">全部文章</a></li>
+                
+                    <li><a href="/tags/">分类</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-sphinx-java" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/07/sphinx-java/" class="article-date">
+      <time datetime="2016-04-06T16:00:00.000Z" itemprop="datePublished">2016-04-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Sphinx在Windows下环境配置与使用
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/sphinx/">sphinx</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><em>1.官网下载任意解压包；</em><br><em>2.解压剪切至d:\sphinx，并在d:\sphinx新建目录data与log；</em><br><em>3.将d:\sphinx\sphinx.conf.in复制到d:\sphinx\bin\sphinx.conf.in，并重命名为sphinx.conf</em><br><em>4.修改sphinx.conf</em><br><a id="more"></a><br>4.1 将@CONFDIR@替换成实际目录<br>4.2 修改source src1<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">type</span> = mysql   </span><br><span class="line"><span class="attr">sql_host</span> = localhost   </span><br><span class="line"><span class="attr">sql_user</span> = root   </span><br><span class="line"><span class="attr">sql_pass</span> =   </span><br><span class="line"><span class="attr">sql_db</span> = test   </span><br><span class="line"><span class="attr">sql_port</span> = <span class="number">3306</span>   </span><br><span class="line"><span class="attr">sql_query_pre</span> = SET NAMES utf-<span class="number">8</span></span><br></pre></td></tr></table></figure></p>
+<p>4.3 修改index test1   </p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">path = <span class="symbol">D:</span>/sphinx/data/   </span><br><span class="line">ngram_len = <span class="number">1</span>   </span><br><span class="line">ngram_chars = U+<span class="number">3000</span>..U+<span class="number">2</span>FA1F</span><br></pre></td></tr></table></figure>
+<p><em>5.建好测试数据库</em><br><em>6.建索引（PS:先建索引，后安装服务，管理员权限）</em></p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">indexer</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">all</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">rotate</span></span><br></pre></td></tr></table></figure>
+<p><em>7.安装服务</em><br><code>searchd.exe --install -c d:\sphinx\bin\sphinx.conf --servicename SphinxSearch</code><br>PS:config路径务必 写好全称<br><code>net start SphinxSearch</code>  (启动服务)<br><code>sc delete SphinxSearch</code> （删除服务）<br>win+R services.msc （打开服务面板）<br><em>8.java API make 产生jar包</em><br><em>9.设置最大显示记录条数</em><br>SphinxClient sphinxClient; sphinxClient.SetLimits(offset, limit, maxMatch);</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/04/09/ps-icon/">
+                    让Photoshop支持输出ico格式
+                </a>
+            </div>
+        
+        
+    </nav>
+
+  
+</article>
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/04/09/ps-icon/" title="上一篇: 让Photoshop支持输出ico格式">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/04/09/ps-icon/">让Photoshop支持输出ico格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/07/sphinx-java/">Sphinx在Windows下环境配置与使用</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.1.22/require.min.js"></script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
