@@ -232,7 +232,7 @@ a {
 }
 #container .left-col {
   background: rgba(255,255,255,0.85);
-  width: 270px;
+  width: 300px;
   position: fixed;
   opacity: 1;
   -webkit-transition: all 0.2s ease-in;
@@ -263,7 +263,7 @@ a {
   right: 0;
   min-height: 100%;
   background: rgba(255,255,255,0.8);
-  left: 270px;
+  left: 300px;
   width: auto;
 }
 @media screen and (max-width: 800px) {
@@ -547,7 +547,7 @@ a {
 }
 .header-author {
   text-align: center;
-  margin: 50px 0;
+  margin: 30px 0;
   font-family: Times, Georgia, serif;
   font-size: 36px;
   -webkit-transition: 0.3s;
@@ -562,7 +562,7 @@ a {
   color: #000;
 }
 #header a:hover {
-  color: #000;
+  color: #007eff;
 }
 #header .profilepic {
   text-align: center;
@@ -599,7 +599,7 @@ a {
 }
 #header .profilepic:hover {
   background: #fff;
-  border: 3px solid #000;
+  border: 3px solid #007eff;
   -webkit-box-shadow: 0 0 1.5em #fefefe;
   box-shadow: 0 0 1.5em #fefefe;
   -webkit-animation: profilepic 0.15s linear infinite alternate;
@@ -661,13 +661,13 @@ a {
 }
 #header .header-menu {
   font-weight: 550;
-  line-height: 4rem;
+  line-height: 2rem;
   font-family: inherit;
   cursor: pointer;
   text-transform: uppercase;
   float: none;
-  min-height: 12rem;
-  max-height: 20rem;
+  min-height: 6rem;
+  max-height: 10rem;
   overflow: auto;
   text-align: center;
   display: -webkit-box;
@@ -680,13 +680,13 @@ a {
 }
 #header .header-menu li a {
   font-size: 0.875rem;
-  min-width: 270px;
+  min-width: 300px;
 }
 #header .switch-area {
   position: relative;
   width: 100%;
   overflow: hidden;
-  min-height: 260px;
+  min-height: 140px;
   font-size: 0.875rem;
 }
 #header .switch-area .switch-wrap {
@@ -987,7 +987,7 @@ a {
 }
 .hide-labels {
   position: fixed;
-  left: 348px;
+  left: 378px;
   top: 30px;
   padding: 1px;
   border: none;
@@ -1008,7 +1008,7 @@ a {
   opacity: 1;
 }
 #post-nav-button {
-  left: 270px;
+  left: 300px;
   top: 61.8%;
 }
 #post-nav-button a {
@@ -1514,7 +1514,7 @@ color
   opacity: 0.75;
 }
 .article-more-link a:hover {
-  background: #9c9;
+  background: #007eff;
   opacity: 1;
 }
 .article-more-link a.hidden {
@@ -1595,7 +1595,7 @@ li:hover {
 #tocButton {
   position: fixed;
   border: none;
-  left: 190px;
+  left: 220px;
   top: 385px;
   background: none;
   font-size: 0.9em;
@@ -1611,7 +1611,7 @@ li:hover {
 }
 .toc-article {
   position: fixed;
-  width: 200px;
+  width: 230px;
   top: 378px;
   bottom: 1em;
   left: 0;
@@ -2561,25 +2561,25 @@ pre .javascript .function {
   display: inline-block;
   text-decoration: none;
   font-weight: normal;
-  font-size: 0.75rem;
+  font-size: 0.5625rem;
   color: #fff;
   height: 1.125rem;
   line-height: 1.125rem;
   float: left;
   padding: 0 5px 0px 10px;
   position: relative;
-  -webkit-border-radius: 0 5px 5px 0;
-  border-radius: 0 5px 5px 0;
-  margin: 5px 9px 5px 8px;
+  -webkit-border-radius: 0 0px 0px 0;
+  border-radius: 0 0px 0px 0;
+  margin: 5px 7px 5px 7px;
   opacity: 0.75;
   font-family: inherit;
 }
 .tagcloud a:hover {
   opacity: 1;
-  -webkit-transform: scale(1.06);
-  -moz-transform: scale(1.06);
-  -ms-transform: scale(1.06);
-  transform: scale(1.06);
+  -webkit-transform: scale(1.02);
+  -moz-transform: scale(1.02);
+  -ms-transform: scale(1.02);
+  transform: scale(1.02);
 }
 .tagcloud a:before {
   content: " ";
@@ -2604,41 +2604,41 @@ pre .javascript .function {
   left: 2px;
 }
 .tagcloud a.color1 {
-  background: #ff945c;
+  background: #000;
 }
 .tagcloud a.color1:before {
-  border-right-color: #ff945c;
+  border-right-color: #000;
 }
 .tagcloud a.color2 {
-  background: #f5c7b7;
+  background: #000;
 }
 .tagcloud a.color2:before {
-  border-right-color: #f5c7b7;
+  border-right-color: #000;
 }
 .tagcloud a.color3 {
-  background: #ba8f6c;
+  background: #000;
 }
 .tagcloud a.color3:before {
-  border-right-color: #ba8f6c;
+  border-right-color: #000;
 }
 .tagcloud a.color4 {
-  background: #cfb7c4;
+  background: #000;
 }
 .tagcloud a.color4:before {
-  border-right-color: #cfb7c4;
+  border-right-color: #000;
 }
 .tagcloud a.color5 {
-  background: #88acdb;
+  background: #000;
 }
 .tagcloud a.color5:before {
-  border-right-color: #88acdb;
+  border-right-color: #000;
 }
 .tagcloud a:hover {
-  background-color: #9c9;
-  border-color: #9c9;
+  background-color: #007eff;
+  border-color: #007eff;
 }
 .tagcloud a:hover::before {
-  border-right-color: #9c9;
+  border-right-color: #007eff;
 }
 .article-tag::before {
   float: left;

@@ -106,13 +106,13 @@ define([], function(){
                 if ($(".toc").length > 0) {
                     $("#toc, #tocButton").toggle(200, function() {
                         if ($(".switch-area").is(":visible")) {
-                            $("#toc, .switch-btn, .switch-area").toggle();
+                            $("#toc, .switch-btn, .switch-area, #js-tagcloud").toggle();
                             $("#tocButton").attr("value", valueHide);
                             }
                         });
                 }
                 else {
-                    $(".switch-btn, .switch-area").fadeToggle(300);
+                    $(".switch-btn, .switch-area, #js-tagcloud").fadeToggle(300);
                 }
             });
         }

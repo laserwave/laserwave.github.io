@@ -53,6 +53,7 @@ define([], function(){
     };
 
     var show = function(target, idx){
+		
         document.getElementById("viewer").className = "";
         setTimeout(function(){
             basicwrap.className = "anm-swipe";

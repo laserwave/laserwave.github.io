@@ -135,7 +135,7 @@ require([], function (){
     //PC
     $("#container .left-col .overlay").css({"background-color": color,"opacity": 1.0});
     //移动端
-    $("#container #mobile-nav .overlay").css({"background-color": color,"opacity": .7});
+    $("#container #mobile-nav .overlay").css({"background-color": color,"opacity": 1.0});
 
     $("table").wrap("<div class='table-area'></div>");
 
