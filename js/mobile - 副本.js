@@ -4,7 +4,7 @@ define([], function(){
 
     var ctn,radio,scaleW,idx,basicwrap;
 
-    //1 初始化
+    //第一步 -- 初始化
     var reset = function() {
         //设定窗口比率
         radio = document.body.scrollHeight/document.body.scrollWidth;
@@ -13,8 +13,19 @@ define([], function(){
         //设定初始的索引值
         idx = 0;
     };
-    
-    //2 根据数据渲染DOM
+    //第一步 -- 组合
+    var combine = function(){
+        if($tag){
+            document.getElementById("js-mobile-tagcloud").innerHTML = $tag.innerHTML;
+        }
+        if($aboutme){
+            document.getElementById("js-mobile-aboutme").innerHTML = $aboutme.innerHTML;
+        }
+        if($friends){
+            document.getElementById("js-mobile-friends").innerHTML = $friends.innerHTML;
+        }
+    }
+    //第三步 -- 根据数据渲染DOM
     var renderDOM = function(){
         //生成节点
         var $viewer = document.createElement("div");
@@ -40,19 +51,6 @@ define([], function(){
         basicwrap = wrap;
         wrap.style.height = document.body.scrollHeight + 'px';
     };
-	
-	//3 组合
-    var combine = function(){
-        if($tag){
-            document.getElementById("js-mobile-tagcloud").innerHTML = $tag.innerHTML;
-        }
-        if($aboutme){
-            document.getElementById("js-mobile-aboutme").innerHTML = $aboutme.innerHTML;
-        }
-        if($friends){
-            document.getElementById("js-mobile-friends").innerHTML = $friends.innerHTML;
-        }
-    }
 
     var show = function(target, idx){
 		
@@ -76,7 +74,7 @@ define([], function(){
         }
     }
 
-    //4 绑定 DOM 事件
+    //第四步 -- 绑定 DOM 事件
     var bindDOM = function(){
         var scaleW = scaleW;
         
@@ -133,31 +131,24 @@ define([], function(){
     };
 
     var resetTags = function(){
-		
         var tags = $(".tagcloud a");
         for(var i = 0; i < tags.length; i++){
-            //var num = parseInt(4*Math.random()) + 1;
-            tags.eq(i).addClass("color");
+            var num = parseInt(4*Math.random()) + 1;
+            tags.eq(i).addClass("color" + num);
         };
-        $(".article-category a:nth-child(-n+2)").attr("class", "color");
-		
-		//$(".tagcloud a").attr("class", "color1");
-        //$(".article-category a:nth-child(-n+2)").attr("class", "color1");
+        $(".article-category a:nth-child(-n+2)").attr("class", "color5");
     }
 
     return{
         init: function(){
-			resetTags();
             //构造函数需要的参数
             ctn = document.getElementsByClassName("slider-trigger")[0];
-
-			
             //构造四步
             reset();
             renderDOM();
             combine();
             bindDOM();
-			//resetTags();
+            resetTags();
         }
     }
 })

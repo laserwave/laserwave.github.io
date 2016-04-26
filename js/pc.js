@@ -36,12 +36,16 @@ define([], function(){
     }
 
     var resetTags = function(){
+		
         var tags = $(".tagcloud a");
         for(var i = 0; i < tags.length; i++){
-            var num = parseInt(4*Math.random()) + 1;
-            tags.eq(i).addClass("color" + num);
+          //  var num = parseInt(4*Math.random()) + 1;
+            tags.eq(i).addClass("color");
         };
-        $(".article-category a:nth-child(-n+2)").attr("class", "color5");
+		$(".article-category a:nth-child(-n+2)").attr("class", "color");
+		
+		//$(".tagcloud a").attr("class", "color1");
+        //$(".article-category a:nth-child(-n+2)").attr("class", "color1");
     }
 
     var bind = function(){
@@ -106,13 +110,13 @@ define([], function(){
                 if ($(".toc").length > 0) {
                     $("#toc, #tocButton").toggle(200, function() {
                         if ($(".switch-area").is(":visible")) {
-                            $("#toc, .switch-btn, .switch-area, #js-tagcloud").toggle();
+                            $("#toc, .switch-btn, .switch-area, #mytagcloud").toggle();
                             $("#tocButton").attr("value", valueHide);
                             }
                         });
                 }
                 else {
-                    $(".switch-btn, .switch-area, #js-tagcloud").fadeToggle(300);
+                    $(".switch-btn, .switch-area, #mytagcloud").fadeToggle(300);
                 }
             });
         }

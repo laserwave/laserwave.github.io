@@ -6,6 +6,7 @@ require([], function (){
             mobile.init();
             isMobileInit = true;
         });
+		
     }
     var isPCInit = false;
     var loadPC = function(){
@@ -124,9 +125,9 @@ require([], function (){
 
     //是否新窗口打开链接
     if(yiliaConfig.open_in_new == true){
-        $(".article a[href]").attr("target", "_blank")
+        $(".article a[href]").attr("target", "_blank");
+		$(".archive-article-title, .github-widget a").attr("target", "_blank");
     }
-    $(".archive-article-title, .github-widget a").attr("target", "_blank");
 
     //头像上方颜色
 	
