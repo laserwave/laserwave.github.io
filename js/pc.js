@@ -36,16 +36,22 @@ define([], function(){
     }
 
     var resetTags = function(){
+		var tags = $(".tagcloud a");
+		for(var i=0,len=tags.length; i<len; i++){
+            var num = tags.eq(i).html().length % 6 +1;
+            tags[i].className = "";
+            tags.eq(i).addClass("color"+num);
+        }
 		
-        var tags = $(".tagcloud a");
-        for(var i = 0; i < tags.length; i++){
-          //  var num = parseInt(4*Math.random()) + 1;
-            tags.eq(i).addClass("color");
-        };
-		$(".article-category a:nth-child(-n+2)").attr("class", "color");
+
+		var categories = $(".article-category a");
+		for(var i=0,len=categories.length; i<len; i++){
+            var num = categories.eq(i).html().length % 6 +1;
+            categories[i].className = "";
+            categories.eq(i).addClass("color"+num);
+        }
+        //$(".article-category a:nth-child(-n+2)").attr("class", "color6");
 		
-		//$(".tagcloud a").attr("class", "color1");
-        //$(".article-category a:nth-child(-n+2)").attr("class", "color1");
     }
 
     var bind = function(){
