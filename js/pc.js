@@ -38,7 +38,7 @@ define([], function(){
     var resetTags = function(){
 		var tags = $(".tagcloud a");
 		for(var i=0,len=tags.length; i<len; i++){
-            var num = tags.eq(i).html().length % 6 +1;
+			var num = ascii(tags.eq(i).html()) % 7 + 1;
             tags[i].className = "";
             tags.eq(i).addClass("color"+num);
         }
@@ -46,13 +46,21 @@ define([], function(){
 
 		var categories = $(".article-category a");
 		for(var i=0,len=categories.length; i<len; i++){
-            var num = categories.eq(i).html().length % 6 +1;
+			var num = ascii(categories.eq(i).html()) % 7 + 1;
             categories[i].className = "";
             categories.eq(i).addClass("color"+num);
         }
-        //$(".article-category a:nth-child(-n+2)").attr("class", "color6");
 		
     }
+	
+	var ascii = function(s){
+		var sum = 0;
+		for(var i = 0; i < s.length; i++){
+			sum += s.charCodeAt(i);
+		}
+		return sum;
+	}
+	
 
     var bind = function(){
         var switchBtn = $("#myonoffswitch");

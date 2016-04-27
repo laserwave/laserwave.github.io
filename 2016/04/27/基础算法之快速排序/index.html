@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  
+  <title>基础算法之快速排序 | LaserWave&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="快速排序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础算法之快速排序">
+<meta property="og:url" content="http://yoursite.com/2016/04/27/基础算法之快速排序/index.html">
+<meta property="og:site_name" content="LaserWave's Blog">
+<meta property="og:description" content="快速排序">
+<meta property="og:updated_time" content="2016-04-27T14:34:47.606Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基础算法之快速排序">
+<meta name="twitter:description" content="快速排序">
+  
+    <link rel="alternative" href="/atom.xml" title="LaserWave&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/zoro.png">
+  
+  
+      <link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+  
+  
+  
+      <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+      <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+  
+  <script src="//cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.9/clipboard.min.js"></script>
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false,
+          fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+          scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.0.9/scrollreveal.min.js"
+      }
+  </script>
+
+  
+      <script>
+          yiliaConfig.rootUrl = "/";
+      </script>
+  
+
+  
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/zoro.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">LaserWave</a></h1>
+        </hgroup>
+
+        
+                
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">时间轴</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+					
+                </section>
+                
+				
+				
+				
+				
+                
+                
+                
+
+                
+            </div>
+        </div>
+		
+		
+		<div class="mytagcloud" id="mytagcloud">
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photoshop/">photoshop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sphinx/">sphinx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序/">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+		</div>
+		
+		
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="">LaserWave</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/zoro.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="">LaserWave</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">时间轴</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>
+		
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-基础算法之快速排序" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/27/基础算法之快速排序/" class="article-date">
+      <time datetime="2016-04-26T16:00:00.000Z" itemprop="datePublished">27th Apr 2016</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      基础算法之快速排序
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/算法与数据结构/">算法与数据结构</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/排序/">排序</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><p>快速排序平均时间复杂度为O(n*logn)<br>最坏情况(基本有序)下时间复杂度降至O(n^2)，可以通过改进避免<br>交换元素：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//交换元素</span><br><span class="line">void swap(int a[], int i, int j)&#123;</span><br><span class="line">    int tmp = a[i];</span><br><span class="line">    a[i] = a[j];</span><br><span class="line">    a[j] = tmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>一般有单边扫描和双边扫描两种实现，双边扫描比单边扫描稍快一些<br>单边扫描版本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//c++实现快速排序_单边扫描版本</span><br><span class="line">void sort(int a[], int low, int high)&#123;</span><br><span class="line">    if (low &lt; high) &#123;</span><br><span class="line">        int last = low - 1;</span><br><span class="line">        for (int i = low; i &lt;= high - 1; i++) &#123;</span><br><span class="line">            if (a[i] &lt; a[high]) &#123;</span><br><span class="line">                swap(a, ++last, i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        swap(a, ++last, high);</span><br><span class="line">        sort(a, low, last - 1);</span><br><span class="line">        sort(a, last + 1, high);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>双边扫描版本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//c++实现快速排序_双边扫描版本</span><br><span class="line">void sort(int a[], int low, int high)&#123;</span><br><span class="line">    if (low &lt; high) &#123;</span><br><span class="line">        int i = low - 1;</span><br><span class="line">        int j = high;</span><br><span class="line">        while(true) &#123;</span><br><span class="line">            do&#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125; while (a[i] &lt; a[high] &amp;&amp; i &lt;= high - 1);</span><br><span class="line">            do&#123;</span><br><span class="line">                j--;</span><br><span class="line">            &#125; while (a[j] &gt; a[high] &amp;&amp; j &gt;= low);</span><br><span class="line">            if (i &gt; j) &#123;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            swap(a, i, j);</span><br><span class="line">        &#125;</span><br><span class="line">        swap(a, i, high);</span><br><span class="line">        sort(a, low, i - 1);</span><br><span class="line">        sort(a, i + 1, high);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后可以加入基准随机化避免基本有序的情况下复杂度降至O(n^2)<br>双边扫描+基准随机化版本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//c++实现快速排序_双边扫描版本_基准随机化</span><br><span class="line">void sort(int a[], int low, int high)&#123;</span><br><span class="line">    if (low &lt; high) &#123;</span><br><span class="line">        int randomIndex = rand() % (high - low + 1) + low;</span><br><span class="line">        swap(a, randomIndex, high);</span><br><span class="line">        int i = low - 1;</span><br><span class="line">        int j = high;</span><br><span class="line">        while(true) &#123;</span><br><span class="line">            do&#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125; while (a[i] &lt; a[high] &amp;&amp; i &lt;= high - 1);</span><br><span class="line">            do&#123;</span><br><span class="line">                j--;</span><br><span class="line">            &#125; while (a[j] &gt; a[high] &amp;&amp; j &gt;= low);</span><br><span class="line">            if (i &gt; j) &#123;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            swap(a, i, j);</span><br><span class="line">        &#125;</span><br><span class="line">        swap(a, i, high);</span><br><span class="line">        sort(a, low, i - 1);</span><br><span class="line">        sort(a, i + 1, high);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后可以利用插入排序在基本有序情况下效率很高这一点进一步优化：<br>双边扫描+基准随机化+利用插入排序优化版本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">//c++实现快速排序_双边扫描版本_基准随机化_利用插入排序优化</span><br><span class="line">void insertSort(int a[], int n)&#123;</span><br><span class="line">	for (int i = 1; i &lt; n; i++) &#123;</span><br><span class="line">		int t = a[i], j;</span><br><span class="line">		for(j = i; j &gt; 0 &amp;&amp; t &lt; a[j - 1]; j--) &#123;</span><br><span class="line">			a[j] = a[j - 1];</span><br><span class="line">		&#125;</span><br><span class="line">		a[j] = t;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">void quickSort(int a[], int low, int high)&#123;</span><br><span class="line">	if (high - low &lt; 16) &#123;</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	int randomIndex = rand() % (high - low + 1) + low;</span><br><span class="line">	swap(a, randomIndex, high);</span><br><span class="line">	int i = low - 1;</span><br><span class="line">	int j = high;</span><br><span class="line">	while(true) &#123;</span><br><span class="line">		do&#123;</span><br><span class="line">			i++;</span><br><span class="line">		&#125; while (a[i] &lt; a[high] &amp;&amp; i &lt;= high - 1);</span><br><span class="line">		do&#123;</span><br><span class="line">			j--;</span><br><span class="line">		&#125; while (a[j] &gt; a[high] &amp;&amp; j &gt;= low);</span><br><span class="line">		if (i &gt; j) &#123;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		swap(a, i, j);</span><br><span class="line">	&#125;</span><br><span class="line">	swap(a, i, high);</span><br><span class="line">	quickSort(a, low, i - 1);</span><br><span class="line">	quickSort(a, i + 1, high);</span><br><span class="line">&#125;</span><br><span class="line">void quickSort(int a[], int n) &#123;</span><br><span class="line">	quickSort(a, 0, n - 1);</span><br><span class="line">	insertSort(a, n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，high-low小于一个阈值时就返回，quickSort(a, 0, n - 1)执行完毕后数组是一段一段的，段与段有序，段内无序，再使用插入排序可以很快完成排序</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/04/27/基础算法之插入排序/">
+                    基础算法之插入排序
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/04/27/基础算法之快速排序/" data-title="基础算法之快速排序" data-url="http://yoursite.com/2016/04/27/基础算法之快速排序/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"laserwave"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/04/27/基础算法之插入排序/" title="下一篇: 基础算法之插入排序">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/基础算法之快速排序/">基础算法之快速排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/基础算法之插入排序/">基础算法之插入排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/25/photoshop制作android点九图/">photoshop制作android点九图</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/23/photoshop制作icon/">photoshop制作icon</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/23/sphinx在windows环境下的配置与Java API的使用/">sphinx在windows环境下的配置与Java API的使用</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="visit">
+				<i class="fa fa-copyright"></i> 2016 LaserWave
+                <a href="http://hexo.io/" target="_blank" title="Hexo">Hexo</a> Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Yelee">Yelee</a>
+			</div>
+        </div>
+		
+		
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.1.22/require.min.js"></script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
