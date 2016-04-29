@@ -2618,46 +2618,28 @@ pre .javascript .function {
   border-right-color: #000;
 }
 .tagcloud a.color1 {
-  background: #3fa6ee;
+  background: #ec2222;
 }
 .tagcloud a.color1:before {
-  border-right-color: #3fa6ee;
+  border-right-color: #ec2222;
 }
 .tagcloud a.color2 {
-  background: #ff4b4b;
+  background: #149c14;
 }
 .tagcloud a.color2:before {
-  border-right-color: #ff4b4b;
+  border-right-color: #149c14;
 }
 .tagcloud a.color3 {
-  background: #21b521;
+  background: #ff5a00;
 }
 .tagcloud a.color3:before {
-  border-right-color: #21b521;
+  border-right-color: #ff5a00;
 }
 .tagcloud a.color4 {
-  background: #ff7200;
+  background: #1895ed;
 }
 .tagcloud a.color4:before {
-  border-right-color: #ff7200;
-}
-.tagcloud a.color5 {
-  background: #10cadb;
-}
-.tagcloud a.color5:before {
-  border-right-color: #10cadb;
-}
-.tagcloud a.color6 {
-  background: #cdff33;
-}
-.tagcloud a.color6:before {
-  border-right-color: #cdff33;
-}
-.tagcloud a.color7 {
-  background: #c031e9;
-}
-.tagcloud a.color7:before {
-  border-right-color: #c031e9;
+  border-right-color: #1895ed;
 }
 .article-tag::before {
   float: left;

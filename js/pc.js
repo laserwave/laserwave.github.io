@@ -38,7 +38,7 @@ define([], function(){
     var resetTags = function(){
 		var tags = $(".tagcloud a");
 		for(var i=0,len=tags.length; i<len; i++){
-			var num = ascii(tags.eq(i).html()) % 7 + 1;
+			var num = ascii(tags.eq(i).html()) % 4 + 1;
             tags[i].className = "";
             tags.eq(i).addClass("color"+num);
         }
@@ -46,7 +46,7 @@ define([], function(){
 
 		var categories = $(".article-category a");
 		for(var i=0,len=categories.length; i<len; i++){
-			var num = ascii(categories.eq(i).html()) % 7 + 1;
+			var num = ascii(categories.eq(i).html()) % 4 + 1;
             categories[i].className = "";
             categories.eq(i).addClass("color"+num);
         }

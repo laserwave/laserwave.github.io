@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>标签云 | LaserWave&#39;s Blog</title>
+  <title>机器学习之EM算法 | LaserWave&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="标签云">
-<meta property="og:url" content="http://yoursite.com/tags/index.html">
+  <meta name="description" content="EM算法是一种迭代算法，用于含有隐变量的概率参数模型的最大似然估计或极大后验概率估计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习之EM算法">
+<meta property="og:url" content="http://yoursite.com/2016/04/28/机器学习之EM算法/index.html">
 <meta property="og:site_name" content="LaserWave's Blog">
-<meta property="og:description">
-<meta property="og:updated_time" content="2016-04-27T08:06:09.851Z">
+<meta property="og:description" content="EM算法是一种迭代算法，用于含有隐变量的概率参数模型的最大似然估计或极大后验概率估计">
+<meta property="og:updated_time" content="2016-04-29T10:34:53.128Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="标签云">
-<meta name="twitter:description">
+<meta name="twitter:title" content="机器学习之EM算法">
+<meta name="twitter:description" content="EM算法是一种迭代算法，用于含有隐变量的概率参数模型的最大似然估计或极大后验概率估计">
   
     <link rel="alternative" href="/atom.xml" title="LaserWave&#39;s Blog" type="application/atom+xml">
   
@@ -44,7 +44,7 @@
           fancybox: true,
           animate: true,
           isHome: false,
-          isPost: false,
+          isPost: true,
           isArchive: false,
           isTag: false,
           isCategory: false,
@@ -160,11 +160,11 @@
 		
     </div>
 </nav>
-      <div class="body-wrap"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-机器学习之EM算法" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/tags/index.html" class="article-date">
-      <time datetime="2016-04-23T13:26:08.000Z" itemprop="datePublished">23rd Apr 2016</time>
+      <a href="/2016/04/28/机器学习之EM算法/" class="article-date">
+      <time datetime="2016-04-27T16:00:00.000Z" itemprop="datePublished">28th Apr 2016</time>
 </a>
     </div>
   
@@ -177,7 +177,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      标签云
+      机器学习之EM算法
     </h1>
   
 
@@ -185,8 +185,16 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+    </div>
+
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -194,123 +202,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <style>
-    .article-meta {
-        display: none;
-    }
-    #container .article .article-title {
-        padding-right: 0;
-    }
-    .article-header {
-        padding: 0;
-        padding-top: 26px;
-        border-left: none;
-        text-align: center;
-    }
-    .article-header:hover {
-        border-left: none;
-    }
-    .article-title {
-        font-size: 1.6em
-    }
-    .article-meta {
-        display: none;
-    }
-    .article-entry hr {
-        margin: 0;
-    }
-    #container .article-info-post.article-info {
-      display: none;
-      }
-    #container .article .article-title {
-    padding: 0;
-    }
-</style>
-
-
-
-	<p class="count"></p>
-
-    <!-- Tag Cloud Page -->
-    <hr>
-    <br>
-    <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法与数据结构/">算法与数据结构</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/设计/">设计</a><span class="category-list-count">2</span></li></ul>
-
-    
-
-    <div class="tags">
-        <a href="/tags/android/" style="font-size: 16px; color: #77b7ff">android</a> <a href="/tags/c/" style="font-size: 28.67px; color: #3c7fcb">c++</a> <a href="/tags/java/" style="font-size: 16px; color: #77b7ff">java</a> <a href="/tags/photoshop/" style="font-size: 22.33px; color: #599be5">photoshop</a> <a href="/tags/sphinx/" style="font-size: 16px; color: #77b7ff">sphinx</a> <a href="/tags/排序/" style="font-size: 28.67px; color: #3c7fcb">排序</a> <a href="/tags/算法/" style="font-size: 35px; color: #1e63b1">算法</a>
-    </div>
-    <style>
-        .category-list li{
-            display: inline-block;
-            margin: 0 1em .5em 0;
-            padding: 4px;
-            border: 1px solid #cccccc;
-            font-size: 1.2rem;
-        }
-        .category-list a {
-            color: #000000;
-        }
-		
-        .category-list-item:hover a {
-            color: white;
-            text-decoration: none;
-        }
-		.category-list-item:hover span {
-            color: white;
-            text-decoration: none;
-        }
-        .category-list-count {
-			color: #000000;
-            margin-left: 2px;
-            font-size: .9rem;
-        }
-        .article-entry ul li:before{
-            display: none;
-        }
-        .article-inner  {
-            text-align: center;
-        }
-        .tags {
-            max-width: 40em;
-            margin: 2em auto;
-            margin-top: 0em;
-        }
-        .tags a {
-            margin-right: 1em;
-            line-height: 65px;
-            border-bottom: 1px solid black;
-            white-space: nowrap;
-        }
-        .tags a:hover {
-            border-bottom: 2px solid black;
-            text-decoration: none;
-            font-style: italic;
-        }
-        #count > span {
-            margin: auto .2em;
-            font-weight: bold;
-        }
-    </style>
-
-    <!-- Count tags and categories -->
-	<p id="count">
-            共有<span><script>document.write($(".category-list-item").length)</script></span>个分类和
-            <span><script>document.write($(".tags > a").length)</script></span>个标签
-    </p>
-    <script>
-        $('#count').appendTo('.count');
-    </script>
-
-
-
-
-
-
-
-          
-        
+        <h1 id="EM算法"><a href="#EM算法" class="headerlink" title="EM算法"></a>EM算法</h1>
       
     </div>
     
@@ -319,6 +211,23 @@
     
 
 
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/04/29/基础算法之二分查找/">
+                    基础算法之二分查找
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/04/27/基础算法之快速排序/">
+                    基础算法之快速排序
+                </a>
+            </div>
+        
+    </nav>
+
   
 </article>
 
@@ -326,6 +235,48 @@
 
 
 
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/04/28/机器学习之EM算法/" data-title="机器学习之EM算法" data-url="http://yoursite.com/2016/04/28/机器学习之EM算法/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"laserwave"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/04/29/基础算法之二分查找/" title="上一篇: 基础算法之二分查找">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/04/27/基础算法之快速排序/" title="下一篇: 基础算法之快速排序">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/基础算法之二分查找/">基础算法之二分查找</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/28/机器学习之EM算法/">机器学习之EM算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/基础算法之快速排序/">基础算法之快速排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/基础算法之插入排序/">基础算法之插入排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/25/photoshop制作android点九图/">photoshop制作android点九图</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/23/photoshop制作icon/">photoshop制作icon</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/23/sphinx在windows环境下的配置与Java API的使用/">sphinx在windows环境下的配置与Java API的使用</a></li></ul>
 
 
 
