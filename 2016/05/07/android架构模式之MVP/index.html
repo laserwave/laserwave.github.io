@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  
+  <title>android架构模式之MVP | laserwave&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="以一个简洁的demo为例介绍MVP架构模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android架构模式之MVP">
+<meta property="og:url" content="http://yoursite.com/2016/05/07/android架构模式之MVP/index.html">
+<meta property="og:site_name" content="laserwave's Blog">
+<meta property="og:description" content="以一个简洁的demo为例介绍MVP架构模式">
+<meta property="og:image" content="http://yoursite.com/img/android架构模式之MVP/mvc_mvp.png">
+<meta property="og:image" content="http://yoursite.com/img/android架构模式之MVP/mvp_test.png">
+<meta property="og:image" content="http://yoursite.com/img/android架构模式之MVP/mvp_demo.png">
+<meta property="og:updated_time" content="2016-05-07T15:18:51.596Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android架构模式之MVP">
+<meta name="twitter:description" content="以一个简洁的demo为例介绍MVP架构模式">
+<meta name="twitter:image" content="http://yoursite.com/img/android架构模式之MVP/mvc_mvp.png">
+  
+    <link rel="alternative" href="/atom.xml" title="laserwave&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/zoro.png">
+  
+  
+      <link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+  
+  
+  
+      <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+      <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+  
+  <script src="//cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.9/clipboard.min.js"></script>
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false,
+          fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+          scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.0.9/scrollreveal.min.js"
+      }
+  </script>
+
+  
+      <script>
+          yiliaConfig.rootUrl = "/";
+      </script>
+  
+
+  
+  
+  <script>
+	var _hmt = _hmt || [];
+	(function() {
+	var hm = document.createElement("script");
+	hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+	})();
+   </script>
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/zoro.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">laserwave</a></h1>
+        </hgroup>
+
+        
+                
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">时间轴</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+					
+                </section>
+                
+				
+				
+				
+				
+                
+                
+                
+
+                
+            </div>
+        </div>
+		
+		
+		<div class="mytagcloud" id="mytagcloud">
+                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photoshop/">photoshop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sphinx/">sphinx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/二分法/">二分法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人工智能/">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序/">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构模式/">架构模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+		</div>
+		
+		
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="">laserwave</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/zoro.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="">laserwave</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">时间轴</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>
+		
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-android架构模式之MVP" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/07/android架构模式之MVP/" class="article-date">
+      <time datetime="2016-05-06T16:00:00.000Z" itemprop="datePublished">7th May 2016</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      android架构模式之MVP
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/技术/">技术</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构模式/">架构模式</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="What"><a href="#What" class="headerlink" title="What?"></a>What?</h3><p>Model-View-Presenter</p>
+<h3 id="Why"><a href="#Why" class="headerlink" title="Why?"></a>Why?</h3><p>Activity太忙了！既作为View又作为Controller，还要忙着与Model耦合<br>Activity一般会采用布局文件来作为视图，但大多情况下还需要在Activity中对View进行动态布局、变化，所以我说Activity承担了View的工作<br>Activity显然也是一个Controller，当用户与视图交互，还是Activity来处理相关视图逻辑<br>Activity还需要调用Model来处理相关业务逻辑，与Model也是耦合的</p>
+<h3 id="How"><a href="#How" class="headerlink" title="How?"></a>How?</h3><p>降低Activity的职责，将其仅作为一个View，不再与Model有任何耦合<br>抽出Presenter，Presenter通过接口访问View，包含Model的引用；View包含Presenter的引用，间接调用Model层处理业务逻辑，见下图<br><img src="/img/android架构模式之MVP/mvc_mvp.png" alt="MVC VS. MVP" title="mvc_mvp.png"></p>
+<h3 id="A-Simple-Example"><a href="#A-Simple-Example" class="headerlink" title="A Simple Example"></a>A Simple Example</h3><p>整体包图见下图，分model、view、presenter三个包<br><img src="/img/android架构模式之MVP/mvp_test.png" alt="package diagram" title="mvp_test.png"><br>model下VO表示Value Object，其实就是java bean，仅包含get、set方法，BO表示Bussiness Object，处理业务逻辑，<br>那么BO中异步完成业务后如何通知View呢？就靠这个Callback接口，由Presenter中实现</p>
+<h5 id="model-BO-IUserModel"><a href="#model-BO-IUserModel" class="headerlink" title="model.BO.IUserModel"></a>model.BO.IUserModel</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface IUserModel &#123;</span><br><span class="line">    public void login(LoginRequest request, Callback&lt;LoginResponse&gt; callback);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="model-BO-UserModel"><a href="#model-BO-UserModel" class="headerlink" title="model.BO.UserModel"></a>model.BO.UserModel</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class UserModel implements IUserModel&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void login(final LoginRequest request, final Callback&lt;LoginResponse&gt; callback) &#123;</span><br><span class="line">        new Thread(new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                String userName = request.getUserName();</span><br><span class="line">                String userPassword = request.getUserPassword();</span><br><span class="line">                //此处进行网络请求验证用户邮箱、密码是否合法</span><br><span class="line">                //..</span><br><span class="line">                boolean isValid = userName.equals(&quot;admin&quot;) &amp;&amp; userPassword.equals(&quot;123456&quot;);</span><br><span class="line">                if(isValid)&#123;</span><br><span class="line">                    //模拟从服务器获得的accessToken</span><br><span class="line">                    callback.success(new LoginResponse(&quot;a7f7v9l0389f8k3ls9&quot;));</span><br><span class="line">                &#125;else&#123;</span><br><span class="line">                    //模拟从服务器获得的错误原因</span><br><span class="line">                    callback.fail(&quot;用户名或密码错误&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="model-VO-LoginRequest"><a href="#model-VO-LoginRequest" class="headerlink" title="model.VO.LoginRequest"></a>model.VO.LoginRequest</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class LoginRequest &#123;</span><br><span class="line">    private String userName;</span><br><span class="line">    private String userPassword;</span><br><span class="line">    public LoginRequest() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    public LoginRequest(String userPassword, String userName) &#123;</span><br><span class="line">        this.userPassword = userPassword;</span><br><span class="line">        this.userName = userName;</span><br><span class="line">    &#125;</span><br><span class="line">    public String getUserName() &#123;</span><br><span class="line">        return userName;</span><br><span class="line">    &#125;</span><br><span class="line">    public void setUserName(String userName) &#123;</span><br><span class="line">        this.userName = userName;</span><br><span class="line">    &#125;</span><br><span class="line">    public String getUserPassword() &#123;</span><br><span class="line">        return userPassword;</span><br><span class="line">    &#125;</span><br><span class="line">    public void setUserPassword(String userPassword) &#123;</span><br><span class="line">        this.userPassword = userPassword;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="model-VO-LoginResponse"><a href="#model-VO-LoginResponse" class="headerlink" title="model.VO.LoginResponse"></a>model.VO.LoginResponse</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class LoginResponse &#123;</span><br><span class="line">    private String accessToken;</span><br><span class="line">    public LoginResponse() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    public LoginResponse(String accessToken) &#123;</span><br><span class="line">        this.accessToken = accessToken;</span><br><span class="line">    &#125;</span><br><span class="line">    public String getAccessToken() &#123;</span><br><span class="line">        return accessToken;</span><br><span class="line">    &#125;</span><br><span class="line">    public void setAccessToken(String accessToken) &#123;</span><br><span class="line">        this.accessToken = accessToken;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="model-Callback"><a href="#model-Callback" class="headerlink" title="model.Callback"></a>model.Callback</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface Callback&lt;T&gt; &#123;</span><br><span class="line">    void success(T t);</span><br><span class="line">    void fail(String reason);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="presenter-ILoginPresenter"><a href="#presenter-ILoginPresenter" class="headerlink" title="presenter.ILoginPresenter"></a>presenter.ILoginPresenter</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface ILoginPresenter&#123;</span><br><span class="line">    public void login();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="presenter-LoginPresenter"><a href="#presenter-LoginPresenter" class="headerlink" title="presenter.LoginPresenter"></a>presenter.LoginPresenter</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">public class LoginPresenter implements ILoginPresenter &#123;</span><br><span class="line">    private ILoginView loginView;</span><br><span class="line">    private IUserModel userModel;</span><br><span class="line">    private Handler handler;</span><br><span class="line">    public LoginPresenter(ILoginView loginView) &#123;</span><br><span class="line">        this.loginView = loginView;</span><br><span class="line">        this.userModel = new UserModel();</span><br><span class="line">        this.handler = new Handler(Looper.getMainLooper());</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void login() &#123;</span><br><span class="line">        userModel.login(new LoginRequest(loginView.getUserName(), loginView.getUserPassword()), new Callback&lt;LoginResponse&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void success(LoginResponse loginResponse) &#123;</span><br><span class="line">                String accessToken = loginResponse.getAccessToken();</span><br><span class="line">                //此处缓存accessToken或其他操作</span><br><span class="line">                //..</span><br><span class="line">                handler.post(new Runnable() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public void run() &#123;</span><br><span class="line">                        loginView.loginSuccess();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">            @Override</span><br><span class="line">            public void fail(final String reason) &#123;</span><br><span class="line">                handler.post(new Runnable() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public void run() &#123;</span><br><span class="line">                        loginView.loginFail(reason);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="view-ILoginView"><a href="#view-ILoginView" class="headerlink" title="view.ILoginView"></a>view.ILoginView</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public interface ILoginView &#123;</span><br><span class="line">    public String getUserName();</span><br><span class="line">    public String getUserPassword();</span><br><span class="line">    public void loginSuccess();</span><br><span class="line">    public void loginFail(String reason);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="view-LoginActivity"><a href="#view-LoginActivity" class="headerlink" title="view.LoginActivity"></a>view.LoginActivity</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public class LoginActivity extends AppCompatActivity implements ILoginView&#123;</span><br><span class="line">    private EditText userNameEditText;</span><br><span class="line">    private EditText userPasswordEditText;</span><br><span class="line">    private Button loginButton;</span><br><span class="line">    private ILoginPresenter loginPresenter;</span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_login);</span><br><span class="line">        loginPresenter = new LoginPresenter(this);</span><br><span class="line">        userNameEditText = (EditText)findViewById(R.id.username);</span><br><span class="line">        userPasswordEditText = (EditText)findViewById(R.id.password);</span><br><span class="line">        loginButton = (Button)findViewById(R.id.login);</span><br><span class="line">        loginButton.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                loginPresenter.login();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public String getUserName() &#123;</span><br><span class="line">        return userNameEditText.getText().toString();</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public String getUserPassword() &#123;</span><br><span class="line">        return userPasswordEditText.getText().toString();</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void loginSuccess() &#123;</span><br><span class="line">        Toast.makeText(this, &quot;登录成功&quot;, Toast.LENGTH_SHORT).show();</span><br><span class="line">        //跳转到其他Activity或进行其他操作</span><br><span class="line">        //..</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void loginFail(String reason) &#123;</span><br><span class="line">        Toast.makeText(this, reason, Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>是不是结构还挺清楚的呢？至于是否要在项目中采用MVP，其实还要看项目的规模<br>demo图如下<br><img src="/img/android架构模式之MVP/mvp_demo.png" alt="demo" title="mvp_demo.png"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/05/05/android黑白棋游戏之极小极大算法的实现/">
+                    android黑白棋游戏之极小极大算法的实现
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/05/07/android架构模式之MVP/" data-title="android架构模式之MVP" data-url="http://yoursite.com/2016/05/07/android架构模式之MVP/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"laserwave"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/05/05/android黑白棋游戏之极小极大算法的实现/" title="下一篇: android黑白棋游戏之极小极大算法的实现">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/android架构模式之MVP/">android架构模式之MVP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/05/android黑白棋游戏之极小极大算法的实现/">android黑白棋游戏之极小极大算法的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/03/java swing之自定义组件外观/">java swing之自定义组件外观</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/基础算法之二分查找/">基础算法之二分查找</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/基础算法之快速排序/">基础算法之快速排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/基础算法之插入排序/">基础算法之插入排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/25/photoshop制作android点九图/">photoshop制作android点九图</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/23/photoshop制作icon/">photoshop制作icon</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/23/sphinx在windows环境下的配置与java API使用/">sphinx在windows环境下的配置与java API使用</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="visit">
+				<i class="fa fa-copyright"></i> 2016 laserwave
+                <a href="http://hexo.io/" target="_blank" title="Hexo">Hexo</a> Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Yelee">Yelee</a>
+			</div>
+        </div>
+		
+		
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.1.22/require.min.js"></script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
