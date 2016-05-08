@@ -210,9 +210,6 @@ a {
   height: 42px;
   z-index: 99;
 }
-#container #mobile-nav #header {
-  padding: 10px 0 0 0;
-}
 #container #mobile-nav #header .profilepic {
   display: block;
   position: relative;
@@ -220,7 +217,6 @@ a {
 }
 #container #mobile-nav #header .header-menu {
   height: auto;
-  margin: 10px;
 }
 #container #mobile-nav #header .header-menu ul {
   text-align: center;
@@ -228,7 +224,6 @@ a {
 }
 #container #mobile-nav #header .header-menu li {
   display: inline-block;
-  margin: 3px;
   background: none;
 }
 #container .left-col {
@@ -277,8 +272,9 @@ a {
     position: relative;
   }
   #container #header .header-menu {
+    margin-top: 10px;
     line-height: 1;
-    min-height: 3rem;
+    min-height: 15px;
   }
   #container #header .header-menu ui {
     background: none;
@@ -558,6 +554,16 @@ a {
   -ms-transition: 0.3s;
   transition: 0.3s;
 }
+.header-author-mobile {
+  text-align: center;
+  margin: 10px 10px 10px 10px;
+  font-family: Times, Georgia, serif;
+  font-size: 28px;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s;
+}
 #header {
   width: 100%;
 }
@@ -684,14 +690,13 @@ a {
 #header .header-menu li a {
   font-size: 14px;
   min-width: 300px;
+  padding: 3px;
 }
 #header .header-menu li a:hover {
   color: #fff;
   background: #008dde;
   -webkit-border-radius: 2px;
   border-radius: 2px;
-  padding: 3px;
-  margin: 2px;
 }
 #header .switch-area {
   position: relative;
@@ -1228,7 +1233,7 @@ color
   overflow: hidden;
 }
 .article {
-  margin: 30px;
+  margin: 20px;
   margin-bottom: 5px;
   position: relative;
   background: rgba(255,255,255,0.45);
