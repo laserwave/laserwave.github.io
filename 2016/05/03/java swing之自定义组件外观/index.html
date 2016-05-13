@@ -1,330 +1,726 @@
+<!doctype html>
 
-<!DOCTYPE html>
-<html lang="zh-Hans">
-<head>
-  <meta charset="utf-8">
+
+
   
-  <title>java swing之自定义组件外观 | zhikaizhang&#39;s Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="以本科毕设做的微博数据采集系统为例介绍java swing中自定义组件外观的实现">
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,swing," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="以本科毕设做的微博数据采集系统为例介绍java swing中自定义组件外观的实现">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java swing之自定义组件外观">
 <meta property="og:url" content="http://yoursite.com/2016/05/03/java swing之自定义组件外观/index.html">
 <meta property="og:site_name" content="zhikaizhang's Blog">
 <meta property="og:description" content="以本科毕设做的微博数据采集系统为例介绍java swing中自定义组件外观的实现">
-<meta property="og:image" content="http://yoursite.com/img/java-swing之自定义组件外观/weibo_data_collect_system.png">
-<meta property="og:updated_time" content="2016-05-12T05:21:46.202Z">
+<meta property="og:image" content="http://yoursite.com/uploads/java-swing之自定义组件外观/weibo_data_collect_system.png">
+<meta property="og:updated_time" content="2016-05-13T08:02:25.610Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java swing之自定义组件外观">
 <meta name="twitter:description" content="以本科毕设做的微博数据采集系统为例介绍java swing中自定义组件外观的实现">
-<meta name="twitter:image" content="http://yoursite.com/img/java-swing之自定义组件外观/weibo_data_collect_system.png">
+<meta name="twitter:image" content="http://yoursite.com/uploads/java-swing之自定义组件外观/weibo_data_collect_system.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> java swing之自定义组件外观 | zhikaizhang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
   
-    <link rel="alternative" href="/atom.xml" title="zhikaizhang&#39;s Blog" type="application/atom+xml">
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
   
   
-    <link rel="icon" href="/img/zoro.png">
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">zhikaizhang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
   
   
-      <link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
   
   
   
-      <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
-      <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java swing之自定义组件外观
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-03T00:00:00+08:00" content="2016-05-03">
+              2016-05-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/03/java swing之自定义组件外观/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/03/java swing之自定义组件外观/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/05/03/java swing之自定义组件外观/" class="leancloud_visitors" data-flag-title="java swing之自定义组件外观">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>首先看一下系统实现的外观效果<br><img src="/uploads/java-swing之自定义组件外观/weibo_data_collect_system.png" alt="微博数据采集系统"><br>可以看到自定义的外观简洁而风格统一</p>
+<h1 id="JFrame的自定义，继承JFrame"><a href="#JFrame的自定义，继承JFrame" class="headerlink" title="JFrame的自定义，继承JFrame"></a>JFrame的自定义，继承JFrame</h1><p>可以看到没有显示系统默认的标题栏，而是通过定义JPanel作为一个自定义标题栏，添加JLabel显示logo、软件名，添加JButton作为最小化按钮、关闭按钮，<br>最外侧的边框通过添加三个JLabel设置其背景色来实现</p>
+<h2 id="设置无标题栏"><a href="#设置无标题栏" class="headerlink" title="设置无标题栏"></a>设置无标题栏</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.setUndecorated(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="设置不可改变尺寸"><a href="#设置不可改变尺寸" class="headerlink" title="设置不可改变尺寸"></a>设置不可改变尺寸</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.setResizable(<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="设置为绝对布局"><a href="#设置为绝对布局" class="headerlink" title="设置为绝对布局"></a>设置为绝对布局</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.getContentPane().setLayout(<span class="keyword">null</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="设置背景色"><a href="#设置背景色" class="headerlink" title="设置背景色"></a>设置背景色</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.getContentPane().setBackground(<span class="keyword">new</span> Color(<span class="number">249</span>, <span class="number">249</span>, <span class="number">249</span>));</span><br></pre></td></tr></table></figure>
+<h2 id="设置界面大小"><a href="#设置界面大小" class="headerlink" title="设置界面大小"></a>设置界面大小</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取PC屏幕尺寸</span></span><br><span class="line">Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); </span><br><span class="line">screenWidth = screenSize.width;</span><br><span class="line">screenHeight = screenSize.height;</span><br><span class="line"><span class="comment">//按屏幕尺寸固定比例设置软件尺寸</span></span><br><span class="line">totalWidth = Maths.round(screenWidth * <span class="number">0.95</span>);</span><br><span class="line">totalHeight = Maths.round(screenHeight * <span class="number">0.95</span>);</span><br><span class="line"><span class="keyword">this</span>.setSize(totalWidth, totalHeight);</span><br></pre></td></tr></table></figure>
+<h2 id="设置初始位置"><a href="#设置初始位置" class="headerlink" title="设置初始位置"></a>设置初始位置</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取任务栏高度,以便将软件位置初始化为屏幕正中央</span></span><br><span class="line">Insets screenInsets = Toolkit.getDefaultToolkit().getScreenInsets(<span class="keyword">this</span>.getGraphicsConfiguration());</span><br><span class="line"><span class="keyword">int</span> bottomInset = screenInsets.bottom;</span><br><span class="line"><span class="keyword">this</span>.setLocation(Maths.round((screenWidth - totalWidth) / <span class="number">2</span>), Maths.round((screenHeight - bottomInset - totalHeight) / <span class="number">2</span>));</span><br></pre></td></tr></table></figure>
+<h2 id="添加子组件"><a href="#添加子组件" class="headerlink" title="添加子组件"></a>添加子组件</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建自定义标题栏</span></span><br><span class="line">titleBarPanel = <span class="keyword">new</span> JPanel();</span><br><span class="line">titleBarPanel.setBounds(<span class="number">0</span>, <span class="number">0</span>, totalWidth, titleBarPanelHeight);</span><br><span class="line">titleBarPanel.setBackground(titleBarBackground);</span><br><span class="line"><span class="keyword">this</span>.getContentPane().add(titleBarPanel);</span><br><span class="line"><span class="comment">//创建自定义标题栏图标</span></span><br><span class="line"><span class="keyword">int</span> logoLeftMargin = <span class="number">10</span>;</span><br><span class="line">titleBarPanel.setLayout(<span class="keyword">null</span>);</span><br><span class="line"><span class="keyword">double</span> logoHeight = titleBarPanelHeight * <span class="number">0.6</span>;</span><br><span class="line">ImageIcon logo = ImageUtil.scaleByHeight(<span class="string">"image/logo.png"</span>, logoHeight);</span><br><span class="line">JLabel logoLabel = <span class="keyword">new</span> JLabel(logo);</span><br><span class="line">logoLabel.setBounds(logoLeftMargin,  Maths.round(titleBarPanelHeight * <span class="number">0.2</span>), logo.getIconWidth(), logo.getIconHeight());</span><br><span class="line">titleBarPanel.add(logoLabel);</span><br><span class="line"><span class="comment">//创建自定义标题栏标题</span></span><br><span class="line">JLabel titleLabel = <span class="keyword">new</span> JLabel(<span class="string">"新浪微博数据采集系统"</span>);</span><br><span class="line">titleLabel.setFont(titleFont);</span><br><span class="line">titleLabel.setForeground(titleColor);</span><br><span class="line"><span class="keyword">int</span> titleHeight = Maths.round(titleBarPanelHeight * <span class="number">0.6</span>);</span><br><span class="line">titleLabel.setBounds(totalWidth / <span class="number">2</span> - <span class="number">180</span> / <span class="number">2</span>, Maths.round(titleBarPanelHeight * <span class="number">0.2</span>), <span class="number">180</span>, titleHeight);</span><br><span class="line">titleBarPanel.add(titleLabel);</span><br><span class="line"><span class="comment">//创建自定义关闭按钮</span></span><br><span class="line">JButton exitButton = ButtonFactory.get(ButtonFactory.J_EXIT);</span><br><span class="line"><span class="keyword">int</span> closeButtonWidth = exitButton.getIcon().getIconWidth();</span><br><span class="line"><span class="keyword">int</span> closeButtonHeight = exitButton.getIcon().getIconHeight();</span><br><span class="line">exitButton.setBounds(totalWidth - borderMargin - closeButtonWidth, <span class="number">0</span>, closeButtonWidth, closeButtonHeight);</span><br><span class="line">exitButton.addMouseListener(<span class="keyword">new</span> MouseAdapter() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mouseClicked</span><span class="params">(MouseEvent e)</span> </span>&#123;</span><br><span class="line">        UserInterface.<span class="keyword">this</span>.dispose();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">titleBarPanel.add(exitButton);</span><br><span class="line"><span class="comment">//创建自定义最小化按钮</span></span><br><span class="line">JButton iconifyButton = ButtonFactory.get(ButtonFactory.J_ICONIFY);</span><br><span class="line"><span class="keyword">int</span> iconifyButtonWidth = iconifyButton.getIcon().getIconWidth();</span><br><span class="line"><span class="keyword">int</span> iconifyButtonHeight = iconifyButton.getIcon().getIconHeight();</span><br><span class="line">iconifyButton.setBounds(totalWidth - borderMargin - iconifyButtonWidth - closeButtonWidth, <span class="number">0</span>, iconifyButtonWidth, iconifyButtonHeight);</span><br><span class="line">iconifyButton.addMouseListener(<span class="keyword">new</span> MouseAdapter() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mouseClicked</span><span class="params">(MouseEvent e)</span> </span>&#123;</span><br><span class="line">        UserInterface.<span class="keyword">this</span>.setExtendedState(JFrame.ICONIFIED);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">titleBarPanel.add(iconifyButton);</span><br></pre></td></tr></table></figure>
+<h2 id="给标题栏添加拖动移动界面效果"><a href="#给标题栏添加拖动移动界面效果" class="headerlink" title="给标题栏添加拖动移动界面效果"></a>给标题栏添加拖动移动界面效果</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//内部类</span></span><br><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">MyMouseAndMouseMotionListener</span> <span class="keyword">extends</span> <span class="title">MouseAdapter</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Point pressed = <span class="keyword">null</span>;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mousePressed</span><span class="params">(MouseEvent event)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.mousePressed(event);</span><br><span class="line">        <span class="keyword">if</span>(event.getModifiers() == MouseEvent.BUTTON1_MASK)&#123;</span><br><span class="line">            <span class="keyword">int</span> pressedX = event.getX();</span><br><span class="line">            <span class="keyword">int</span> pressedY = event.getY();</span><br><span class="line">            <span class="keyword">if</span>(pressedX &gt;= <span class="number">0</span> &amp;&amp; pressedX &lt;= totalWidth &amp;&amp; pressedY &gt;= <span class="number">0</span> &amp;&amp; pressedY &lt;= titleBarPanelHeight)&#123;</span><br><span class="line">                pressed = event.getPoint();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                pressed = <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mouseDragged</span><span class="params">(MouseEvent event)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.mouseDragged(event);</span><br><span class="line">        <span class="keyword">if</span>(event.getModifiers() == MouseEvent.BUTTON1_MASK)&#123;</span><br><span class="line">            <span class="keyword">if</span>(pressed != <span class="keyword">null</span>)&#123;</span><br><span class="line">                Point dragged = event.getPoint();</span><br><span class="line">                Point location = UserInterface.<span class="keyword">this</span>.getLocation();</span><br><span class="line">                <span class="keyword">int</span> x = location.x + dragged.x - pressed.x;</span><br><span class="line">                <span class="keyword">int</span> y = location.y + dragged.y - pressed.y;</span><br><span class="line">                UserInterface.<span class="keyword">this</span>.setLocation(x, y);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//构造函数中</span></span><br><span class="line">MyMouseAndMouseMotionListener listener = <span class="keyword">new</span> MyMouseAndMouseMotionListener();</span><br><span class="line"><span class="keyword">this</span>.addMouseListener(listener);</span><br><span class="line"><span class="keyword">this</span>.addMouseMotionListener(listener);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/swing/" rel="tag">#swing</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/29/基础算法之二分查找/" rel="next" title="基础算法之二分查找">
+                <i class="fa fa-chevron-left"></i> 基础算法之二分查找
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/05/android黑白棋游戏之极小极大算法的实现/" rel="prev" title="android黑白棋游戏之极小极大算法的实现">
+                android黑白棋游戏之极小极大算法的实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/03/java swing之自定义组件外观/"
+           data-title="java swing之自定义组件外观" data-url="http://yoursite.com/2016/05/03/java swing之自定义组件外观/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
   
-  <link rel="stylesheet" href="/css/style.css">
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/zoro.png"
+               alt="zhikaizhang" />
+          <p class="site-author-name" itemprop="name">zhikaizhang</p>
+          <p class="site-description motion-element" itemprop="description">充电中...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JFrame的自定义，继承JFrame"><span class="nav-number">1.</span> <span class="nav-text">JFrame的自定义，继承JFrame</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设置无标题栏"><span class="nav-number">1.1.</span> <span class="nav-text">设置无标题栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置不可改变尺寸"><span class="nav-number">1.2.</span> <span class="nav-text">设置不可改变尺寸</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置为绝对布局"><span class="nav-number">1.3.</span> <span class="nav-text">设置为绝对布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置背景色"><span class="nav-number">1.4.</span> <span class="nav-text">设置背景色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置界面大小"><span class="nav-number">1.5.</span> <span class="nav-text">设置界面大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置初始位置"><span class="nav-number">1.6.</span> <span class="nav-text">设置初始位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加子组件"><span class="nav-number">1.7.</span> <span class="nav-text">添加子组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给标题栏添加拖动移动界面效果"><span class="nav-number">1.8.</span> <span class="nav-text">给标题栏添加拖动移动界面效果</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
   
-  <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="author" itemprop="copyrightHolder">zhikaizhang</span>
+  <span class="author" itemprop="copyrightHolder">. All rights reserved.</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
   
   
-      <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
   
-  <script src="//cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
-  <script src="//cdn.bootcss.com/clipboard.js/1.5.9/clipboard.min.js"></script>
-  <script>
-      var yiliaConfig = {
-          fancybox: true,
-          animate: true,
-          isHome: false,
-          isPost: true,
-          isArchive: false,
-          isTag: false,
-          isCategory: false,
-          open_in_new: false,
-          fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
-          scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.0.9/scrollreveal.min.js"
-      }
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"laserwave"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
   </script>
 
   
-      <script>
-          yiliaConfig.rootUrl = "/";
-      </script>
+    
   
+
+
+
+
 
   
   
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("wv1vA5GMdT6r7Vi1AVpQNC0I-gzGzoHsz", "jt5O27A704yaLaJrddXok0jb");</script>
   <script>
-	var _hmt = _hmt || [];
-	(function() {
-	var hm = document.createElement("script");
-	hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
-	var s = document.getElementsByTagName("script")[0]; 
-	s.parentNode.insertBefore(hm, s);
-	})();
-   </script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
 
 
-</head>
-<body>	
-  <div id="container">
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-    <header id="header" class="inner">
-        <a href="/" class="profilepic">
-            <img src="/img/zoro.png" class="animated zoomIn">
-        </a>
-        <hgroup>
-          <h1 class="header-author"><a href="/">zhikaizhang</a></h1>
-        </hgroup>
 
-        
-                
-
-
-        
-
-        <div id="switch-area" class="switch-area">
-            <div class="switch-wrap">
-                <section class="switch-part switch-part1">
-                    <nav class="header-menu">
-                        <ul>
-                        
-                            <li><a href="/archives/">时间轴</a></li>
-                        
-                            <li><a href="/tags/">标签云</a></li>
-                        
-                            <li><a href="/links/">友情链接</a></li>
-                        
-                        </ul>
-                    </nav>
-                    <nav class="header-nav">
-                        <ul class="social">
-                            
-                        </ul>
-                    </nav>
-					
-                </section>
-                
-				
-				
-				
-				
-                
-                
-                
-
-                
-            </div>
-        </div>
-		
-		
-		<div class="mytagcloud" id="mytagcloud">
-                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photoshop/">photoshop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sphinx/">sphinx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swing/">swing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/二分法/">二分法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人工智能/">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序/">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构模式/">架构模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
-		</div>
-		
-		
-    </header>                
-</div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-    <div class="intrude-less">
-        <header id="header" class="inner">
-
-            <nav class="header-menu">
-                <ul>
-				
-				<li><a href="/" title="">zzk's Blog</a></li>
-                
-                    <li><a href="/archives/">时间轴</a></li>
-                
-                    <li><a href="/tags/">标签云</a></li>
-                
-                    <li><a href="/links/">友情链接</a></li>
-                
-                <div class="clearfix"></div>
-                </ul>
-            </nav>
-        </header>
-		
-    </div>
-</nav>
-      <div class="body-wrap"><article id="post-java swing之自定义组件外观" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/03/java swing之自定义组件外观/" class="article-date">
-      <time datetime="2016-05-02T16:00:00.000Z" itemprop="datePublished">3rd May 2016</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      java swing之自定义组件外观
-    </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-
-        
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/swing/">swing</a></li></ul>
-    </div>
-
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <p>首先看一下系统实现的外观效果<br><img src="/img/java-swing之自定义组件外观/weibo_data_collect_system.png" alt="微博数据采集系统" title="weibo_data_collect_system.png"><br>可以看到自定义的外观简洁而风格统一</p>
-<h3 id="JFrame的自定义，继承JFrame"><a href="#JFrame的自定义，继承JFrame" class="headerlink" title="JFrame的自定义，继承JFrame"></a>JFrame的自定义，继承JFrame</h3><p>可以看到没有显示系统默认的标题栏，而是通过定义JPanel作为一个自定义标题栏，添加JLabel显示logo、软件名，添加JButton作为最小化按钮、关闭按钮，<br>最外侧的边框通过添加三个JLabel设置其背景色来实现</p>
-<h5 id="设置无标题栏"><a href="#设置无标题栏" class="headerlink" title="设置无标题栏"></a>设置无标题栏</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.setUndecorated(true);</span><br></pre></td></tr></table></figure>
-<h5 id="设置不可改变尺寸"><a href="#设置不可改变尺寸" class="headerlink" title="设置不可改变尺寸"></a>设置不可改变尺寸</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.setResizable(false);</span><br></pre></td></tr></table></figure>
-<h5 id="设置为绝对布局"><a href="#设置为绝对布局" class="headerlink" title="设置为绝对布局"></a>设置为绝对布局</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.getContentPane().setLayout(null);</span><br></pre></td></tr></table></figure>
-<h5 id="设置背景色"><a href="#设置背景色" class="headerlink" title="设置背景色"></a>设置背景色</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.getContentPane().setBackground(new Color(249, 249, 249));</span><br></pre></td></tr></table></figure>
-<h5 id="设置界面大小"><a href="#设置界面大小" class="headerlink" title="设置界面大小"></a>设置界面大小</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//获取PC屏幕尺寸</span><br><span class="line">Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); </span><br><span class="line">screenWidth = screenSize.width;</span><br><span class="line">screenHeight = screenSize.height;</span><br><span class="line">//按屏幕尺寸固定比例设置软件尺寸</span><br><span class="line">totalWidth = Maths.round(screenWidth * 0.95);</span><br><span class="line">totalHeight = Maths.round(screenHeight * 0.95);</span><br><span class="line">this.setSize(totalWidth, totalHeight);</span><br></pre></td></tr></table></figure>
-<h5 id="设置初始位置"><a href="#设置初始位置" class="headerlink" title="设置初始位置"></a>设置初始位置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//获取任务栏高度,以便将软件位置初始化为屏幕正中央</span><br><span class="line">Insets screenInsets = Toolkit.getDefaultToolkit().getScreenInsets(this.getGraphicsConfiguration());</span><br><span class="line">int bottomInset = screenInsets.bottom;</span><br><span class="line">this.setLocation(Maths.round((screenWidth - totalWidth) / 2), Maths.round((screenHeight - bottomInset - totalHeight) / 2));</span><br></pre></td></tr></table></figure>
-<h5 id="添加子组件"><a href="#添加子组件" class="headerlink" title="添加子组件"></a>添加子组件</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">//创建自定义标题栏</span><br><span class="line">titleBarPanel = new JPanel();</span><br><span class="line">titleBarPanel.setBounds(0, 0, totalWidth, titleBarPanelHeight);</span><br><span class="line">titleBarPanel.setBackground(titleBarBackground);</span><br><span class="line">this.getContentPane().add(titleBarPanel);</span><br><span class="line">//创建自定义标题栏图标</span><br><span class="line">int logoLeftMargin = 10;</span><br><span class="line">titleBarPanel.setLayout(null);</span><br><span class="line">double logoHeight = titleBarPanelHeight * 0.6;</span><br><span class="line">ImageIcon logo = ImageUtil.scaleByHeight(&quot;image/logo.png&quot;, logoHeight);</span><br><span class="line">JLabel logoLabel = new JLabel(logo);</span><br><span class="line">logoLabel.setBounds(logoLeftMargin,  Maths.round(titleBarPanelHeight * 0.2), logo.getIconWidth(), logo.getIconHeight());</span><br><span class="line">titleBarPanel.add(logoLabel);</span><br><span class="line">//创建自定义标题栏标题</span><br><span class="line">JLabel titleLabel = new JLabel(&quot;新浪微博数据采集系统&quot;);</span><br><span class="line">titleLabel.setFont(titleFont);</span><br><span class="line">titleLabel.setForeground(titleColor);</span><br><span class="line">int titleHeight = Maths.round(titleBarPanelHeight * 0.6);</span><br><span class="line">titleLabel.setBounds(totalWidth / 2 - 180 / 2, Maths.round(titleBarPanelHeight * 0.2), 180, titleHeight);</span><br><span class="line">titleBarPanel.add(titleLabel);</span><br><span class="line">//创建自定义关闭按钮</span><br><span class="line">JButton exitButton = ButtonFactory.get(ButtonFactory.J_EXIT);</span><br><span class="line">int closeButtonWidth = exitButton.getIcon().getIconWidth();</span><br><span class="line">int closeButtonHeight = exitButton.getIcon().getIconHeight();</span><br><span class="line">exitButton.setBounds(totalWidth - borderMargin - closeButtonWidth, 0, closeButtonWidth, closeButtonHeight);</span><br><span class="line">exitButton.addMouseListener(new MouseAdapter() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void mouseClicked(MouseEvent e) &#123;</span><br><span class="line">        UserInterface.this.dispose();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">titleBarPanel.add(exitButton);</span><br><span class="line">//创建自定义最小化按钮</span><br><span class="line">JButton iconifyButton = ButtonFactory.get(ButtonFactory.J_ICONIFY);</span><br><span class="line">int iconifyButtonWidth = iconifyButton.getIcon().getIconWidth();</span><br><span class="line">int iconifyButtonHeight = iconifyButton.getIcon().getIconHeight();</span><br><span class="line">iconifyButton.setBounds(totalWidth - borderMargin - iconifyButtonWidth - closeButtonWidth, 0, iconifyButtonWidth, iconifyButtonHeight);</span><br><span class="line">iconifyButton.addMouseListener(new MouseAdapter() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void mouseClicked(MouseEvent e) &#123;</span><br><span class="line">        UserInterface.this.setExtendedState(JFrame.ICONIFIED);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">titleBarPanel.add(iconifyButton);</span><br></pre></td></tr></table></figure>
-<h5 id="给标题栏添加拖动移动界面效果"><a href="#给标题栏添加拖动移动界面效果" class="headerlink" title="给标题栏添加拖动移动界面效果"></a>给标题栏添加拖动移动界面效果</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">//内部类</span><br><span class="line">private class MyMouseAndMouseMotionListener extends MouseAdapter&#123;</span><br><span class="line">    private Point pressed = null;</span><br><span class="line">    @Override</span><br><span class="line">    public void mousePressed(MouseEvent event) &#123;</span><br><span class="line">        super.mousePressed(event);</span><br><span class="line">        if(event.getModifiers() == MouseEvent.BUTTON1_MASK)&#123;</span><br><span class="line">            int pressedX = event.getX();</span><br><span class="line">            int pressedY = event.getY();</span><br><span class="line">            if(pressedX &gt;= 0 &amp;&amp; pressedX &lt;= totalWidth &amp;&amp; pressedY &gt;= 0 &amp;&amp; pressedY &lt;= titleBarPanelHeight)&#123;</span><br><span class="line">                pressed = event.getPoint();</span><br><span class="line">            &#125;</span><br><span class="line">            else&#123;</span><br><span class="line">                pressed = null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void mouseDragged(MouseEvent event) &#123;</span><br><span class="line">        super.mouseDragged(event);</span><br><span class="line">        if(event.getModifiers() == MouseEvent.BUTTON1_MASK)&#123;</span><br><span class="line">            if(pressed != null)&#123;</span><br><span class="line">                Point dragged = event.getPoint();</span><br><span class="line">                Point location = UserInterface.this.getLocation();</span><br><span class="line">                int x = location.x + dragged.x - pressed.x;</span><br><span class="line">                int y = location.y + dragged.y - pressed.y;</span><br><span class="line">                UserInterface.this.setLocation(x, y);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//构造函数中</span><br><span class="line">MyMouseAndMouseMotionListener listener = new MyMouseAndMouseMotionListener();</span><br><span class="line">this.addMouseListener(listener);</span><br><span class="line">this.addMouseMotionListener(listener);</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    
-  </div>
-  
-    
-
-
-    <nav id="article-nav">
-        
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/05/05/android黑白棋游戏之极小极大算法的实现/">
-                    android黑白棋游戏之极小极大算法的实现
-                </a>
-            </div>
-        
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/04/29/基础算法之二分查找/">
-                    基础算法之二分查找
-                </a>
-            </div>
-        
-    </nav>
-
-  
-</article>
-
-
-
-
-
-    
-      <div class="duoshuo" id="comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/05/03/java swing之自定义组件外观/" data-title="java swing之自定义组件外观" data-url="http://yoursite.com/2016/05/03/java swing之自定义组件外观/"></div>
-    <!-- 多说评论框 end -->
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-    var duoshuoQuery = {short_name:"laserwave"};
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] 
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-    </script>
-    <!-- 多说公共JS代码 end -->
-</div>
-
-    
-
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/2016/05/05/android黑白棋游戏之极小极大算法的实现/" title="上一篇: android黑白棋游戏之极小极大算法的实现">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
-
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-
-        
-            <a href="/2016/04/29/基础算法之二分查找/" title="下一篇: 基础算法之二分查找">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/数据结构之字典树/">数据结构之字典树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/08/数据结构之线段树/">数据结构之线段树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/android架构模式之MVP/">android架构模式之MVP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/05/android黑白棋游戏之极小极大算法的实现/">android黑白棋游戏之极小极大算法的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/03/java swing之自定义组件外观/">java swing之自定义组件外观</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/基础算法之二分查找/">基础算法之二分查找</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/基础算法之快速排序/">基础算法之快速排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/基础算法之插入排序/">基础算法之插入排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/25/photoshop之制作android点九图/">photoshop之制作android点九图</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/23/photoshop之如何支持ico格式输出/">photoshop之如何支持ico格式输出</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/23/sphinx在windows环境下的配置及其java版API的使用/">sphinx在windows环境下的配置及其java版API的使用</a></li></ul>
-
-
-
-
-    <script>
-        
-    </script>
-</div>
-      <footer id="footer">
-    <div class="outer">
-        <div id="footer-info">
-            <div class="visit">
-                Powered by <a href="http://hexo.io/" target="_blank" title="Hexo">Hexo</a> Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Yelee">Yelee</a>
-			</div>
-        </div>
-		
-		
-        
-    </div>
-</footer>
-    </div>
-    
-<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.1.22/require.min.js"></script>
-
-
-
-
-<div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
-</div>
-
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
-  </div>
 </body>
 </html>
-   	<script type="text/javascript">
-		if(window.location.href.indexOf('links') != -1){
-				document.getElementById("comments").style.display = 'none';
-		}	
-	</script>

@@ -1,323 +1,729 @@
+<!doctype html>
 
-<!DOCTYPE html>
-<html lang="zh-Hans">
-<head>
-  <meta charset="utf-8">
+
+
   
-  <title>sphinx在windows环境下的配置及其java版API的使用 | zhikaizhang&#39;s Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="windows环境下配置sphinx并以一个微博舆情分析demo为例介绍java API的使用">
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,swing,sphinx," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="windows环境下配置sphinx并以一个微博舆情分析demo为例介绍java API的使用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="sphinx在windows环境下的配置及其java版API的使用">
 <meta property="og:url" content="http://yoursite.com/2016/04/23/sphinx在windows环境下的配置及其java版API的使用/index.html">
 <meta property="og:site_name" content="zhikaizhang's Blog">
 <meta property="og:description" content="windows环境下配置sphinx并以一个微博舆情分析demo为例介绍java API的使用">
-<meta property="og:image" content="http://yoursite.com/img/sphinx在windows环境下的配置与java-API使用/weibo_sentiment_analysis.png">
-<meta property="og:updated_time" content="2016-05-12T05:23:59.193Z">
+<meta property="og:image" content="http://yoursite.com/uploads/sphinx在windows环境下的配置与java-API使用/weibo_sentiment_analysis.png">
+<meta property="og:updated_time" content="2016-05-13T08:05:26.486Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sphinx在windows环境下的配置及其java版API的使用">
 <meta name="twitter:description" content="windows环境下配置sphinx并以一个微博舆情分析demo为例介绍java API的使用">
-<meta name="twitter:image" content="http://yoursite.com/img/sphinx在windows环境下的配置与java-API使用/weibo_sentiment_analysis.png">
+<meta name="twitter:image" content="http://yoursite.com/uploads/sphinx在windows环境下的配置与java-API使用/weibo_sentiment_analysis.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> sphinx在windows环境下的配置及其java版API的使用 | zhikaizhang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
   
-    <link rel="alternative" href="/atom.xml" title="zhikaizhang&#39;s Blog" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/img/zoro.png">
-  
-  
-      <link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
-  
-  
-  
-      <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
-      <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  
-  <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  
-  
-      <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
-  
-  <script src="//cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
-  <script src="//cdn.bootcss.com/clipboard.js/1.5.9/clipboard.min.js"></script>
-  <script>
-      var yiliaConfig = {
-          fancybox: true,
-          animate: true,
-          isHome: false,
-          isPost: true,
-          isArchive: false,
-          isTag: false,
-          isCategory: false,
-          open_in_new: false,
-          fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
-          scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.0.9/scrollreveal.min.js"
-      }
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
   </script>
 
-  
-      <script>
-          yiliaConfig.rootUrl = "/";
-      </script>
-  
+
+
+
+
+
+
 
   
   
-  <script>
-	var _hmt = _hmt || [];
-	(function() {
-	var hm = document.createElement("script");
-	hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
-	var s = document.getElementsByTagName("script")[0]; 
-	s.parentNode.insertBefore(hm, s);
-	})();
-   </script>
+    
+  
 
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
 
-</head>
-<body>	
-  <div id="container">
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-    <header id="header" class="inner">
-        <a href="/" class="profilepic">
-            <img src="/img/zoro.png" class="animated zoomIn">
-        </a>
-        <hgroup>
-          <h1 class="header-author"><a href="/">zhikaizhang</a></h1>
-        </hgroup>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
 
-        
-                
-
-
-        
-
-        <div id="switch-area" class="switch-area">
-            <div class="switch-wrap">
-                <section class="switch-part switch-part1">
-                    <nav class="header-menu">
-                        <ul>
-                        
-                            <li><a href="/archives/">时间轴</a></li>
-                        
-                            <li><a href="/tags/">标签云</a></li>
-                        
-                            <li><a href="/links/">友情链接</a></li>
-                        
-                        </ul>
-                    </nav>
-                    <nav class="header-nav">
-                        <ul class="social">
-                            
-                        </ul>
-                    </nav>
-					
-                </section>
-                
-				
-				
-				
-				
-                
-                
-                
-
-                
-            </div>
-        </div>
-		
-		
-		<div class="mytagcloud" id="mytagcloud">
-                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photoshop/">photoshop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sphinx/">sphinx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swing/">swing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/二分法/">二分法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人工智能/">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序/">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构模式/">架构模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
-		</div>
-		
-		
-    </header>                
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">zhikaizhang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
 </div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-    <div class="intrude-less">
-        <header id="header" class="inner">
 
-            <nav class="header-menu">
-                <ul>
-				
-				<li><a href="/" title="">zzk's Blog</a></li>
-                
-                    <li><a href="/archives/">时间轴</a></li>
-                
-                    <li><a href="/tags/">标签云</a></li>
-                
-                    <li><a href="/links/">友情链接</a></li>
-                
-                <div class="clearfix"></div>
-                </ul>
-            </nav>
-        </header>
-		
-    </div>
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
 </nav>
-      <div class="body-wrap"><article id="post-sphinx在windows环境下的配置及其java版API的使用" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/04/23/sphinx在windows环境下的配置及其java版API的使用/" class="article-date">
-      <time datetime="2016-04-22T16:00:00.000Z" itemprop="datePublished">23rd Apr 2016</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
     
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
+
   
-    <h1 class="article-title" itemprop="name">
-      sphinx在windows环境下的配置及其java版API的使用
-    </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
+  
+  
+  
 
-        
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sphinx/">sphinx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/swing/">swing</a></li></ul>
-    </div>
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
-        <div class="clearfix"></div>
-      </div>
-      
     
-    <div class="article-entry" itemprop="articleBody">
-      
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                sphinx在windows环境下的配置及其java版API的使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-23T00:00:00+08:00" content="2016-04-23">
+              2016-04-23
+            </time>
+          </span>
+
           
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/23/sphinx在windows环境下的配置及其java版API的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/23/sphinx在windows环境下的配置及其java版API的使用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/04/23/sphinx在windows环境下的配置及其java版API的使用/" class="leancloud_visitors" data-flag-title="sphinx在windows环境下的配置及其java版API的使用">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
         <h1 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h1><p>官网下载任意解压包</p>
 <h1 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h1><p>解压拷贝至d:\sphinx，并在d:\sphinx新建data与log文件夹</p>
 <h1 id="拷贝配置文件"><a href="#拷贝配置文件" class="headerlink" title="拷贝配置文件"></a>拷贝配置文件</h1><p>将d:\sphinx\sphinx.conf.in拷贝至d:\sphinx\bin\sphinx.conf.in，并重命名为sphinx.conf  </p>
-<h1 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h1><h4 id="1-打开d-sphinx-bin-sphinx-conf"><a href="#1-打开d-sphinx-bin-sphinx-conf" class="headerlink" title="1 打开d:\sphinx\bin\sphinx.conf"></a>1 打开d:\sphinx\bin\sphinx.conf</h4><h4 id="2-将-CONFDIR-替换成实际目录"><a href="#2-将-CONFDIR-替换成实际目录" class="headerlink" title="2 将@CONFDIR@替换成实际目录"></a>2 将@CONFDIR@替换成实际目录</h4><h4 id="3-修改source-src1"><a href="#3-修改source-src1" class="headerlink" title="3 修改source src1"></a>3 修改source src1</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">type = mysql   </span><br><span class="line">sql_host = localhost   </span><br><span class="line">sql_user = root   </span><br><span class="line">sql_pass =   </span><br><span class="line">sql_db = test   </span><br><span class="line">sql_port = 3306   </span><br><span class="line">sql_query_pre = SET NAMES utf-8</span><br></pre></td></tr></table></figure>
-<h4 id="4-修改index-test1"><a href="#4-修改index-test1" class="headerlink" title="4 修改index test1"></a>4 修改index test1</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">path = D:/sphinx/data/   </span><br><span class="line">ngram_len = 1   </span><br><span class="line">ngram_chars = U+3000..U+2FA1F</span><br></pre></td></tr></table></figure>
+<h1 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h1><h2 id="1-打开d-sphinx-bin-sphinx-conf"><a href="#1-打开d-sphinx-bin-sphinx-conf" class="headerlink" title="1 打开d:\sphinx\bin\sphinx.conf"></a>1 打开d:\sphinx\bin\sphinx.conf</h2><h2 id="2-将-CONFDIR-替换成实际目录"><a href="#2-将-CONFDIR-替换成实际目录" class="headerlink" title="2 将@CONFDIR@替换成实际目录"></a>2 将@CONFDIR@替换成实际目录</h2><h2 id="3-修改source-src1"><a href="#3-修改source-src1" class="headerlink" title="3 修改source src1"></a>3 修改source src1</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">type = mysql   </span><br><span class="line">sql_host = localhost   </span><br><span class="line">sql_user = root   </span><br><span class="line">sql_pass =   </span><br><span class="line">sql_db = test   </span><br><span class="line">sql_port = 3306   </span><br><span class="line">sql_query_pre = SET NAMES utf-8</span><br></pre></td></tr></table></figure>
+<h2 id="4-修改index-test1"><a href="#4-修改index-test1" class="headerlink" title="4 修改index test1"></a>4 修改index test1</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">path = D:/sphinx/data/   </span><br><span class="line">ngram_len = 1   </span><br><span class="line">ngram_chars = U+3000..U+2FA1F</span><br></pre></td></tr></table></figure>
 <h1 id="建测试数据库"><a href="#建测试数据库" class="headerlink" title="建测试数据库"></a>建测试数据库</h1><h1 id="建索引"><a href="#建索引" class="headerlink" title="建索引"></a>建索引</h1><p>注意使用管理员权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">indexer --all --rotate</span><br></pre></td></tr></table></figure></p>
 <h1 id="安装服务"><a href="#安装服务" class="headerlink" title="安装服务"></a>安装服务</h1><p>searchd.exe –install -c d:\sphinx\bin\sphinx.conf –servicename SphinxSearch<br>config路径务必使用全称<br>启动服务：net start SphinxSearch<br>删除服务：sc delete SphinxSearch<br>打开服务面板：win+R services.msc </p>
 <h1 id="打jar包"><a href="#打jar包" class="headerlink" title="打jar包"></a>打jar包</h1><p>在java API目录下make，打好jar包</p>
-<h1 id="Java-API的使用"><a href="#Java-API的使用" class="headerlink" title="Java API的使用"></a>Java API的使用</h1><p>以我做的一个demo为例，目的是检索出指定关键词的微博，并按情感排序<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public List&lt;Status&gt; queryPositiveTopK(String keyword, int K) &#123;</span><br><span class="line">    //参数3指定了排序规则，用到的字段均已在bin/sphinx.conf中的source中配置</span><br><span class="line">    return query(keyword, K, &quot;(positive_num - negative_num) * (comment_count+exist_repost_count+1) - (1-is_original)*100000&quot;);  </span><br><span class="line">&#125;</span><br><span class="line">@Override</span><br><span class="line">public List&lt;Status&gt; queryNegativeTopK(String keyword, int K) &#123;</span><br><span class="line">    return query(keyword, K, &quot;(negative_num - positive_num) * (comment_count+exist_repost_count+1) - (1-is_original)*100000&quot;);</span><br><span class="line">&#125;</span><br><span class="line">private  List&lt;Status&gt; query(String keyword, int K, String sortRule)&#123;</span><br><span class="line">    List&lt;Status&gt; statuses = new ArrayList&lt;&gt;();</span><br><span class="line">    try&#123;</span><br><span class="line">        SphinxClient client = new SphinxClient();</span><br><span class="line">        client.SetServer(&quot;localhost&quot;, 9312);</span><br><span class="line">        client.SetWeights(new int[] &#123; 100, 1 &#125;);</span><br><span class="line">        client.SetMatchMode(SphinxClient.SPH_MATCH_PHRASE);     //关键词匹配模式</span><br><span class="line">        //SetLimits() 参数1：偏移量，参数2：最多查找到多少条记录停止查找，参数3：从查找到的记录取出排序结果的前多少条</span><br><span class="line">        client.SetLimits(0, 12000000, K);                       </span><br><span class="line">        client.SetSortMode(SphinxClient.SPH_SORT_EXPR, sortRule);  //设置排序方法，这里采用表达式</span><br><span class="line">        SphinxResult res = client.Query(keyword, &quot;test1&quot;);         //指定关键词以及在sphinx中建立的索引</span><br><span class="line">        for (int i = 0; i &lt; res.matches.length; i++) &#123;                //res.matches包含了所有查询到的记录</span><br><span class="line">            Status status = new Status();</span><br><span class="line">            status.setId(res.matches[i].docId);                        //docId是sphinx中配置的主键</span><br><span class="line">            for (int k = 0; k &lt; res.attrNames.length; k++) &#123;        //循环中获取查询到的该条记录的所有键值对</span><br><span class="line">                String key = res.attrNames[k];                        </span><br><span class="line">                Object value = res.matches[i].attrValues.get(k);</span><br><span class="line">                if(key.equals(&quot;text&quot;)) &#123;</span><br><span class="line">                    status.setText((String)value);</span><br><span class="line">                &#125;else if(key.equals(&quot;flag&quot;))&#123;</span><br><span class="line">                    status.setFlag((int)(long)value);</span><br><span class="line">                &#125;else if(key.equals(&quot;mid&quot;))&#123;</span><br><span class="line">                    status.setMid((Long)value);</span><br><span class="line">                &#125;else if(key.equals(&quot;uid&quot;))&#123;</span><br><span class="line">                    status.setUid((Long)value);</span><br><span class="line">                &#125;else if(key.equals(&quot;comment_count&quot;))&#123;</span><br><span class="line">                    status.setComment_count((int)(long)value);</span><br><span class="line">                &#125;else if(key.equals(&quot;exist_repost_count&quot;))&#123;</span><br><span class="line">                    status.setExist_repost_count((int)(long)value);</span><br><span class="line">                &#125;else if(key.equals(&quot;positive_num&quot;))&#123;</span><br><span class="line">                    status.setPositive_num((int)(long)value);</span><br><span class="line">                &#125;else if(key.equals(&quot;negative_num&quot;))&#123;</span><br><span class="line">                    status.setNegative_num((int)(long)value);</span><br><span class="line">                &#125;else if(key.equals(&quot;repost_path&quot;))&#123;</span><br><span class="line">                    status.setRepost_path((String)value);</span><br><span class="line">                &#125;else if(key.equals(&quot;@expr&quot;))&#123;</span><br><span class="line">                    System.out.println(key + &quot; = &quot; + value);</span><br><span class="line">                &#125;else if(key.equals(&quot;is_original&quot;))&#123;</span><br><span class="line">                    status.setIs_original((int)(long)value);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if(status.getIs_original() == 1)&#123;</span><br><span class="line">                statuses.add(status);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;catch(Exception e)&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    return statuses;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Java-API的使用"><a href="#Java-API的使用" class="headerlink" title="Java API的使用"></a>Java API的使用</h1><p>以我做的一个demo为例，目的是检索出指定关键词的微博，并按情感排序<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Status&gt; <span class="title">queryPositiveTopK</span><span class="params">(String keyword, <span class="keyword">int</span> K)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//参数3指定了排序规则，用到的字段均已在bin/sphinx.conf中的source中配置</span></span><br><span class="line">    <span class="keyword">return</span> query(keyword, K, <span class="string">"(positive_num - negative_num) * (comment_count+exist_repost_count+1) - (1-is_original)*100000"</span>);  </span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Status&gt; <span class="title">queryNegativeTopK</span><span class="params">(String keyword, <span class="keyword">int</span> K)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> query(keyword, K, <span class="string">"(negative_num - positive_num) * (comment_count+exist_repost_count+1) - (1-is_original)*100000"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span>  List&lt;Status&gt; <span class="title">query</span><span class="params">(String keyword, <span class="keyword">int</span> K, String sortRule)</span></span>&#123;</span><br><span class="line">    List&lt;Status&gt; statuses = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        SphinxClient client = <span class="keyword">new</span> SphinxClient();</span><br><span class="line">        client.SetServer(<span class="string">"localhost"</span>, <span class="number">9312</span>);</span><br><span class="line">        client.SetWeights(<span class="keyword">new</span> <span class="keyword">int</span>[] &#123; <span class="number">100</span>, <span class="number">1</span> &#125;);</span><br><span class="line">        client.SetMatchMode(SphinxClient.SPH_MATCH_PHRASE);     <span class="comment">//关键词匹配模式</span></span><br><span class="line">        <span class="comment">//SetLimits() 参数1：偏移量，参数2：最多查找到多少条记录停止查找，参数3：从查找到的记录取出排序结果的前多少条</span></span><br><span class="line">        client.SetLimits(<span class="number">0</span>, <span class="number">12000000</span>, K);                       </span><br><span class="line">        client.SetSortMode(SphinxClient.SPH_SORT_EXPR, sortRule);  <span class="comment">//设置排序方法，这里采用表达式</span></span><br><span class="line">        SphinxResult res = client.Query(keyword, <span class="string">"test1"</span>);         <span class="comment">//指定关键词以及在sphinx中建立的索引</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; res.matches.length; i++) &#123;                <span class="comment">//res.matches包含了所有查询到的记录</span></span><br><span class="line">            Status status = <span class="keyword">new</span> Status();</span><br><span class="line">            status.setId(res.matches[i].docId);                        <span class="comment">//docId是sphinx中配置的主键</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; res.attrNames.length; k++) &#123;        <span class="comment">//循环中获取查询到的该条记录的所有键值对</span></span><br><span class="line">                String key = res.attrNames[k];                        </span><br><span class="line">                Object value = res.matches[i].attrValues.get(k);</span><br><span class="line">                <span class="keyword">if</span>(key.equals(<span class="string">"text"</span>)) &#123;</span><br><span class="line">                    status.setText((String)value);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key.equals(<span class="string">"flag"</span>))&#123;</span><br><span class="line">                    status.setFlag((<span class="keyword">int</span>)(<span class="keyword">long</span>)value);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key.equals(<span class="string">"mid"</span>))&#123;</span><br><span class="line">                    status.setMid((Long)value);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key.equals(<span class="string">"uid"</span>))&#123;</span><br><span class="line">                    status.setUid((Long)value);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key.equals(<span class="string">"comment_count"</span>))&#123;</span><br><span class="line">                    status.setComment_count((<span class="keyword">int</span>)(<span class="keyword">long</span>)value);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key.equals(<span class="string">"exist_repost_count"</span>))&#123;</span><br><span class="line">                    status.setExist_repost_count((<span class="keyword">int</span>)(<span class="keyword">long</span>)value);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key.equals(<span class="string">"positive_num"</span>))&#123;</span><br><span class="line">                    status.setPositive_num((<span class="keyword">int</span>)(<span class="keyword">long</span>)value);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key.equals(<span class="string">"negative_num"</span>))&#123;</span><br><span class="line">                    status.setNegative_num((<span class="keyword">int</span>)(<span class="keyword">long</span>)value);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key.equals(<span class="string">"repost_path"</span>))&#123;</span><br><span class="line">                    status.setRepost_path((String)value);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key.equals(<span class="string">"@expr"</span>))&#123;</span><br><span class="line">                    System.out.println(key + <span class="string">" = "</span> + value);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(key.equals(<span class="string">"is_original"</span>))&#123;</span><br><span class="line">                    status.setIs_original((<span class="keyword">int</span>)(<span class="keyword">long</span>)value);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(status.getIs_original() == <span class="number">1</span>)&#123;</span><br><span class="line">                statuses.add(status);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> statuses;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>附上bin/sphinx.conf中的source中配置好的字段<br>注意：<br>1 主键字段不需配置(查询后可以获取)<br>2 其他查询时需要获取的字段需要配置<br>3 在此配置的字段不参与关键词检索（被忽略）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">sql_attr_bigint     = mid</span><br><span class="line">sql_attr_bigint     = uid</span><br><span class="line">sql_attr_bigint     = ori_mid</span><br><span class="line">sql_attr_bigint     = parent_mid</span><br><span class="line">    </span><br><span class="line">sql_attr_string     = text  </span><br><span class="line">sql_attr_string     = repost_path</span><br><span class="line">    </span><br><span class="line">sql_attr_uint       = repost_count</span><br><span class="line">sql_attr_uint       = comment_count</span><br><span class="line">sql_attr_uint       = flag</span><br><span class="line">sql_attr_uint       = positive_num</span><br><span class="line">sql_attr_uint       = negative_num</span><br><span class="line">sql_attr_uint       = exist_repost_count</span><br><span class="line">sql_attr_uint       = is_original</span><br><span class="line">    </span><br><span class="line">sql_attr_float      = positive_score</span><br><span class="line">sql_attr_float      = negative_score</span><br></pre></td></tr></table></figure></p>
-<p>最后附上demo截图，这个demo是由java swing写成<br><img src="/img/sphinx在windows环境下的配置与java-API使用/weibo_sentiment_analysis.png" alt="微博舆情分析系统" title="weibo_sentiment_analysis.png"></p>
+<p>最后附上demo截图，这个demo是由java swing写成<br><img src="/uploads/sphinx在windows环境下的配置与java-API使用/weibo_sentiment_analysis.png" alt="微博舆情分析系统"></p>
 
       
     </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/swing/" rel="tag">#swing</a>
+          
+            <a href="/tags/sphinx/" rel="tag">#sphinx</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/23/photoshop之如何支持ico格式输出/" rel="next" title="photoshop之如何支持ico格式输出">
+                <i class="fa fa-chevron-left"></i> photoshop之如何支持ico格式输出
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/25/photoshop之制作android点九图/" rel="prev" title="photoshop之制作android点九图">
+                photoshop之制作android点九图 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/23/sphinx在windows环境下的配置及其java版API的使用/"
+           data-title="sphinx在windows环境下的配置及其java版API的使用" data-url="http://yoursite.com/2016/04/23/sphinx在windows环境下的配置及其java版API的使用/">
+      </div>
     
   </div>
-  
-    
 
 
-    <nav id="article-nav">
+        </div>
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/04/23/photoshop之如何支持ico格式输出/">
-                    photoshop之如何支持ico格式输出
-                </a>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/zoro.png"
+               alt="zhikaizhang" />
+          <p class="site-author-name" itemprop="name">zhikaizhang</p>
+          <p class="site-description motion-element" itemprop="description">充电中...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
             </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
         
         
-    </nav>
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#下载"><span class="nav-number">1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解压"><span class="nav-number">2.</span> <span class="nav-text">解压</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拷贝配置文件"><span class="nav-number">3.</span> <span class="nav-text">拷贝配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改配置文件"><span class="nav-number">4.</span> <span class="nav-text">修改配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-打开d-sphinx-bin-sphinx-conf"><span class="nav-number">4.1.</span> <span class="nav-text">1 打开d:\sphinx\bin\sphinx.conf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-将-CONFDIR-替换成实际目录"><span class="nav-number">4.2.</span> <span class="nav-text">2 将@CONFDIR@替换成实际目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-修改source-src1"><span class="nav-number">4.3.</span> <span class="nav-text">3 修改source src1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-修改index-test1"><span class="nav-number">4.4.</span> <span class="nav-text">4 修改index test1</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#建测试数据库"><span class="nav-number">5.</span> <span class="nav-text">建测试数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#建索引"><span class="nav-number">6.</span> <span class="nav-text">建索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装服务"><span class="nav-number">7.</span> <span class="nav-text">安装服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#打jar包"><span class="nav-number">8.</span> <span class="nav-text">打jar包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-API的使用"><span class="nav-number">9.</span> <span class="nav-text">Java API的使用</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="author" itemprop="copyrightHolder">zhikaizhang</span>
+  <span class="author" itemprop="copyrightHolder">. All rights reserved.</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
 
   
-</article>
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
 
 
 
 
 
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
     
-      <div class="duoshuo" id="comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/04/23/sphinx在windows环境下的配置及其java版API的使用/" data-title="sphinx在windows环境下的配置及其java版API的使用" data-url="http://yoursite.com/2016/04/23/sphinx在windows环境下的配置及其java版API的使用/"></div>
-    <!-- 多说评论框 end -->
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
+  
+
+  <script type="text/javascript">
     var duoshuoQuery = {short_name:"laserwave"};
     (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] 
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
-    </script>
-    <!-- 多说公共JS代码 end -->
-</div>
+  </script>
 
+  
     
+  
 
 
 
 
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/2016/04/23/photoshop之如何支持ico格式输出/" title="上一篇: photoshop之如何支持ico格式输出">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+  
+  
+  
 
-        
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
-        
-    </div>
+  
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/数据结构之字典树/">数据结构之字典树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/08/数据结构之线段树/">数据结构之线段树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/android架构模式之MVP/">android架构模式之MVP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/05/android黑白棋游戏之极小极大算法的实现/">android黑白棋游戏之极小极大算法的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/03/java swing之自定义组件外观/">java swing之自定义组件外观</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/基础算法之二分查找/">基础算法之二分查找</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/基础算法之快速排序/">基础算法之快速排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/基础算法之插入排序/">基础算法之插入排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/25/photoshop之制作android点九图/">photoshop之制作android点九图</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/23/photoshop之如何支持ico格式输出/">photoshop之如何支持ico格式输出</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/23/sphinx在windows环境下的配置及其java版API的使用/">sphinx在windows环境下的配置及其java版API的使用</a></li></ul>
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("wv1vA5GMdT6r7Vi1AVpQNC0I-gzGzoHsz", "jt5O27A704yaLaJrddXok0jb");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
 
 
 
+  
 
-    <script>
-        
-    </script>
-</div>
-      <footer id="footer">
-    <div class="outer">
-        <div id="footer-info">
-            <div class="visit">
-                Powered by <a href="http://hexo.io/" target="_blank" title="Hexo">Hexo</a> Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Yelee">Yelee</a>
-			</div>
-        </div>
-		
-		
-        
-    </div>
-</footer>
-    </div>
-    
-<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.1.22/require.min.js"></script>
-
-
-
-
-<div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
-</div>
-
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
-  </div>
 </body>
 </html>
-   	<script type="text/javascript">
-		if(window.location.href.indexOf('links') != -1){
-				document.getElementById("comments").style.display = 'none';
-		}	
-	</script>

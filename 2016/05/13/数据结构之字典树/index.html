@@ -1,317 +1,717 @@
+<!doctype html>
 
-<!DOCTYPE html>
-<html lang="zh-Hans">
-<head>
-  <meta charset="utf-8">
+
+
   
-  <title>数据结构之字典树 | zhikaizhang&#39;s Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="字典树(Trie Tree)的实现">
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="c++,数据结构," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="字典树(Trie Tree)的实现">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构之字典树">
 <meta property="og:url" content="http://yoursite.com/2016/05/13/数据结构之字典树/index.html">
 <meta property="og:site_name" content="zhikaizhang's Blog">
 <meta property="og:description" content="字典树(Trie Tree)的实现">
-<meta property="og:image" content="http://yoursite.com/img/数据结构之字典树/trie_tree.png">
-<meta property="og:updated_time" content="2016-05-13T05:04:26.303Z">
+<meta property="og:image" content="http://yoursite.com/uploads/数据结构之字典树/trie_tree.png">
+<meta property="og:updated_time" content="2016-05-13T08:07:43.694Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构之字典树">
 <meta name="twitter:description" content="字典树(Trie Tree)的实现">
-<meta name="twitter:image" content="http://yoursite.com/img/数据结构之字典树/trie_tree.png">
+<meta name="twitter:image" content="http://yoursite.com/uploads/数据结构之字典树/trie_tree.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 数据结构之字典树 | zhikaizhang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
   
-    <link rel="alternative" href="/atom.xml" title="zhikaizhang&#39;s Blog" type="application/atom+xml">
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
   
   
-    <link rel="icon" href="/img/zoro.png">
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">zhikaizhang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
   
   
-      <link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
   
   
   
-      <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
-      <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据结构之字典树
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-13T00:00:00+08:00" content="2016-05-13">
+              2016-05-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/算法与数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">算法与数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/13/数据结构之字典树/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/数据结构之字典树/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/05/13/数据结构之字典树/" class="leancloud_visitors" data-flag-title="数据结构之字典树">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="什么是字典树"><a href="#什么是字典树" class="headerlink" title="什么是字典树"></a>什么是字典树</h1><p>字典树是一种树形结构，利用字符串的公共前缀来减少查询时间，以空间换时间；根节点不包含字符，除根节点外每一个节点都只包含一个字符；从根节点到某一节点，路径上经过的字符连接起来，为该节点对应的字符串。<br><img src="/uploads/数据结构之字典树/trie_tree.png" alt="字典树"><br>如图是一个字典树，共有12个节点不为NULL，其中根节点不包含字符。那么这棵树中有几个单词呢？hell、hello、help、world，共四个单词。节点标记为红色表示根节点到该节点所形成的字符串存在。</p>
+<h1 id="如何实现字典树"><a href="#如何实现字典树" class="headerlink" title="如何实现字典树"></a>如何实现字典树</h1><p>下面以字符串查找问题为例，介绍字典树使用。<br>问题描述如下：<br>实现一个 Trie，包含 insert, search, 和 startsWith 这三个方法, 假设所有单词均由小写字母组成。<br>insert插入单词，search查找单词，startsWith是否包含以查询词为前缀的单词。<br>样例<br>insert(“hello”)<br>search(“hell”) // return false<br>startsWith(“hell”) // return true<br>startsWith(“helloworld”) // return false<br>insert(“helloworld”)<br>search(“hello) // return true<br>startsWith(“helloworld”) // return true</p>
+<h2 id="字符种类数目"><a href="#字符种类数目" class="headerlink" title="字符种类数目"></a>字符种类数目</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAX_CHAR = <span class="number">26</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="字典树节点TrieNode"><a href="#字典树节点TrieNode" class="headerlink" title="字典树节点TrieNode"></a>字典树节点TrieNode</h2><p>child是TrieNode指针数组，指向子节点，0-25这26个下标与a-z这26个小写字母一一对应。<br>也就是说，一个节点表示哪个字符，是由该节点在父节点的child数组的下标所决定的。<br>flag标记当前字符串是否存在，true相当于在前面的图中将节点标记为红色，false则为黑色。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> TrieNode &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    TrieNode() &#123;</span><br><span class="line">        flag = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; MAX_CHAR; i++) &#123;</span><br><span class="line">            child[i] = <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//递归插入一个单词，每次建立其中的一个字符</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; word, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = word[i] - <span class="string">'a'</span>;</span><br><span class="line">        <span class="keyword">if</span> (child[pos] == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            child[pos] = new TrieNode();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//若是最后一个字符，修改flag标记，否则递归插入</span></span><br><span class="line">        <span class="keyword">if</span> (i == word.size() - <span class="number">1</span>) &#123;</span><br><span class="line">            child[pos] -&gt; flag = <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            child[pos] -&gt; insert(word, i + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//递归查找一个单词，每次校验其中的一个字符</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">search</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; word, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = word[i] - <span class="string">'a'</span>;</span><br><span class="line">        <span class="comment">//当前位置字符在当前节点的孩子对应于NULL，查找失败</span></span><br><span class="line">        <span class="keyword">if</span> (child[pos] == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            return <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//若查找到了最后一个字符，当前节点的对应孩子的flag标记了该单词是否存在</span></span><br><span class="line">        <span class="keyword">if</span> (i == word.size() - <span class="number">1</span>) &#123;</span><br><span class="line">            return child[pos] -&gt; flag;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//否则递归校验</span></span><br><span class="line">        return child[pos] -&gt; search(word, i + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">startsWith</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; word, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pos = word[i] - <span class="string">'a'</span>;</span><br><span class="line">        <span class="keyword">if</span> (child[pos] == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            return <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//只要查找到最后一个字符前未失败说明以该单词为前缀的单词存在</span></span><br><span class="line">        <span class="keyword">if</span> (i == word.size() - <span class="number">1</span>) &#123;</span><br><span class="line">            return <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        return child[pos] -&gt; startsWith(word, i + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//释放空间</span></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">(TrieNode* cur)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!cur) return;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; MAX_CHAR; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(cur-&gt;child[i])&#123;</span><br><span class="line">                clear(cur-&gt;child[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">delete</span> cur;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    TrieNode *child[MAX_CHAR];</span><br><span class="line">    <span class="keyword">bool</span> flag;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h2 id="字典树TrieTree"><a href="#字典树TrieTree" class="headerlink" title="字典树TrieTree"></a>字典树TrieTree</h2><p>只是将TrieNode实现的方法进行封装。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> TrieTree &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    TrieTree() &#123;</span><br><span class="line">        root = new TrieNode();</span><br><span class="line">    &#125;</span><br><span class="line">    ~TrieTree() &#123;</span><br><span class="line">        TrieNode::clear(root);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; word)</span> </span>&#123;</span><br><span class="line">        root -&gt; insert(word, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">search</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; word)</span> </span>&#123;</span><br><span class="line">        return root -&gt; search(word, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">startsWith</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; prefix)</span> </span>&#123;</span><br><span class="line">        return root -&gt; startsWith(prefix, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    TrieNode* root;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c/" rel="tag">#c++</a>
+          
+            <a href="/tags/数据结构/" rel="tag">#数据结构</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/08/数据结构之线段树/" rel="next" title="数据结构之线段树">
+                <i class="fa fa-chevron-left"></i> 数据结构之线段树
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/13/数据结构之字典树/"
+           data-title="数据结构之字典树" data-url="http://yoursite.com/2016/05/13/数据结构之字典树/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
   
-  <link rel="stylesheet" href="/css/style.css">
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/zoro.png"
+               alt="zhikaizhang" />
+          <p class="site-author-name" itemprop="name">zhikaizhang</p>
+          <p class="site-description motion-element" itemprop="description">充电中...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是字典树"><span class="nav-number">1.</span> <span class="nav-text">什么是字典树</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何实现字典树"><span class="nav-number">2.</span> <span class="nav-text">如何实现字典树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字符种类数目"><span class="nav-number">2.1.</span> <span class="nav-text">字符种类数目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字典树节点TrieNode"><span class="nav-number">2.2.</span> <span class="nav-text">字典树节点TrieNode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字典树TrieTree"><span class="nav-number">2.3.</span> <span class="nav-text">字典树TrieTree</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
   
-  <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="author" itemprop="copyrightHolder">zhikaizhang</span>
+  <span class="author" itemprop="copyrightHolder">. All rights reserved.</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
   
   
-      <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
   
-  <script src="//cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
-  <script src="//cdn.bootcss.com/clipboard.js/1.5.9/clipboard.min.js"></script>
-  <script>
-      var yiliaConfig = {
-          fancybox: true,
-          animate: true,
-          isHome: false,
-          isPost: true,
-          isArchive: false,
-          isTag: false,
-          isCategory: false,
-          open_in_new: false,
-          fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
-          scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.0.9/scrollreveal.min.js"
-      }
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"laserwave"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
   </script>
 
   
-      <script>
-          yiliaConfig.rootUrl = "/";
-      </script>
+    
   
+
+
+
+
 
   
   
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("wv1vA5GMdT6r7Vi1AVpQNC0I-gzGzoHsz", "jt5O27A704yaLaJrddXok0jb");</script>
   <script>
-	var _hmt = _hmt || [];
-	(function() {
-	var hm = document.createElement("script");
-	hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
-	var s = document.getElementsByTagName("script")[0]; 
-	s.parentNode.insertBefore(hm, s);
-	})();
-   </script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
 
 
-</head>
-<body>	
-  <div id="container">
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-    <header id="header" class="inner">
-        <a href="/" class="profilepic">
-            <img src="/img/zoro.png" class="animated zoomIn">
-        </a>
-        <hgroup>
-          <h1 class="header-author"><a href="/">zhikaizhang</a></h1>
-        </hgroup>
 
-        
-                
-
-
-        
-
-        <div id="switch-area" class="switch-area">
-            <div class="switch-wrap">
-                <section class="switch-part switch-part1">
-                    <nav class="header-menu">
-                        <ul>
-                        
-                            <li><a href="/archives/">时间轴</a></li>
-                        
-                            <li><a href="/tags/">标签云</a></li>
-                        
-                            <li><a href="/links/">友情链接</a></li>
-                        
-                        </ul>
-                    </nav>
-                    <nav class="header-nav">
-                        <ul class="social">
-                            
-                        </ul>
-                    </nav>
-					
-                </section>
-                
-				
-				
-				
-				
-                
-                
-                
-
-                
-            </div>
-        </div>
-		
-		
-		<div class="mytagcloud" id="mytagcloud">
-                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photoshop/">photoshop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sphinx/">sphinx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swing/">swing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/二分法/">二分法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人工智能/">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序/">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构模式/">架构模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
-		</div>
-		
-		
-    </header>                
-</div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-    <div class="intrude-less">
-        <header id="header" class="inner">
-
-            <nav class="header-menu">
-                <ul>
-				
-				<li><a href="/" title="">zzk's Blog</a></li>
-                
-                    <li><a href="/archives/">时间轴</a></li>
-                
-                    <li><a href="/tags/">标签云</a></li>
-                
-                    <li><a href="/links/">友情链接</a></li>
-                
-                <div class="clearfix"></div>
-                </ul>
-            </nav>
-        </header>
-		
-    </div>
-</nav>
-      <div class="body-wrap"><article id="post-数据结构之字典树" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/13/数据结构之字典树/" class="article-date">
-      <time datetime="2016-05-12T16:00:00.000Z" itemprop="datePublished">13th May 2016</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      数据结构之字典树
-    </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-
-        
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
-    </div>
-
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h3 id="什么是字典树"><a href="#什么是字典树" class="headerlink" title="什么是字典树"></a>什么是字典树</h3><p>如图是一个字典树，共有12个节点不为NULL，其中根节点不包含字符<br>那么这棵树中有几个单词呢？hell、hello、help、world共四个单词<br>节点标记为红色表示根节点到该节点所形成的字符串存在<br><img src="/img/数据结构之字典树/trie_tree.png" alt="字典树" title="trie_tree.png"><br>字典树是一种树形结构，利用字符串的公共前缀来减少查询时间，以空间换时间；<br>根节点不包含字符，除根节点外每一个节点都只包含一个字符；<br>从根节点到某一节点，路径上经过的字符连接起来，为该节点对应的字符串；<br>每个节点的所有子节点包含的字符都不相同。</p>
-<h3 id="如何实现字典树"><a href="#如何实现字典树" class="headerlink" title="如何实现字典树"></a>如何实现字典树</h3><p>下面以一个具体的字符串查找问题为例，介绍字典树使用<br>问题描述如下：<br>实现一个 Trie，包含 insert, search, 和 startsWith 这三个方法, 假设所有单词均由小写字母组成<br>insert插入单词，search查找单词，startsWith是否包含以查询词为前缀的单词<br>样例<br>insert(“hello”)<br>search(“hell”) // return false<br>startsWith(“hell”) // return true<br>startsWith(“helloworld”) // return false<br>insert(“helloworld”)<br>search(“hello) // return true<br>startsWith(“helloworld”) // return true</p>
-<h5 id="字符种类数目"><a href="#字符种类数目" class="headerlink" title="字符种类数目"></a>字符种类数目</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const int MAX_CHAR = 26;</span><br></pre></td></tr></table></figure>
-<h5 id="字典树节点TrieNode"><a href="#字典树节点TrieNode" class="headerlink" title="字典树节点TrieNode"></a>字典树节点TrieNode</h5><p>child是TrieNode指针数组，指向子节点，0-25这26个下标与a-z这26个小写字母一一对应<br>也就是说，一个节点表示哪个字符，是由该节点在父节点的child数组的下标所决定的<br>flag标记当前字符串是否存在，true相当于在前面的图中将节点标记为红色，false则为黑色<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">class TrieNode &#123;</span><br><span class="line">public:</span><br><span class="line">    TrieNode() &#123;</span><br><span class="line">        flag = false;</span><br><span class="line">        for (int i = 0; i &lt; MAX_CHAR; i++) &#123;</span><br><span class="line">            child[i] = NULL;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //递归插入一个单词，每次建立其中的一个字符</span><br><span class="line">    void insert(const string&amp; word, int i) &#123;</span><br><span class="line">        int pos = word[i] - &apos;a&apos;;</span><br><span class="line">        if (child[pos] == NULL) &#123;</span><br><span class="line">            child[pos] = new TrieNode();</span><br><span class="line">        &#125;</span><br><span class="line">        //若是最后一个字符，修改flag标记，否则递归插入</span><br><span class="line">        if (i == word.size() - 1) &#123;</span><br><span class="line">            child[pos] -&gt; flag = true;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            child[pos] -&gt; insert(word, i + 1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //递归查找一个单词，每次校验其中的一个字符</span><br><span class="line">    bool search(const string&amp; word, int i) &#123;</span><br><span class="line">        int pos = word[i] - &apos;a&apos;;</span><br><span class="line">        //当前位置字符在当前节点的孩子对应于NULL，查找失败</span><br><span class="line">        if (child[pos] == NULL) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        //若查找到了最后一个字符，当前节点的对应孩子的flag标记了该单词是否存在</span><br><span class="line">        if (i == word.size() - 1) &#123;</span><br><span class="line">            return child[pos] -&gt; flag;</span><br><span class="line">        &#125;</span><br><span class="line">        //否则递归校验</span><br><span class="line">        return child[pos] -&gt; search(word, i + 1);</span><br><span class="line">    &#125;</span><br><span class="line">    bool startsWith(const string&amp; word, int i) &#123;</span><br><span class="line">        int pos = word[i] - &apos;a&apos;;</span><br><span class="line">        if (child[pos] == NULL) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        //只要查找到最后一个字符前未失败说明以该单词为前缀的单词存在</span><br><span class="line">        if (i == word.size() - 1) &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">        return child[pos] -&gt; startsWith(word, i + 1);</span><br><span class="line">    &#125;</span><br><span class="line">    //释放空间</span><br><span class="line">    static void clear(TrieNode* cur)&#123;</span><br><span class="line">        if(!cur) return;</span><br><span class="line">        for(int i = 0; i &lt; MAX_CHAR; i++)&#123;</span><br><span class="line">            if(cur-&gt;child[i])&#123;</span><br><span class="line">                clear(cur-&gt;child[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        delete cur;</span><br><span class="line">    &#125;</span><br><span class="line">private:</span><br><span class="line">    TrieNode *child[MAX_CHAR];</span><br><span class="line">    bool flag;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<h5 id="字典树TrieTree"><a href="#字典树TrieTree" class="headerlink" title="字典树TrieTree"></a>字典树TrieTree</h5><p>只是将TrieNode实现的方法进行封装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class TrieTree &#123;</span><br><span class="line">public:</span><br><span class="line">    TrieTree() &#123;</span><br><span class="line">        root = new TrieNode();</span><br><span class="line">    &#125;</span><br><span class="line">    ~TrieTree() &#123;</span><br><span class="line">        TrieNode::clear(root);</span><br><span class="line">    &#125;</span><br><span class="line">    void insert(const string&amp; word) &#123;</span><br><span class="line">        root -&gt; insert(word, 0);</span><br><span class="line">    &#125;</span><br><span class="line">    bool search(const string&amp; word) &#123;</span><br><span class="line">        return root -&gt; search(word, 0);</span><br><span class="line">    &#125;</span><br><span class="line">    bool startsWith(const string&amp; prefix) &#123;</span><br><span class="line">        return root -&gt; startsWith(prefix, 0);</span><br><span class="line">    &#125;</span><br><span class="line">private:</span><br><span class="line">    TrieNode* root;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    
-  </div>
-  
-    
-
-
-    <nav id="article-nav">
-        
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/05/08/数据结构之线段树/">
-                    数据结构之线段树
-                </a>
-            </div>
-        
-    </nav>
-
-  
-</article>
-
-
-
-
-
-    
-      <div class="duoshuo" id="comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/05/13/数据结构之字典树/" data-title="数据结构之字典树" data-url="http://yoursite.com/2016/05/13/数据结构之字典树/"></div>
-    <!-- 多说评论框 end -->
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-    var duoshuoQuery = {short_name:"laserwave"};
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] 
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-    </script>
-    <!-- 多说公共JS代码 end -->
-</div>
-
-    
-
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
-        
-
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-
-        
-            <a href="/2016/05/08/数据结构之线段树/" title="下一篇: 数据结构之线段树">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/数据结构之字典树/">数据结构之字典树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/08/数据结构之线段树/">数据结构之线段树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/android架构模式之MVP/">android架构模式之MVP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/05/android黑白棋游戏之极小极大算法的实现/">android黑白棋游戏之极小极大算法的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/03/java swing之自定义组件外观/">java swing之自定义组件外观</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/基础算法之二分查找/">基础算法之二分查找</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/基础算法之快速排序/">基础算法之快速排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/基础算法之插入排序/">基础算法之插入排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/25/photoshop之制作android点九图/">photoshop之制作android点九图</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/23/photoshop之如何支持ico格式输出/">photoshop之如何支持ico格式输出</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/23/sphinx在windows环境下的配置及其java版API的使用/">sphinx在windows环境下的配置及其java版API的使用</a></li></ul>
-
-
-
-
-    <script>
-        
-    </script>
-</div>
-      <footer id="footer">
-    <div class="outer">
-        <div id="footer-info">
-            <div class="visit">
-                Powered by <a href="http://hexo.io/" target="_blank" title="Hexo">Hexo</a> Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Yelee">Yelee</a>
-			</div>
-        </div>
-		
-		
-        
-    </div>
-</footer>
-    </div>
-    
-<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.1.22/require.min.js"></script>
-
-
-
-
-<div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
-</div>
-
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
-  </div>
 </body>
 </html>
-   	<script type="text/javascript">
-		if(window.location.href.indexOf('links') != -1){
-				document.getElementById("comments").style.display = 'none';
-		}	
-	</script>

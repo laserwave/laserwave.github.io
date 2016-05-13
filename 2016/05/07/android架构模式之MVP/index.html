@@ -1,336 +1,732 @@
+<!doctype html>
 
-<!DOCTYPE html>
-<html lang="zh-Hans">
-<head>
-  <meta charset="utf-8">
+
+
   
-  <title>android架构模式之MVP | zhikaizhang&#39;s Blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="以一个简洁的demo为例介绍MVP架构模式">
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android,架构模式," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="以一个简洁的demo为例介绍MVP架构模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="android架构模式之MVP">
 <meta property="og:url" content="http://yoursite.com/2016/05/07/android架构模式之MVP/index.html">
 <meta property="og:site_name" content="zhikaizhang's Blog">
 <meta property="og:description" content="以一个简洁的demo为例介绍MVP架构模式">
-<meta property="og:image" content="http://yoursite.com/img/android架构模式之MVP/mvc_mvp.png">
-<meta property="og:image" content="http://yoursite.com/img/android架构模式之MVP/mvp_test.png">
-<meta property="og:image" content="http://yoursite.com/img/android架构模式之MVP/mvp_demo.png">
-<meta property="og:updated_time" content="2016-05-12T05:10:30.612Z">
+<meta property="og:image" content="http://yoursite.com/uploads/android架构模式之MVP/mvc_mvp.png">
+<meta property="og:image" content="http://yoursite.com/uploads/android架构模式之MVP/mvp_test.png">
+<meta property="og:image" content="http://yoursite.com/uploads/android架构模式之MVP/mvp_demo.png">
+<meta property="og:updated_time" content="2016-05-13T08:31:43.607Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android架构模式之MVP">
 <meta name="twitter:description" content="以一个简洁的demo为例介绍MVP架构模式">
-<meta name="twitter:image" content="http://yoursite.com/img/android架构模式之MVP/mvc_mvp.png">
+<meta name="twitter:image" content="http://yoursite.com/uploads/android架构模式之MVP/mvc_mvp.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> android架构模式之MVP | zhikaizhang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
   
-    <link rel="alternative" href="/atom.xml" title="zhikaizhang&#39;s Blog" type="application/atom+xml">
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
   
   
-    <link rel="icon" href="/img/zoro.png">
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">zhikaizhang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
   
   
-      <link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
   
   
   
-      <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
-      <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                android架构模式之MVP
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-07T00:00:00+08:00" content="2016-05-07">
+              2016-05-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/07/android架构模式之MVP/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/07/android架构模式之MVP/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/05/07/android架构模式之MVP/" class="leancloud_visitors" data-flag-title="android架构模式之MVP">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="What"><a href="#What" class="headerlink" title="What?"></a>What?</h1><p>Model-View-Presenter</p>
+<h1 id="Why"><a href="#Why" class="headerlink" title="Why?"></a>Why?</h1><p>Activity太忙了！既作为View又作为Controller，还要忙着与Model耦合<br>Activity一般会采用布局文件来作为视图，但大多情况下还需要在Activity中对View进行动态布局、变化，所以我说Activity承担了View的工作<br>Activity显然也是一个Controller，当用户与视图交互，还是Activity来处理相关视图逻辑<br>Activity还需要调用Model来处理相关业务逻辑，与Model也是耦合的</p>
+<h1 id="How"><a href="#How" class="headerlink" title="How?"></a>How?</h1><p>降低Activity的职责，将其仅作为一个View，不再与Model有任何耦合<br>抽出Presenter，Presenter通过接口访问View，包含Model的引用；View包含Presenter的引用，间接调用Model层处理业务逻辑，见下图<br><img src="/uploads/android架构模式之MVP/mvc_mvp.png" alt="MVC VS. MVP"></p>
+<h1 id="A-Simple-Example"><a href="#A-Simple-Example" class="headerlink" title="A Simple Example"></a>A Simple Example</h1><p>整体包图见下图，分model、view、presenter三个包<br><img src="/uploads/android架构模式之MVP/mvp_test.png" alt="package diagram"><br>model下VO表示Value Object，其实就是java bean，仅包含get、set方法，BO表示Bussiness Object，处理业务逻辑，<br>那么BO中异步完成业务后如何通知View呢？就靠这个Callback接口，由Presenter中实现</p>
+<h2 id="model-BO-IUserModel"><a href="#model-BO-IUserModel" class="headerlink" title="model.BO.IUserModel"></a>model.BO.IUserModel</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IUserModel</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">(LoginRequest request, Callback&lt;LoginResponse&gt; callback)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="model-BO-UserModel"><a href="#model-BO-UserModel" class="headerlink" title="model.BO.UserModel"></a>model.BO.UserModel</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserModel</span> <span class="keyword">implements</span> <span class="title">IUserModel</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">(<span class="keyword">final</span> LoginRequest request, <span class="keyword">final</span> Callback&lt;LoginResponse&gt; callback)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                String userName = request.getUserName();</span><br><span class="line">                String userPassword = request.getUserPassword();</span><br><span class="line">                <span class="comment">//此处进行网络请求验证用户邮箱、密码是否合法</span></span><br><span class="line">                <span class="comment">//..</span></span><br><span class="line">                <span class="keyword">boolean</span> isValid = userName.equals(<span class="string">"admin"</span>) &amp;&amp; userPassword.equals(<span class="string">"123456"</span>);</span><br><span class="line">                <span class="keyword">if</span>(isValid)&#123;</span><br><span class="line">                    <span class="comment">//模拟从服务器获得的accessToken</span></span><br><span class="line">                    callback.success(<span class="keyword">new</span> LoginResponse(<span class="string">"a7f7v9l0389f8k3ls9"</span>));</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="comment">//模拟从服务器获得的错误原因</span></span><br><span class="line">                    callback.fail(<span class="string">"用户名或密码错误"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="model-VO-LoginRequest"><a href="#model-VO-LoginRequest" class="headerlink" title="model.VO.LoginRequest"></a>model.VO.LoginRequest</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginRequest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String userName;</span><br><span class="line">    <span class="keyword">private</span> String userPassword;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LoginRequest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LoginRequest</span><span class="params">(String userPassword, String userName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userPassword = userPassword;</span><br><span class="line">        <span class="keyword">this</span>.userName = userName;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getUserName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userName;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserName</span><span class="params">(String userName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userName = userName;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getUserPassword</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userPassword;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserPassword</span><span class="params">(String userPassword)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userPassword = userPassword;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="model-VO-LoginResponse"><a href="#model-VO-LoginResponse" class="headerlink" title="model.VO.LoginResponse"></a>model.VO.LoginResponse</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginResponse</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String accessToken;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LoginResponse</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LoginResponse</span><span class="params">(String accessToken)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.accessToken = accessToken;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getAccessToken</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> accessToken;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAccessToken</span><span class="params">(String accessToken)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.accessToken = accessToken;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="model-Callback"><a href="#model-Callback" class="headerlink" title="model.Callback"></a>model.Callback</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Callback</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">success</span><span class="params">(T t)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">fail</span><span class="params">(String reason)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="presenter-ILoginPresenter"><a href="#presenter-ILoginPresenter" class="headerlink" title="presenter.ILoginPresenter"></a>presenter.ILoginPresenter</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ILoginPresenter</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="presenter-LoginPresenter"><a href="#presenter-LoginPresenter" class="headerlink" title="presenter.LoginPresenter"></a>presenter.LoginPresenter</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginPresenter</span> <span class="keyword">implements</span> <span class="title">ILoginPresenter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> ILoginView loginView;</span><br><span class="line">    <span class="keyword">private</span> IUserModel userModel;</span><br><span class="line">    <span class="keyword">private</span> Handler handler;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LoginPresenter</span><span class="params">(ILoginView loginView)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.loginView = loginView;</span><br><span class="line">        <span class="keyword">this</span>.userModel = <span class="keyword">new</span> UserModel();</span><br><span class="line">        <span class="keyword">this</span>.handler = <span class="keyword">new</span> Handler(Looper.getMainLooper());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        userModel.login(<span class="keyword">new</span> LoginRequest(loginView.getUserName(), loginView.getUserPassword()), <span class="keyword">new</span> Callback&lt;LoginResponse&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">success</span><span class="params">(LoginResponse loginResponse)</span> </span>&#123;</span><br><span class="line">                String accessToken = loginResponse.getAccessToken();</span><br><span class="line">                <span class="comment">//此处缓存accessToken或其他操作</span></span><br><span class="line">                <span class="comment">//..</span></span><br><span class="line">                handler.post(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                        loginView.loginSuccess();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fail</span><span class="params">(<span class="keyword">final</span> String reason)</span> </span>&#123;</span><br><span class="line">                handler.post(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                        loginView.loginFail(reason);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="view-ILoginView"><a href="#view-ILoginView" class="headerlink" title="view.ILoginView"></a>view.ILoginView</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ILoginView</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getUserName</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getUserPassword</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loginSuccess</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loginFail</span><span class="params">(String reason)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="view-LoginActivity"><a href="#view-LoginActivity" class="headerlink" title="view.LoginActivity"></a>view.LoginActivity</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">ILoginView</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> EditText userNameEditText;</span><br><span class="line">    <span class="keyword">private</span> EditText userPasswordEditText;</span><br><span class="line">    <span class="keyword">private</span> Button loginButton;</span><br><span class="line">    <span class="keyword">private</span> ILoginPresenter loginPresenter;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_login);</span><br><span class="line">        loginPresenter = <span class="keyword">new</span> LoginPresenter(<span class="keyword">this</span>);</span><br><span class="line">        userNameEditText = (EditText)findViewById(R.id.username);</span><br><span class="line">        userPasswordEditText = (EditText)findViewById(R.id.password);</span><br><span class="line">        loginButton = (Button)findViewById(R.id.login);</span><br><span class="line">        loginButton.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                loginPresenter.login();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getUserName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userNameEditText.getText().toString();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getUserPassword</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> userPasswordEditText.getText().toString();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loginSuccess</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Toast.makeText(<span class="keyword">this</span>, <span class="string">"登录成功"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">        <span class="comment">//跳转到其他Activity或进行其他操作</span></span><br><span class="line">        <span class="comment">//..</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loginFail</span><span class="params">(String reason)</span> </span>&#123;</span><br><span class="line">        Toast.makeText(<span class="keyword">this</span>, reason, Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>是不是结构还挺清楚的呢？至于是否要在项目中采用MVP，其实还要看项目的规模<br>demo图如下<br><img src="/uploads/android架构模式之MVP/mvp_demo.png" alt="demo"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag">#android</a>
+          
+            <a href="/tags/架构模式/" rel="tag">#架构模式</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/05/android黑白棋游戏之极小极大算法的实现/" rel="next" title="android黑白棋游戏之极小极大算法的实现">
+                <i class="fa fa-chevron-left"></i> android黑白棋游戏之极小极大算法的实现
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/08/数据结构之线段树/" rel="prev" title="数据结构之线段树">
+                数据结构之线段树 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/07/android架构模式之MVP/"
+           data-title="android架构模式之MVP" data-url="http://yoursite.com/2016/05/07/android架构模式之MVP/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
   
-  <link rel="stylesheet" href="/css/style.css">
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/zoro.png"
+               alt="zhikaizhang" />
+          <p class="site-author-name" itemprop="name">zhikaizhang</p>
+          <p class="site-description motion-element" itemprop="description">充电中...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#What"><span class="nav-number">1.</span> <span class="nav-text">What?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Why"><span class="nav-number">2.</span> <span class="nav-text">Why?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#How"><span class="nav-number">3.</span> <span class="nav-text">How?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A-Simple-Example"><span class="nav-number">4.</span> <span class="nav-text">A Simple Example</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#model-BO-IUserModel"><span class="nav-number">4.1.</span> <span class="nav-text">model.BO.IUserModel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-BO-UserModel"><span class="nav-number">4.2.</span> <span class="nav-text">model.BO.UserModel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-VO-LoginRequest"><span class="nav-number">4.3.</span> <span class="nav-text">model.VO.LoginRequest</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-VO-LoginResponse"><span class="nav-number">4.4.</span> <span class="nav-text">model.VO.LoginResponse</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-Callback"><span class="nav-number">4.5.</span> <span class="nav-text">model.Callback</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#presenter-ILoginPresenter"><span class="nav-number">4.6.</span> <span class="nav-text">presenter.ILoginPresenter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#presenter-LoginPresenter"><span class="nav-number">4.7.</span> <span class="nav-text">presenter.LoginPresenter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#view-ILoginView"><span class="nav-number">4.8.</span> <span class="nav-text">view.ILoginView</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#view-LoginActivity"><span class="nav-number">4.9.</span> <span class="nav-text">view.LoginActivity</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
   
-  <link href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="author" itemprop="copyrightHolder">zhikaizhang</span>
+  <span class="author" itemprop="copyrightHolder">. All rights reserved.</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
   
   
-      <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
   
-  <script src="//cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
-  <script src="//cdn.bootcss.com/clipboard.js/1.5.9/clipboard.min.js"></script>
-  <script>
-      var yiliaConfig = {
-          fancybox: true,
-          animate: true,
-          isHome: false,
-          isPost: true,
-          isArchive: false,
-          isTag: false,
-          isCategory: false,
-          open_in_new: false,
-          fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
-          scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.0.9/scrollreveal.min.js"
-      }
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"laserwave"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
   </script>
 
   
-      <script>
-          yiliaConfig.rootUrl = "/";
-      </script>
+    
   
+
+
+
+
 
   
   
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("wv1vA5GMdT6r7Vi1AVpQNC0I-gzGzoHsz", "jt5O27A704yaLaJrddXok0jb");</script>
   <script>
-	var _hmt = _hmt || [];
-	(function() {
-	var hm = document.createElement("script");
-	hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
-	var s = document.getElementsByTagName("script")[0]; 
-	s.parentNode.insertBefore(hm, s);
-	})();
-   </script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
 
 
-</head>
-<body>	
-  <div id="container">
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-    <header id="header" class="inner">
-        <a href="/" class="profilepic">
-            <img src="/img/zoro.png" class="animated zoomIn">
-        </a>
-        <hgroup>
-          <h1 class="header-author"><a href="/">zhikaizhang</a></h1>
-        </hgroup>
 
-        
-                
-
-
-        
-
-        <div id="switch-area" class="switch-area">
-            <div class="switch-wrap">
-                <section class="switch-part switch-part1">
-                    <nav class="header-menu">
-                        <ul>
-                        
-                            <li><a href="/archives/">时间轴</a></li>
-                        
-                            <li><a href="/tags/">标签云</a></li>
-                        
-                            <li><a href="/links/">友情链接</a></li>
-                        
-                        </ul>
-                    </nav>
-                    <nav class="header-nav">
-                        <ul class="social">
-                            
-                        </ul>
-                    </nav>
-					
-                </section>
-                
-				
-				
-				
-				
-                
-                
-                
-
-                
-            </div>
-        </div>
-		
-		
-		<div class="mytagcloud" id="mytagcloud">
-                <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/photoshop/">photoshop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sphinx/">sphinx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swing/">swing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/二分法/">二分法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人工智能/">人工智能</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/排序/">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/架构模式/">架构模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
-		</div>
-		
-		
-    </header>                
-</div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-    <div class="intrude-less">
-        <header id="header" class="inner">
-
-            <nav class="header-menu">
-                <ul>
-				
-				<li><a href="/" title="">zzk's Blog</a></li>
-                
-                    <li><a href="/archives/">时间轴</a></li>
-                
-                    <li><a href="/tags/">标签云</a></li>
-                
-                    <li><a href="/links/">友情链接</a></li>
-                
-                <div class="clearfix"></div>
-                </ul>
-            </nav>
-        </header>
-		
-    </div>
-</nav>
-      <div class="body-wrap"><article id="post-android架构模式之MVP" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/07/android架构模式之MVP/" class="article-date">
-      <time datetime="2016-05-06T16:00:00.000Z" itemprop="datePublished">7th May 2016</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      android架构模式之MVP
-    </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-
-        
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构模式/">架构模式</a></li></ul>
-    </div>
-
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h3 id="What"><a href="#What" class="headerlink" title="What?"></a>What?</h3><p>Model-View-Presenter</p>
-<h3 id="Why"><a href="#Why" class="headerlink" title="Why?"></a>Why?</h3><p>Activity太忙了！既作为View又作为Controller，还要忙着与Model耦合<br>Activity一般会采用布局文件来作为视图，但大多情况下还需要在Activity中对View进行动态布局、变化，所以我说Activity承担了View的工作<br>Activity显然也是一个Controller，当用户与视图交互，还是Activity来处理相关视图逻辑<br>Activity还需要调用Model来处理相关业务逻辑，与Model也是耦合的</p>
-<h3 id="How"><a href="#How" class="headerlink" title="How?"></a>How?</h3><p>降低Activity的职责，将其仅作为一个View，不再与Model有任何耦合<br>抽出Presenter，Presenter通过接口访问View，包含Model的引用；View包含Presenter的引用，间接调用Model层处理业务逻辑，见下图<br><img src="/img/android架构模式之MVP/mvc_mvp.png" alt="MVC VS. MVP" title="mvc_mvp.png"></p>
-<h3 id="A-Simple-Example"><a href="#A-Simple-Example" class="headerlink" title="A Simple Example"></a>A Simple Example</h3><p>整体包图见下图，分model、view、presenter三个包<br><img src="/img/android架构模式之MVP/mvp_test.png" alt="package diagram" title="mvp_test.png"><br>model下VO表示Value Object，其实就是java bean，仅包含get、set方法，BO表示Bussiness Object，处理业务逻辑，<br>那么BO中异步完成业务后如何通知View呢？就靠这个Callback接口，由Presenter中实现</p>
-<h5 id="model-BO-IUserModel"><a href="#model-BO-IUserModel" class="headerlink" title="model.BO.IUserModel"></a>model.BO.IUserModel</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface IUserModel &#123;</span><br><span class="line">    public void login(LoginRequest request, Callback&lt;LoginResponse&gt; callback);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="model-BO-UserModel"><a href="#model-BO-UserModel" class="headerlink" title="model.BO.UserModel"></a>model.BO.UserModel</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class UserModel implements IUserModel&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void login(final LoginRequest request, final Callback&lt;LoginResponse&gt; callback) &#123;</span><br><span class="line">        new Thread(new Runnable() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void run() &#123;</span><br><span class="line">                String userName = request.getUserName();</span><br><span class="line">                String userPassword = request.getUserPassword();</span><br><span class="line">                //此处进行网络请求验证用户邮箱、密码是否合法</span><br><span class="line">                //..</span><br><span class="line">                boolean isValid = userName.equals(&quot;admin&quot;) &amp;&amp; userPassword.equals(&quot;123456&quot;);</span><br><span class="line">                if(isValid)&#123;</span><br><span class="line">                    //模拟从服务器获得的accessToken</span><br><span class="line">                    callback.success(new LoginResponse(&quot;a7f7v9l0389f8k3ls9&quot;));</span><br><span class="line">                &#125;else&#123;</span><br><span class="line">                    //模拟从服务器获得的错误原因</span><br><span class="line">                    callback.fail(&quot;用户名或密码错误&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="model-VO-LoginRequest"><a href="#model-VO-LoginRequest" class="headerlink" title="model.VO.LoginRequest"></a>model.VO.LoginRequest</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class LoginRequest &#123;</span><br><span class="line">    private String userName;</span><br><span class="line">    private String userPassword;</span><br><span class="line">    public LoginRequest() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    public LoginRequest(String userPassword, String userName) &#123;</span><br><span class="line">        this.userPassword = userPassword;</span><br><span class="line">        this.userName = userName;</span><br><span class="line">    &#125;</span><br><span class="line">    public String getUserName() &#123;</span><br><span class="line">        return userName;</span><br><span class="line">    &#125;</span><br><span class="line">    public void setUserName(String userName) &#123;</span><br><span class="line">        this.userName = userName;</span><br><span class="line">    &#125;</span><br><span class="line">    public String getUserPassword() &#123;</span><br><span class="line">        return userPassword;</span><br><span class="line">    &#125;</span><br><span class="line">    public void setUserPassword(String userPassword) &#123;</span><br><span class="line">        this.userPassword = userPassword;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="model-VO-LoginResponse"><a href="#model-VO-LoginResponse" class="headerlink" title="model.VO.LoginResponse"></a>model.VO.LoginResponse</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class LoginResponse &#123;</span><br><span class="line">    private String accessToken;</span><br><span class="line">    public LoginResponse() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    public LoginResponse(String accessToken) &#123;</span><br><span class="line">        this.accessToken = accessToken;</span><br><span class="line">    &#125;</span><br><span class="line">    public String getAccessToken() &#123;</span><br><span class="line">        return accessToken;</span><br><span class="line">    &#125;</span><br><span class="line">    public void setAccessToken(String accessToken) &#123;</span><br><span class="line">        this.accessToken = accessToken;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="model-Callback"><a href="#model-Callback" class="headerlink" title="model.Callback"></a>model.Callback</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface Callback&lt;T&gt; &#123;</span><br><span class="line">    void success(T t);</span><br><span class="line">    void fail(String reason);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="presenter-ILoginPresenter"><a href="#presenter-ILoginPresenter" class="headerlink" title="presenter.ILoginPresenter"></a>presenter.ILoginPresenter</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface ILoginPresenter&#123;</span><br><span class="line">    public void login();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="presenter-LoginPresenter"><a href="#presenter-LoginPresenter" class="headerlink" title="presenter.LoginPresenter"></a>presenter.LoginPresenter</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">public class LoginPresenter implements ILoginPresenter &#123;</span><br><span class="line">    private ILoginView loginView;</span><br><span class="line">    private IUserModel userModel;</span><br><span class="line">    private Handler handler;</span><br><span class="line">    public LoginPresenter(ILoginView loginView) &#123;</span><br><span class="line">        this.loginView = loginView;</span><br><span class="line">        this.userModel = new UserModel();</span><br><span class="line">        this.handler = new Handler(Looper.getMainLooper());</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void login() &#123;</span><br><span class="line">        userModel.login(new LoginRequest(loginView.getUserName(), loginView.getUserPassword()), new Callback&lt;LoginResponse&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void success(LoginResponse loginResponse) &#123;</span><br><span class="line">                String accessToken = loginResponse.getAccessToken();</span><br><span class="line">                //此处缓存accessToken或其他操作</span><br><span class="line">                //..</span><br><span class="line">                handler.post(new Runnable() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public void run() &#123;</span><br><span class="line">                        loginView.loginSuccess();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">            @Override</span><br><span class="line">            public void fail(final String reason) &#123;</span><br><span class="line">                handler.post(new Runnable() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    public void run() &#123;</span><br><span class="line">                        loginView.loginFail(reason);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="view-ILoginView"><a href="#view-ILoginView" class="headerlink" title="view.ILoginView"></a>view.ILoginView</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public interface ILoginView &#123;</span><br><span class="line">    public String getUserName();</span><br><span class="line">    public String getUserPassword();</span><br><span class="line">    public void loginSuccess();</span><br><span class="line">    public void loginFail(String reason);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="view-LoginActivity"><a href="#view-LoginActivity" class="headerlink" title="view.LoginActivity"></a>view.LoginActivity</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public class LoginActivity extends AppCompatActivity implements ILoginView&#123;</span><br><span class="line">    private EditText userNameEditText;</span><br><span class="line">    private EditText userPasswordEditText;</span><br><span class="line">    private Button loginButton;</span><br><span class="line">    private ILoginPresenter loginPresenter;</span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_login);</span><br><span class="line">        loginPresenter = new LoginPresenter(this);</span><br><span class="line">        userNameEditText = (EditText)findViewById(R.id.username);</span><br><span class="line">        userPasswordEditText = (EditText)findViewById(R.id.password);</span><br><span class="line">        loginButton = (Button)findViewById(R.id.login);</span><br><span class="line">        loginButton.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                loginPresenter.login();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public String getUserName() &#123;</span><br><span class="line">        return userNameEditText.getText().toString();</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public String getUserPassword() &#123;</span><br><span class="line">        return userPasswordEditText.getText().toString();</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void loginSuccess() &#123;</span><br><span class="line">        Toast.makeText(this, &quot;登录成功&quot;, Toast.LENGTH_SHORT).show();</span><br><span class="line">        //跳转到其他Activity或进行其他操作</span><br><span class="line">        //..</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void loginFail(String reason) &#123;</span><br><span class="line">        Toast.makeText(this, reason, Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>是不是结构还挺清楚的呢？至于是否要在项目中采用MVP，其实还要看项目的规模<br>demo图如下<br><img src="/img/android架构模式之MVP/mvp_demo.png" alt="demo" title="mvp_demo.png"></p>
-
-      
-    </div>
-    
-  </div>
-  
-    
-
-
-    <nav id="article-nav">
-        
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/05/08/数据结构之线段树/">
-                    数据结构之线段树
-                </a>
-            </div>
-        
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/05/05/android黑白棋游戏之极小极大算法的实现/">
-                    android黑白棋游戏之极小极大算法的实现
-                </a>
-            </div>
-        
-    </nav>
-
-  
-</article>
-
-
-
-
-
-    
-      <div class="duoshuo" id="comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/05/07/android架构模式之MVP/" data-title="android架构模式之MVP" data-url="http://yoursite.com/2016/05/07/android架构模式之MVP/"></div>
-    <!-- 多说评论框 end -->
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-    var duoshuoQuery = {short_name:"laserwave"};
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] 
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-    </script>
-    <!-- 多说公共JS代码 end -->
-</div>
-
-    
-
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/2016/05/08/数据结构之线段树/" title="上一篇: 数据结构之线段树">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
-
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-
-        
-            <a href="/2016/05/05/android黑白棋游戏之极小极大算法的实现/" title="下一篇: android黑白棋游戏之极小极大算法的实现">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/05/13/数据结构之字典树/">数据结构之字典树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/08/数据结构之线段树/">数据结构之线段树</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/07/android架构模式之MVP/">android架构模式之MVP</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/05/android黑白棋游戏之极小极大算法的实现/">android黑白棋游戏之极小极大算法的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/03/java swing之自定义组件外观/">java swing之自定义组件外观</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/29/基础算法之二分查找/">基础算法之二分查找</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/基础算法之快速排序/">基础算法之快速排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/27/基础算法之插入排序/">基础算法之插入排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/25/photoshop之制作android点九图/">photoshop之制作android点九图</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/23/photoshop之如何支持ico格式输出/">photoshop之如何支持ico格式输出</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/23/sphinx在windows环境下的配置及其java版API的使用/">sphinx在windows环境下的配置及其java版API的使用</a></li></ul>
-
-
-
-
-    <script>
-        
-    </script>
-</div>
-      <footer id="footer">
-    <div class="outer">
-        <div id="footer-info">
-            <div class="visit">
-                Powered by <a href="http://hexo.io/" target="_blank" title="Hexo">Hexo</a> Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Yelee">Yelee</a>
-			</div>
-        </div>
-		
-		
-        
-    </div>
-</footer>
-    </div>
-    
-<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.1.22/require.min.js"></script>
-
-
-
-
-<div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
-</div>
-
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script>
-  </div>
 </body>
 </html>
-   	<script type="text/javascript">
-		if(window.location.href.indexOf('links') != -1){
-				document.getElementById("comments").style.display = 'none';
-		}	
-	</script>
