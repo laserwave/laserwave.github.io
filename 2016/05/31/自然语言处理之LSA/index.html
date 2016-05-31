@@ -1,0 +1,801 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="NLP,python," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="用python结合一个实例来实现LSA(Latent Semantic Analysis)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自然语言处理之LSA">
+<meta property="og:url" content="http://yoursite.com/2016/05/31/自然语言处理之LSA/index.html">
+<meta property="og:site_name" content="zhikaizhang's Blog">
+<meta property="og:description" content="用python结合一个实例来实现LSA(Latent Semantic Analysis)">
+<meta property="og:image" content="http://yoursite.com/uploads/自然语言处理之LSA/X.png">
+<meta property="og:image" content="http://yoursite.com/uploads/自然语言处理之LSA/lsa.png">
+<meta property="og:image" content="http://yoursite.com/uploads/自然语言处理之LSA/coordinates.png">
+<meta property="og:updated_time" content="2016-05-31T08:36:12.042Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自然语言处理之LSA">
+<meta name="twitter:description" content="用python结合一个实例来实现LSA(Latent Semantic Analysis)">
+<meta name="twitter:image" content="http://yoursite.com/uploads/自然语言处理之LSA/X.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 自然语言处理之LSA | zhikaizhang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">zhikaizhang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">算法、数据结构、机器学习、自然语言处理、android...</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+            检索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '752m6FjhyWpsEQqLXPaN','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                自然语言处理之LSA
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发布于</span>
+            <time itemprop="dateCreated" datetime="2016-05-31T00:00:00+08:00" content="2016-05-31">
+              2016-05-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/自然语言处理/" itemprop="url" rel="index">
+                    <span itemprop="name">自然语言处理</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/31/自然语言处理之LSA/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/31/自然语言处理之LSA/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/05/31/自然语言处理之LSA/" class="leancloud_visitors" data-flag-title="自然语言处理之LSA">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="什么是LSA"><a href="#什么是LSA" class="headerlink" title="什么是LSA"></a>什么是LSA</h1><p>LSA(Latent Semantic Analysis), 潜在语义分析。试图利用文档中隐藏的潜在的概念来进行文档分析与检索，能够达到比直接的关键词匹配获得更好的效果。</p>
+<h1 id="关键词匹配进行文档检索有何问题？"><a href="#关键词匹配进行文档检索有何问题？" class="headerlink" title="关键词匹配进行文档检索有何问题？"></a>关键词匹配进行文档检索有何问题？</h1><p>现在我们考虑检索问题，我们要从一些文档（可以是一句话、一个段落或一篇文章)中检索出我们想要的文档，可以想到的最简单的方法就是关键词匹配，即哪篇文档包含我们检索使用的关键词，我们就认为该文档是我们想要的。这样做当然可以，但存在如下两个问题。</p>
+<h2 id="问题一"><a href="#问题一" class="headerlink" title="问题一"></a>问题一</h2><p>我们知道，无论在英语还是汉语中，一个词语或一个单词都存在同义词，比如愉悦和开心，那么通过关键词检索愉悦，就只能找到包含愉悦这两个字的文档，而不能找到包含开心但不包含愉悦的文档。撇开同义词，当我们检索乔布斯，我们可能也想检索到关于iphone的相关信息，但仅通过关键词匹配，不能检索到。</p>
+<h2 id="问题二"><a href="#问题二" class="headerlink" title="问题二"></a>问题二</h2><p>我们知道，无论在英语还是汉语中都存在一词多义问题，比如“苹果”，到底指的是一种水果还是一个手机品牌，除非给定上下文语境否则我们不得而知。这样仅通过关键词匹配，检索到的含义可能不是我们想要的。撇开一词多义，文档中可能存在很多词语属于拼写打字错误（粗心）、误用（语文没学好）、巧合（比如“和服装”，这里的和服不是一个词语，但关键词匹配会检索到），更甚，文档中可能存在大量广告信息，人为植入这些关键词，这些都不是我们想要的。</p>
+<h1 id="LSA可以完全解决上述问题吗？"><a href="#LSA可以完全解决上述问题吗？" class="headerlink" title="LSA可以完全解决上述问题吗？"></a>LSA可以完全解决上述问题吗？</h1><p>不能。<br>LSA可以很好的应对上述问题一，对于问题二不能彻底解决。</p>
+<h1 id="LSA的核心思想"><a href="#LSA的核心思想" class="headerlink" title="LSA的核心思想"></a>LSA的核心思想</h1><p>假设有 $n$ 篇文档，这些文档中的单词总数为 $m$ (可以先进行分词、去词根、去停止词操作),我们可以用一个 $m*n$ 的矩阵 $X$ 来表示这些文档，这个矩阵的每个元素 $X_{ij}$ 表示第 $i$ 个单词在第 $j$ 篇文档中出现的次数(也可用tf-idf值)。下文例子中得到的矩阵见下图。<br><img src="/uploads/自然语言处理之LSA/X.png" alt="X"><br>LSA试图将原始矩阵降维到一个潜在的概念空间（维度不超过 $n$ ），然后每个单词或文档都可以用该空间下的一组权值向量（也可认为是坐标）来表示，这些权值反应了与对应的潜在概念的关联程度的强弱。<br>这个降维是通过对该矩阵进行奇异值分解(SVD, singular value decomposition)做到的，计算其用三个矩阵的乘积表示的等价形式，如下：<br>$$<br>X = U{\Sigma}V^T<br>$$<br>其中 $U$ 为 <code>m * n</code> 维，$\sigma$ 为对角阵 <code>n * n</code> 维，$V$ 为 <code>n * n</code> 维。<br>$\Sigma$ 矩阵中对角线上的每一个值就是SVD过程中得到的奇异值，其大小反映了其对应的潜在概念的重要程度。<br>然后我们可以自行设定降维后的潜在概念的维度 $k(k &lt; n)$ , 可以得到：<br>$$<br>X_k = U_k\Sigma_kV_k^T<br>$$<br>其中 $U_k$ 是将 $U$ 仅保留前 $k$ 列的结果，$\Sigma_k$ 是仅保留前 $k$ 行及前 $k$ 列的结果，$V_k$ 是将 $V$ 仅保留前 $k$ 列的结果。<br>$X_k$ 则是将 $X$ 降维到 $k$ 维的近似结果，这个 $k$ 越接近 $n$, $X_k$ 与 $X$ 也越接近，但我们的目标并不是越接近越好，LSA认为 $k$ 值不宜过大（保留了冗余的潜在概念）也不宜过小。</p>
+<h1 id="LSA如何实现"><a href="#LSA如何实现" class="headerlink" title="LSA如何实现"></a>LSA如何实现</h1><p>这里用python结合一个例子来实现一个LSA。</p>
+<h2 id="1-定义一些变量"><a href="#1-定义一些变量" class="headerlink" title="1 定义一些变量"></a>1 定义一些变量</h2><h3 id="待处理的文档"><a href="#待处理的文档" class="headerlink" title="待处理的文档"></a>待处理的文档</h3><p>选用的documents来自wikipedia，包含海贼王里zoro、luffy、nami三个人的人物介绍。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文档</span></span><br><span class="line">documents =[</span><br><span class="line">    <span class="string">"Roronoa Zoro, nicknamed \"Pirate Hunter\" Zoro, is a fictional character in the One Piece franchise created by Eiichiro Oda."</span>,</span><br><span class="line">    <span class="string">"In the story, Zoro is the first to join Monkey D. Luffy after he is saved from being executed at the Marine Base. "</span>,</span><br><span class="line">    <span class="string">"Zoro is an expert swordsman who uses three swords for his Three Sword Style, but is also capable of the one and two-sword styles. "</span>,</span><br><span class="line">    <span class="string">"Zoro seems to be more comfortable and powerful using three swords, but he also uses one sword or two swords against weaker enemies."</span>,</span><br><span class="line">    <span class="string">"In One Piece, Luffy sails from the East Blue to the Grand Line in search of the legendary treasure One Piece to succeed Gol D. Roger as the King of the Pirates. "</span>,</span><br><span class="line">    <span class="string">"Luffy is the captain of the Straw Hat Pirates and along his journey, he recruits new crew members with unique abilities and personalities. "</span>,</span><br><span class="line">    <span class="string">"Luffy often thinks with his stomach and gorges himself to comical levels. "</span>,</span><br><span class="line">    <span class="string">"However, Luffy is not as naive as many people believe him to be, showing more understanding in situations than people often expect. "</span>,</span><br><span class="line">    <span class="string">"Knowing the dangers ahead, Luffy is willing to risk his life to reach his goal to become the King of the Pirates, and protect his crew."</span>,</span><br><span class="line">    <span class="string">"Adopted and raised by Navy seaman turned tangerine farmer Bellemere, Nami and her older sister Nojiko, have to witness their mother being murdered by the infamous Arlong."</span>,</span><br><span class="line">    <span class="string">"Nami, still a child but already an accomplished cartographer who dreams of drawing a complete map of the world, joins the pirates, hoping to eventually buy freedom for her village. "</span>,</span><br><span class="line">    <span class="string">"Growing up as a pirate-hating pirate, drawing maps for Arlong and stealing treasure from other pirates, Nami becomes an excellent burglar, pickpocket and navigator with an exceptional ability to forecast weather."</span>,</span><br><span class="line">    <span class="string">"After Arlong betrays her, and he and his gang are defeated by the Straw Hat Pirates, Nami joins the latter in pursuit of her dream."</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<h3 id="定义停止词"><a href="#定义停止词" class="headerlink" title="定义停止词"></a>定义停止词</h3><p>我们知道，无论是中文还是英文，有些词语不包含实际的语义，出现在大部分的文档之中，比如量词a，连词and，人称代词I，介词in等等，因此我们认为这些词对于文档的分析没有帮助，将其排除。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">stopwords = [<span class="string">'a'</span>,<span class="string">'an'</span>, <span class="string">'after'</span>, <span class="string">'also'</span>, <span class="string">'and'</span>, <span class="string">'as'</span>, <span class="string">'be'</span>, <span class="string">'being'</span>, <span class="string">'but'</span>, <span class="string">'by'</span>, <span class="string">'d'</span>, <span class="string">'for'</span>, <span class="string">'from'</span>, <span class="string">'he'</span>, <span class="string">'her'</span>, <span class="string">'his'</span>, <span class="string">'in'</span>, <span class="string">'is'</span>, <span class="string">'more'</span>, <span class="string">'of'</span>, <span class="string">'often'</span>, <span class="string">'the'</span>, <span class="string">'to'</span>, <span class="string">'who'</span>, <span class="string">'with'</span>, <span class="string">'people'</span>]</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"><span class="comment">### 定义要去除的标点符号</span></span><br><span class="line">我们知道，英文中单词之前有空格和标点符号隔开字符，因此英文的分词非常容易，只要把粘连的标点与单词隔开就可以了。对于中文，需要先进行分词。</span><br><span class="line">``` python</span><br><span class="line"><span class="comment"># 要去除的标点符号的正则表达式</span></span><br><span class="line">punctuation_regex = <span class="string">'[,.;"]+'</span></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"><span class="comment">### 定义词典</span></span><br><span class="line">这是一个map, 键是单词, 值是该单词出现在的所有文档编号的列表</span><br><span class="line">``` python</span><br><span class="line">dictionary = &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="定义当前处理的文档编号"><a href="#定义当前处理的文档编号" class="headerlink" title="定义当前处理的文档编号"></a>定义当前处理的文档编号</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 当前处理的文档编号</span></span><br><span class="line">currentDocId = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-生成词典"><a href="#2-生成词典" class="headerlink" title="2 生成词典"></a>2 生成词典</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 依次处理每篇文档</span></span><br><span class="line"><span class="keyword">for</span> d <span class="keyword">in</span> documents:</span><br><span class="line">    words = d.split();</span><br><span class="line">    <span class="keyword">for</span> w <span class="keyword">in</span> words:</span><br><span class="line">        <span class="comment"># 去标点</span></span><br><span class="line">        w = re.sub(punct_regex, <span class="string">''</span>, w.lower())</span><br><span class="line">        <span class="keyword">if</span> w <span class="keyword">in</span> stopwords:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">elif</span> w <span class="keyword">in</span> dictionary:</span><br><span class="line">            dictionary[w].append(currentDocId)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            dictionary[w] = [currentDocId]</span><br><span class="line">    currentDocId += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 至少出现在两个文档中的单词选为关键词</span></span><br><span class="line">keywords = [k <span class="keyword">for</span> k <span class="keyword">in</span> dictionary.keys() <span class="keyword">if</span> len(dictionary[k]) &gt; <span class="number">1</span>]</span><br><span class="line">keywords.sort()</span><br><span class="line">print(<span class="string">"keywords:\n"</span>, keywords, <span class="string">"\n"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="3-生成-word-document-矩阵"><a href="#3-生成-word-document-矩阵" class="headerlink" title="3 生成 word-document 矩阵"></a>3 生成 word-document 矩阵</h2><p>即生成上述的矩阵 $X$ 。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成word-document矩阵</span></span><br><span class="line">X = np.zeros([len(keywords), currentDocId])</span><br><span class="line"><span class="keyword">for</span> i, k <span class="keyword">in</span> enumerate(keywords):</span><br><span class="line">    <span class="keyword">for</span> d <span class="keyword">in</span> dictionary[k]:</span><br><span class="line">        X[i,d] += <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="4-奇异值分解"><a href="#4-奇异值分解" class="headerlink" title="4 奇异值分解"></a>4 奇异值分解</h2><p>这里svd函数得到的 $U$, $V$ 与前述的变量$U$, $V$一一对应，$sigma$是前述的 $\sigma$ 对角线元素组成的一维矩阵。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 奇异值分解</span></span><br><span class="line">U,sigma,V = linalg.svd(X, full_matrices=<span class="keyword">True</span>)</span><br><span class="line">print(<span class="string">"U:\n"</span>, U, <span class="string">"\n"</span>)</span><br><span class="line">print(<span class="string">"SIGMA:\n"</span>, sigma, <span class="string">"\n"</span>)</span><br><span class="line">print(<span class="string">"V:\n"</span>, V, <span class="string">"\n"</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="5-降维"><a href="#5-降维" class="headerlink" title="5 降维"></a>5 降维</h2><p>代码中降到了2维。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 得到降维(降到targetDimension维)后单词与文档的坐标表示</span></span><br><span class="line">targetDimension = <span class="number">2</span></span><br><span class="line">U2 = U[<span class="number">0</span>:, <span class="number">0</span>:targetDimension]</span><br><span class="line">V2 = V[<span class="number">0</span>:targetDimension, <span class="number">0</span>:]</span><br><span class="line">sigma2 = np.diag(sigma[<span class="number">0</span>:targetDimension])</span><br><span class="line">print(U2.shape, sigma2.shape, V2.shape)</span><br></pre></td></tr></table></figure></p>
+<h2 id="6-画图"><a href="#6-画图" class="headerlink" title="6 画图"></a>6 画图</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 开始画图</span><br><span class="line">plt.title("LSA")</span><br><span class="line">plt.xlabel(u'x')</span><br><span class="line">plt.ylabel(u'y')</span><br><span class="line"></span><br><span class="line"># 绘制单词表示的点</span><br><span class="line"># U2的每一行包含了每个单词的坐标表示(维度是targetDimension)，此处使用前两个维度的坐标画图</span><br><span class="line">for i in range(len(U2)):</span><br><span class="line">    text(U2[i][0], U2[i][1],  keywords[i], fontsize=10)</span><br><span class="line">    print("(", U2[i][0], ",", U2[i][1], ")", keywords[i])</span><br><span class="line">x = U2.T[0]</span><br><span class="line">y = U2.T[1]</span><br><span class="line">plot(x, y, '.')</span><br><span class="line"></span><br><span class="line"># 绘制文档表示的点</span><br><span class="line"># V2的每一列包含了每个文档的坐标表示(维度是targetDimension)，此处使用前两个维度的坐标画图</span><br><span class="line">for i in range(len(V2[0])):</span><br><span class="line">    text(V2[0][i], V2[1][i], docText[i], fontsize=10)</span><br><span class="line">    print("(", V2[0][i], ",", V2[1][i], ")", ('D%d' %(i+1)))</span><br><span class="line">x = V[0]</span><br><span class="line">y = V[1]</span><br><span class="line">plot(x, y, 'x')</span><br></pre></td></tr></table></figure>
+<h1 id="LSA结果分析"><a href="#LSA结果分析" class="headerlink" title="LSA结果分析"></a>LSA结果分析</h1><p>这里我们需要注意的是，我们在衡量单词与单词、文档与文档间的相似度时，应该看得是两个向量的夹角，而不是点的距离，夹角越小越相关。<br>最终结果与所有点的坐标见下图。红线是额外画得辅助线。<br><img src="/uploads/自然语言处理之LSA/lsa.png" alt="lsa-result"><br><img src="/uploads/自然语言处理之LSA/coordinates.png" alt="coordinates"><br>我们可以看到D1，D2，D3，D4四篇关于zoro的文档的向量之间的夹角都很小，且与关键词zoro、three、swords、sword、uses之间的夹角都很小（D3，D4与这些词夹角更小），这是因为D3和D4都提到了zoro使用三刀流，D1、D2提到了zoro但没提到三刀流。同理，我们可以看到luffy那条红线上是在讲路飞是要成为海贼王的男人，nami那边则提到了阿龙以及娜美的梦想是绘制世界航海图。从这些结果上可以看到LSA在进行语义分析时是有不错的结果的。<br>我们还能看到one和piece两个单词的位置，在关于luffy、zoro和nami的文档中均有可能出现one piece这两个词，一方面原因one piece是海贼王漫画的英文名很可能会在其中任何一个角色的文档中出现，表示大秘宝，另一方面，one这个词也可以表示一，zoro也会使用一刀流的描述中也出现了one这个单词。而LSA则会对于这些潜在的概念进行一个折衷，坐标位于zoro、nami、luffy三个主题之间，因此我们说LSA在对于一词多义的问题上并不能完美解决。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>1 Indexing by Latent Semantic Analysis by Scott Deerwester</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/python/" rel="tag">#python</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/24/机器学习之线性回归II-批梯度下降与随机梯度下降/" rel="next" title="机器学习之线性回归II-批梯度下降与随机梯度下降">
+                <i class="fa fa-chevron-left"></i> 机器学习之线性回归II-批梯度下降与随机梯度下降
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/05/31/自然语言处理之LSA/"
+     data-title="自然语言处理之LSA"
+     data-content=""
+     data-url="http://yoursite.com/2016/05/31/自然语言处理之LSA/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/05/31/自然语言处理之LSA/"
+           data-title="自然语言处理之LSA" data-url="http://yoursite.com/2016/05/31/自然语言处理之LSA/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/cat.png"
+               alt="zhikaizhang" />
+          <p class="site-author-name" itemprop="name">zhikaizhang</p>
+          <p class="site-description motion-element" itemprop="description">zhikaizhang的个人博客，分享学习算法、数据结构、机器学习、自然语言处理、android以及其他技术所思所想，热衷于实现具体问题来加深对理论的理解，努力中......</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是LSA"><span class="nav-number">1.</span> <span class="nav-text">什么是LSA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关键词匹配进行文档检索有何问题？"><span class="nav-number">2.</span> <span class="nav-text">关键词匹配进行文档检索有何问题？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一"><span class="nav-number">2.1.</span> <span class="nav-text">问题一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二"><span class="nav-number">2.2.</span> <span class="nav-text">问题二</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LSA可以完全解决上述问题吗？"><span class="nav-number">3.</span> <span class="nav-text">LSA可以完全解决上述问题吗？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LSA的核心思想"><span class="nav-number">4.</span> <span class="nav-text">LSA的核心思想</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LSA如何实现"><span class="nav-number">5.</span> <span class="nav-text">LSA如何实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-定义一些变量"><span class="nav-number">5.1.</span> <span class="nav-text">1 定义一些变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#待处理的文档"><span class="nav-number">5.1.1.</span> <span class="nav-text">待处理的文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义停止词"><span class="nav-number">5.1.2.</span> <span class="nav-text">定义停止词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义当前处理的文档编号"><span class="nav-number">5.1.3.</span> <span class="nav-text">定义当前处理的文档编号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-生成词典"><span class="nav-number">5.2.</span> <span class="nav-text">2 生成词典</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-生成-word-document-矩阵"><span class="nav-number">5.3.</span> <span class="nav-text">3 生成 word-document 矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-奇异值分解"><span class="nav-number">5.4.</span> <span class="nav-text">4 奇异值分解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-降维"><span class="nav-number">5.5.</span> <span class="nav-text">5 降维</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-画图"><span class="nav-number">5.6.</span> <span class="nav-text">6 画图</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LSA结果分析"><span class="nav-number">6.</span> <span class="nav-text">LSA结果分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="author" itemprop="copyrightHolder">zhikaizhang</span>
+  <span class="author" itemprop="copyrightHolder">. All rights reserved.</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"laserwave"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("wv1vA5GMdT6r7Vi1AVpQNC0I-gzGzoHsz", "jt5O27A704yaLaJrddXok0jb");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
