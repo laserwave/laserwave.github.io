@@ -1,0 +1,808 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="算法,机器学习,matlab,梯度下降,逻辑回归," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="二类分类模型 - 逻辑回归(logistic regression)的实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习之逻辑回归">
+<meta property="og:url" content="http://yoursite.com/2016/06/10/机器学习之逻辑回归/index.html">
+<meta property="og:site_name" content="zhikaizhang's Blog">
+<meta property="og:description" content="二类分类模型 - 逻辑回归(logistic regression)的实现">
+<meta property="og:image" content="http://yoursite.com/uploads/机器学习之逻辑回归/logistic-function.png">
+<meta property="og:image" content="http://yoursite.com/uploads/机器学习之逻辑回归/likelihood.png">
+<meta property="og:image" content="http://yoursite.com/uploads/机器学习之逻辑回归/predict.png">
+<meta property="og:image" content="http://yoursite.com/uploads/机器学习之逻辑回归/LR-result.png">
+<meta property="og:updated_time" content="2016-06-10T12:14:33.596Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习之逻辑回归">
+<meta name="twitter:description" content="二类分类模型 - 逻辑回归(logistic regression)的实现">
+<meta name="twitter:image" content="http://yoursite.com/uploads/机器学习之逻辑回归/logistic-function.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 机器学习之逻辑回归 | zhikaizhang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">zhikaizhang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">算法、数据结构、机器学习、自然语言处理、android...</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+            检索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '752m6FjhyWpsEQqLXPaN','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                机器学习之逻辑回归
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发布于</span>
+            <time itemprop="dateCreated" datetime="2016-06-10T00:00:00+08:00" content="2016-06-10">
+              2016-06-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/10/机器学习之逻辑回归/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/10/机器学习之逻辑回归/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/06/10/机器学习之逻辑回归/" class="leancloud_visitors" data-flag-title="机器学习之逻辑回归">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在上一篇 <a href="http://zhikaizhang.cn/2016/06/09/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%84%9F%E7%9F%A5%E6%9C%BA/">机器学习之感知机</a> 中，我们实现了一种简单的线性分类模型感知机模型，它有很大的局限性。<br>感知机的目标仅仅是正确的将线性可分的数据集分开，在实验结果中也可以看到得到的分离超平面与其中一类较近，与另一类较远，这是因为一旦对所有样本都正确的分类，算法就停止了迭代。<br>感知机的另一个问题是如果数据集线性不可分，将永远不会收敛，虽然我们可以人为的在迭代了若干轮之后停止迭代，但何时停止结果最好并未可知。<br>这些问题的根源在于感知机的目标函数是基于误分类点的，对于正确分类的样本其实是没有再使用到的，这就导致学习到的参数不够好。<br>逻辑回归模型将定义一个更为合理的目标函数。</p>
+<h1 id="什么是逻辑回归（logistic-regression）"><a href="#什么是逻辑回归（logistic-regression）" class="headerlink" title="什么是逻辑回归（logistic regression）"></a>什么是逻辑回归（logistic regression）</h1><p>逻辑回归(逻辑斯蒂回归,logistic regression)，是一种经典的二类分类模型，虽有回归二字，却不是回归模型，名字中带有回归两个字是因为其与线性回归中的 $\theta$ 参数形式类似。<br>逻辑回归与逻辑二字完全无关，属于logistic的音译，之所以有logistic这个词，是因为模型中使用到了logistic函数，又称为sigmoid函数，是一种取值在0到1的S形函数。<br>逻辑回归是一种判别模型（discriminant model），学习的是给定特征条件下属于每种类别的概率，即 $p(y\mid{x})$, 与之相反的叫做生成模型（generative model），学习的是特征与类别的联合概率，即 $p(x,y)$。<br>逻辑回归可以泛化成一种多类分类模型，叫做 softmax regression，本文先讨论用逻辑回归解决二类分类问题。</p>
+<h1 id="逻辑回归模型"><a href="#逻辑回归模型" class="headerlink" title="逻辑回归模型"></a>逻辑回归模型</h1><h2 id="logistic函数"><a href="#logistic函数" class="headerlink" title="logistic函数"></a>logistic函数</h2><p>我们定义 $y$ 是一个样本对应的类别，在感知机中取值是-1和+1，在这里取值是0和1，即 $y\in\lbrace0,1\rbrace$ ，这仅是为了计算方便。<br>逻辑回归与线性回归的相似之处在于，要学习的也是一组 $\theta$ 参数，是一个 $n+1$ 维的向量，n是特征维度，加一是进行了增广，有下式成立，其中 $x_0=1$：<br>$$<br>{\theta}^{T}x=\theta_0x_0+\theta_1x_1+\theta_2x_2+…+\theta_nx_n<br>$$<br>逻辑回归的最终输出是0或1，因此不能像线性回归一样直接将上式作为输出，因为那并不能得到一个好的结果，我们使用一个logistic函数将上式映射到0与1之间，或称为logit函数或者sigmoid函数。logistic函数定义如下：<br>$$<br>g(z)=\frac{1}{1+e^{-z}}<br>$$<br>logistic函数的图形如下：</p>
+<p><img src="/uploads/机器学习之逻辑回归/logistic-function.png" alt="logistic函数"></p>
+<p>可以看到，当自变量取值0时，函数值为0.5，自变量趋向于正无穷和负无穷时函数值趋近于1和0。因此我们用下式表示对一个样本 $x$ 的预测：<br>$$<br>h_\theta(x)=g({\theta^T}{x})=\frac{1}{1+e^{-{\theta^T}{x}}}<br>$$<br>这个结果将位于0和1之间，在学习好参数之后，我们可以认为这个结果与0和1哪个更近，就将哪个类别作为这个测试样本的预测类别。</p>
+<h2 id="目标函数"><a href="#目标函数" class="headerlink" title="目标函数"></a>目标函数</h2><p>事实上，逻辑回归做出了如下假设：<br>$$<br>P(y=1{\mid}{x};{\theta})=h_\theta(x)<br>$$<br>$$<br>P(y=0{\mid}{x};{\theta})=1-h_\theta(x)<br>$$<br>将logistic函数得到的函数值认为是类别为1的概率，1减去这个值就是类别为0的概率。这两个概率可以写成一个式子来表示：<br>$$<br>P(y{\mid}{x};{\theta})={(h_\theta(x))}^{y}{(1-h_\theta(x))}^{1-y}<br>$$<br>那么我们要定义参数的似然性来作为目标函数，然后学习得到使得这个似然性不断增大最终收敛时的参数 $\theta$。参数似然性表示如下：<br>$$<br>L(\theta)=p(Y\mid{X};\theta)=\prod_{i=1}^{m}p(y^{(i)}{\mid}x^{(i)};\theta)=\prod_{i=1}^{m}{(h_\theta(x^{(i)}))^{y(i)}}{(1-h_\theta(x^{(i)}))^{1-y^{(i)}}}<br>$$<br>可以看到这个似然性是使得这整个数据集的条件概率。为了计算方便，定义对数似然如下：<br>$$<br>l(\theta)=log(L(\theta))=\sum_{i=1}^{m}y^{(i)}logh_\theta(x^{(i)})+(1-y^{(i)})log(1-h_\theta(x^{(i)}))<br>$$</p>
+<h2 id="最大化参数似然性"><a href="#最大化参数似然性" class="headerlink" title="最大化参数似然性"></a>最大化参数似然性</h2><p>那么如何来最大化这个对数似然函数呢？显然可以使用梯度下降法，只不过这一次是梯度上升。<br>对对数似然求参数导数，得到:<br>$$<br>\frac{\partial}{\partial{\theta_j}}l(\theta)=\sum_{i=1}^{m}(y^{(i)}-h_\theta(x^{(i)}))x^{(i)}_j<br>$$<br>从而可以得到批梯度下降的参数更新公式：<br>$$<br>\theta_j=\theta_j+\alpha\sum_{i=1}^{m}(y^{(i)}-h_\theta(x^{(i)}))x^{(i)}_j=\theta_j+\alpha\sum_{i=1}^{m}(y^{(i)}-\frac{1}{1+e^{-{\theta^T}{x^{(i)}}}})x^{(i)}_j<br>$$<br>去掉其中的 $\sum_{i=1}^{m}$ 就可以得到随机梯度下降的参数更新公式。</p>
+<h1 id="逻辑回归模型的实现"><a href="#逻辑回归模型的实现" class="headerlink" title="逻辑回归模型的实现"></a>逻辑回归模型的实现</h1><p>以一个简单的例子来实现一个逻辑回归模型。<br>6个训练样本的特征分别为(3,3), (3,4), (2,4), (-1,1), (-1,2), (1,1)对应的类别分别是1,1,1,0,0,0。现在要学习一个逻辑回归模型,并预测3个测试样本(2,1),(2,2),(2,3)的类别。<br>给出matlab实现代码。<br><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">load data;</span><br><span class="line">X = [ones(size(train_feature,<span class="number">1</span>),<span class="number">1</span>) train_feature];</span><br><span class="line">n = <span class="built_in">size</span>(X,<span class="number">2</span>); <span class="comment">%特征数+1</span></span><br><span class="line">m = <span class="built_in">size</span>(X,<span class="number">1</span>); <span class="comment">%样本数</span></span><br><span class="line">Y = train_label; <span class="comment">%真实类别</span></span><br><span class="line">theta = <span class="built_in">zeros</span>(n,<span class="number">1</span>); <span class="comment">%参数</span></span><br><span class="line">theta_new = <span class="built_in">zeros</span>(n,<span class="number">1</span>);</span><br><span class="line">epsilon = <span class="number">0.0001</span>; <span class="comment">%收敛阈值</span></span><br><span class="line">alpha = <span class="number">0.01</span>; <span class="comment">%学习率</span></span><br><span class="line"><span class="comment">% 训练</span></span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">j</span> = <span class="number">1</span>:n)</span><br><span class="line">        theta_new(<span class="built_in">j</span>) = theta(<span class="built_in">j</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">i</span> = <span class="number">1</span>:m)</span><br><span class="line">            h = <span class="number">1</span>/(<span class="number">1</span>+<span class="built_in">exp</span>(-theta'*X(<span class="built_in">i</span>, :)'));</span><br><span class="line">            theta_new(<span class="built_in">j</span>) = theta_new(<span class="built_in">j</span>) + alpha * (Y(<span class="built_in">i</span>)-h) * X(<span class="built_in">i</span>, <span class="built_in">j</span>); </span><br><span class="line">        <span class="keyword">end</span>;</span><br><span class="line">    <span class="keyword">end</span>;</span><br><span class="line">    <span class="keyword">if</span> norm(theta_new-theta) &lt; epsilon</span><br><span class="line">        theta = theta_new;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        theta = theta_new;</span><br><span class="line">    <span class="keyword">end</span>;</span><br><span class="line"><span class="keyword">end</span>;</span><br><span class="line"><span class="comment">% 测试</span></span><br><span class="line">test_feature = [ones(size(test_feature,<span class="number">1</span>),<span class="number">1</span>) test_feature];</span><br><span class="line">predict=[];</span><br><span class="line">predictLabel=[];</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:<span class="built_in">size</span>(test_feature,<span class="number">1</span>)</span><br><span class="line">    predict=[predict;<span class="number">1</span>/(<span class="number">1</span>+exp(-theta<span class="string">'*test_feature(i,:)'</span>))];</span><br><span class="line">    <span class="keyword">if</span> <span class="number">1</span>/(<span class="number">1</span>+<span class="built_in">exp</span>(-theta'*test_feature(<span class="built_in">i</span>,:)'))&gt;=<span class="number">0.5</span></span><br><span class="line">        predictLabel=[predictLabel;<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        predictLabel=[predictLabel;<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">end</span>;</span><br><span class="line"><span class="keyword">end</span>;</span><br></pre></td></tr></table></figure></p>
+<p>这里使用了批梯度下降法来更新参数，测试时predict是预测该样本处于类别1的概率，predictLabel是预测的类别，只要和0.5比较即可。<br>下面这段代码用于计算参数的似然性，这里只是用来分析似然性的变化情况，使用逻辑回归时无需计算。<br>一般情况下，参数的似然性 $L(\theta)$ 会随着迭代不断递增的，当学习率特别大的情况下，可能会出现不增反降的情形。<br><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">% 计算参数的似然性(仅用作分析)</span></span><br><span class="line">L(k) = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="built_in">i</span> = <span class="number">1</span>:m)</span><br><span class="line">    h = <span class="number">1</span>/(<span class="number">1</span>+<span class="built_in">exp</span>(-theta'*X(<span class="built_in">i</span>, :)'));</span><br><span class="line">    L(k) = L(k) + (Y(<span class="built_in">i</span>)*<span class="built_in">log</span>(h) + (<span class="number">1</span>-Y(<span class="built_in">i</span>))*<span class="built_in">log</span>(<span class="number">1</span>-h));</span><br><span class="line"><span class="keyword">end</span>;</span><br><span class="line">L(k) = <span class="built_in">exp</span>(L(k));</span><br><span class="line">fprintf(<span class="string">'The %dth iteration, L = %f \n'</span>, k, <span class="built_in">exp</span>(L(k)));</span><br></pre></td></tr></table></figure></p>
+<p>据此画出了参数似然性随着迭代次数的变化图，可以看到似然性不断逼近1。</p>
+<p><img src="/uploads/机器学习之逻辑回归/likelihood.png" alt="似然性"></p>
+<p>逻辑回归得到的参数以及预测的结果见下图。</p>
+<p><img src="/uploads/机器学习之逻辑回归/predict.png" alt="预测结果"></p>
+<p>参数 $\theta=[-9.3813;2.4955;2.5963]$, 这就表示决策线的直线方程为 $2.4955x+2.5963y-9.3813=0$, 在这条直线上方的就是正类，下方则是负类。<br>可以看到(2,1)预测为负类，(2,2)和(2,3)预测为正类，同时可以看到这三个点预测为正类的概率，点(2,2)距离决策线很近，因此该点预测为正类的概率比较接近于0.5。<br>最后用图形直观的对比一下逻辑回归模型与感知机模型的实验结果。</p>
+<p><img src="/uploads/机器学习之逻辑回归/LR-result.png" alt="对比"></p>
+<p>从图中就可以看出感知机模型会将三个测试点全预测为正类，看起来逻辑回归得到的决策线更为合理。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>1 斯坦福机器学习公开课及其课程笔记 by Andrew Ng</p>
+<p>完整代码以及数据已托管至 <a href="https://github.com/laserwave/Machine-Learning-demos/tree/master/logistic-regression-demo">github</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag">#算法</a>
+          
+            <a href="/tags/机器学习/" rel="tag">#机器学习</a>
+          
+            <a href="/tags/matlab/" rel="tag">#matlab</a>
+          
+            <a href="/tags/梯度下降/" rel="tag">#梯度下降</a>
+          
+            <a href="/tags/逻辑回归/" rel="tag">#逻辑回归</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/09/机器学习之感知机/" rel="next" title="机器学习之感知机">
+                <i class="fa fa-chevron-left"></i> 机器学习之感知机
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/06/10/机器学习之逻辑回归/"
+     data-title="机器学习之逻辑回归"
+     data-content=""
+     data-url="http://yoursite.com/2016/06/10/机器学习之逻辑回归/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/10/机器学习之逻辑回归/"
+           data-title="机器学习之逻辑回归" data-url="http://yoursite.com/2016/06/10/机器学习之逻辑回归/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/cat.png"
+               alt="zhikaizhang" />
+          <p class="site-author-name" itemprop="name">zhikaizhang</p>
+          <p class="site-description motion-element" itemprop="description">zhikaizhang的个人博客，分享学习算法、数据结构、机器学习、自然语言处理、android以及其他技术所思所想，热衷于实现具体问题来加深对理论的理解，努力中......</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是逻辑回归（logistic-regression）"><span class="nav-number">1.</span> <span class="nav-text">什么是逻辑回归（logistic regression）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑回归模型"><span class="nav-number">2.</span> <span class="nav-text">逻辑回归模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#logistic函数"><span class="nav-number">2.1.</span> <span class="nav-text">logistic函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目标函数"><span class="nav-number">2.2.</span> <span class="nav-text">目标函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最大化参数似然性"><span class="nav-number">2.3.</span> <span class="nav-text">最大化参数似然性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑回归模型的实现"><span class="nav-number">3.</span> <span class="nav-text">逻辑回归模型的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="author" itemprop="copyrightHolder">zhikaizhang</span>
+  <span class="author" itemprop="copyrightHolder">. All rights reserved.</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"laserwave"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("wv1vA5GMdT6r7Vi1AVpQNC0I-gzGzoHsz", "jt5O27A704yaLaJrddXok0jb");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
