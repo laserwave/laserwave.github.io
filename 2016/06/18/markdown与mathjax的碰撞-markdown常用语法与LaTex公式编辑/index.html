@@ -1,0 +1,1237 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="markdown,mathjax," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="介绍markdown常用编辑语法，mathjax支持的字母符号，以及LaTex公式编辑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="markdown与mathjax的碰撞-markdown常用语法与LaTex公式编辑">
+<meta property="og:url" content="http://yoursite.com/2016/06/18/markdown与mathjax的碰撞-markdown常用语法与LaTex公式编辑/index.html">
+<meta property="og:site_name" content="zhikaizhang's Blog">
+<meta property="og:description" content="介绍markdown常用编辑语法，mathjax支持的字母符号，以及LaTex公式编辑">
+<meta property="og:updated_time" content="2016-06-18T08:24:46.889Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="markdown与mathjax的碰撞-markdown常用语法与LaTex公式编辑">
+<meta name="twitter:description" content="介绍markdown常用编辑语法，mathjax支持的字母符号，以及LaTex公式编辑">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> markdown与mathjax的碰撞-markdown常用语法与LaTex公式编辑 | zhikaizhang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">zhikaizhang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">算法、数据结构、机器学习、自然语言处理、android...</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+            检索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '752m6FjhyWpsEQqLXPaN','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                markdown与mathjax的碰撞-markdown常用语法与LaTex公式编辑
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发布于</span>
+            <time itemprop="dateCreated" datetime="2016-06-18T00:00:00+08:00" content="2016-06-18">
+              2016-06-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/杂谈分享/" itemprop="url" rel="index">
+                    <span itemprop="name">杂谈分享</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/18/markdown与mathjax的碰撞-markdown常用语法与LaTex公式编辑/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/18/markdown与mathjax的碰撞-markdown常用语法与LaTex公式编辑/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/06/18/markdown与mathjax的碰撞-markdown常用语法与LaTex公式编辑/" class="leancloud_visitors" data-flag-title="markdown与mathjax的碰撞-markdown常用语法与LaTex公式编辑">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文包括markdown常用语法、mathjax公式编辑、公式编辑常用字母符号三个部分。</p>
+<h1 id="markdown常用语法"><a href="#markdown常用语法" class="headerlink" title="markdown常用语法"></a>markdown常用语法</h1><p>列出了标题、列表、图片、链接、表格、代码、添加空格的常用语法。</p>
+<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>几级标题就是几个井号 #，后面一个空格，跟上你的标题。一到六级标题都可以用。<br>markdown原文:<br>##### hahaha，我是五级标题<br>markdown显示:</p>
+<h5 id="hahaha，我是五级标题"><a href="#hahaha，我是五级标题" class="headerlink" title="hahaha，我是五级标题"></a>hahaha，我是五级标题</h5><h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><h3 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h3><p>markdown原文:<br>1. Firstly<br>2. Secondly<br>3. Finally<br>markdown显示:</p>
+<ol>
+<li>Firstly</li>
+<li>Secondly</li>
+<li>Finally</li>
+</ol>
+<h3 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h3><p>markdown原文:<br>- Firstly<br>- Secondly<br>- Finally<br>markdown显示:</p>
+<ul>
+<li>Firstly</li>
+<li>Secondly</li>
+<li>Finally</li>
+</ul>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>url既可以用相对路径，也可以用绝对路径</p>
+<h3 id="在引用图片处直接写url"><a href="#在引用图片处直接写url" class="headerlink" title="在引用图片处直接写url"></a>在引用图片处直接写url</h3><p>![图片描述](url)</p>
+<h3 id="将url放在markdown文件末尾统一管理，在引用处标上数字编号"><a href="#将url放在markdown文件末尾统一管理，在引用处标上数字编号" class="headerlink" title="将url放在markdown文件末尾统一管理，在引用处标上数字编号"></a>将url放在markdown文件末尾统一管理，在引用处标上数字编号</h3><p>![图片描述][url编号]<br>  [url编号]: url</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p>[链接显示的文字](url)</p>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>markdown原文:<br>|A|B|C|<br>|:-|:-:|-:|<br>|1|2|3|<br>|4|5|6|<br>|7|8|9|<br>仔细观察第二行就可以知道如何设置单元格对齐方式，第二行的小横线可以在编辑时多输入几个使得编辑时能对齐，增加可读性。<br>markdown显示:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">A</th>
+<th style="text-align:center">B</th>
+<th style="text-align:right">C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:center">2</td>
+<td style="text-align:right">3</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:center">5</td>
+<td style="text-align:right">6</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:center">8</td>
+<td style="text-align:right">9</td>
+</tr>
+</tbody>
+</table>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><h3 id="行内代码"><a href="#行内代码" class="headerlink" title="行内代码"></a>行内代码</h3><p>行内代码可以与其他文字放在同一行。<br>使用两个 ` 符号将代码包裹起来即可，该符号位于Esc键下方，在输入法英文状态下输入。<br>markdown原文:<br>`int a = 1;`<br>markdown显示:<br><code>int a = 1;</code></p>
+<h3 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h3><p>代码块会占据一个单独的段落。<br>代码部分的最前面和最后面一行分别输入3个 ` 符号，开头的3个 ` 符号可以加上代码属于的语言。<br>markdown原文:<br>``` c++<br>int main(){<br>&emsp;&emsp;printf(“hello world!\n”);<br>&emsp;&emsp;return 0;<br>}<br>```<br>markdown显示:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"hello world!\n"</span>);</span><br><span class="line">	return <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>代码高亮支持的语言中，常用的有c++, java, matlab, python, xml, javascript等。<br><a href="http://highlightjs.readthedocs.io/en/latest/css-classes-reference.html">查看支持的全部语言类型。</a></p>
+<h2 id="添加空格"><a href="#添加空格" class="headerlink" title="添加空格"></a>添加空格</h2><p>我们知道，在markdown中打上多个空格也只会空一个格，可以使用<code>&amp;emsp;</code>进行空格。</p>
+<h1 id="mathjax公式编辑"><a href="#mathjax公式编辑" class="headerlink" title="mathjax公式编辑"></a>mathjax公式编辑</h1><h2 id="行内公式"><a href="#行内公式" class="headerlink" title="行内公式"></a>行内公式</h2><p>行内公式可以与其他内容显示在同一行。<br>用两个美元符 \$ 包裹住公式即可。<br>markdown原文:<br>\$f(x)=ax+b\$<br>markdown显示:<br>$f(x)=ax+b$</p>
+<h2 id="行间公式"><a href="#行间公式" class="headerlink" title="行间公式"></a>行间公式</h2><p>行间公式会占据单独的行。<br>公式前后各添加两个美元符 \$。<br>markdown原文:<br>\$\$<br>f(x)=ax+b<br>\$\$<br>markdown显示:<br>$$<br>f(x)=ax+b<br>$$</p>
+<h2 id="几个特殊符号"><a href="#几个特殊符号" class="headerlink" title="几个特殊符号"></a>几个特殊符号</h2><h3 id="表示上标"><a href="#表示上标" class="headerlink" title="^ 表示上标"></a>^ 表示上标</h3><p>markdown原文:<br>\$a^2\$<br>markdown显示:<br>$a^2$</p>
+<h3 id="表示下标"><a href="#表示下标" class="headerlink" title="\_ 表示下标"></a>\_ 表示下标</h3><p>由于markdown与mathjax的渲染有冲突，下划线必须使用反斜杠转义。<br>markdown原文:<br>\$a\_2\$<br>markdown显示:<br>$a_2$</p>
+<h3 id="用于分组"><a href="#用于分组" class="headerlink" title="{} 用于分组"></a>{} 用于分组</h3><p>举个例子，a的b乘c次方，需要对bc进行分组，否则就变成了a的b次方乘c。<br>markdown原文:<br>\$a^{bc}\$<br>markdown显示:<br>$a^{bc}$</p>
+<h2 id="公式推导过程"><a href="#公式推导过程" class="headerlink" title="公式推导过程"></a>公式推导过程</h2><p>有时一行放不下所有的推导过程，放到多行并使得每行的等号对齐可以大大增加可读性。<br>下面这个例子原始形式是A，然后经过三步推导最终得到了D。<br>以符号 &amp; 的下一个字符进行对齐，末尾的三个反斜杠 \ 用来分割行。<br>这里是由于markdown与mathjax的渲染有冲突才需要用三个反斜杠。<br>markdown原文:<br>\$\$<br>\begin {aligned}<br>A&amp;=B \\\<br>&amp;=C \\\<br>&amp;=D<br>\end {aligned}<br>\$\$</p>
+<p>markdown显示:<br>$$<br>\begin {aligned}<br>A&amp;=B \\<br>&amp;=C \\<br>&amp;=D<br>\end {aligned}<br>$$</p>
+<h2 id="分段函数"><a href="#分段函数" class="headerlink" title="分段函数"></a>分段函数</h2><p>以符号 &amp; 的下一个字符进行对齐，末尾的三个反斜杠 \ 用来分割行。<br>markdown原文:<br>\$\$<br>sign(x)=\begin {cases}<br>+1, &amp; x\geq0 \\\<br>-1, &amp; x&lt;0<br>\end {cases}<br>\$\$</p>
+<p>markdown显示:<br>$$<br>sign(x)=\begin{cases}<br>+1, &amp; x\geq0 \\<br>-1, &amp; x&lt;0<br>\end{cases}<br>$$</p>
+<h2 id="分数线的使用"><a href="#分数线的使用" class="headerlink" title="分数线的使用"></a>分数线的使用</h2><p>\frac后面的两个分组分别作为分子和分母。<br>markdown原文:<br>\$\frac{1}{1+e^{-x}}\$</p>
+<p>markdown显示:<br>$\frac{1}{1+e^{-x}}$</p>
+<h1 id="公式编辑常用字母符号"><a href="#公式编辑常用字母符号" class="headerlink" title="公式编辑常用字母符号"></a>公式编辑常用字母符号</h1><p>这些符号需要放在行内公式或行间公式之中。</p>
+<h2 id="希腊字母"><a href="#希腊字母" class="headerlink" title="希腊字母"></a>希腊字母</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">字母名称</th>
+<th style="text-align:center">大写</th>
+<th style="text-align:center">markdown原文</th>
+<th style="text-align:center">小写</th>
+<th style="text-align:center">markdown原文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">alpha</td>
+<td style="text-align:center">$A$</td>
+<td style="text-align:center">A</td>
+<td style="text-align:center">$\alpha$</td>
+<td style="text-align:center">\alpha</td>
+</tr>
+<tr>
+<td style="text-align:center">beta</td>
+<td style="text-align:center">$B$</td>
+<td style="text-align:center">B</td>
+<td style="text-align:center">$\beta$</td>
+<td style="text-align:center">\beta</td>
+</tr>
+<tr>
+<td style="text-align:center">gamma</td>
+<td style="text-align:center">$\Gamma$</td>
+<td style="text-align:center">\Gamma</td>
+<td style="text-align:center">$\gamma$</td>
+<td style="text-align:center">\gamma</td>
+</tr>
+<tr>
+<td style="text-align:center">delta</td>
+<td style="text-align:center">$\Delta$</td>
+<td style="text-align:center">\Delta</td>
+<td style="text-align:center">$\delta$</td>
+<td style="text-align:center">\delta</td>
+</tr>
+<tr>
+<td style="text-align:center">eplison</td>
+<td style="text-align:center">$E$</td>
+<td style="text-align:center">E</td>
+<td style="text-align:center">$\epsilon$</td>
+<td style="text-align:center">\epsilon</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">$\varepsilon$</td>
+<td style="text-align:center">\varepsilon</td>
+</tr>
+<tr>
+<td style="text-align:center">zeta</td>
+<td style="text-align:center">$Z$</td>
+<td style="text-align:center">Z</td>
+<td style="text-align:center">$\zeta$</td>
+<td style="text-align:center">\zeta</td>
+</tr>
+<tr>
+<td style="text-align:center">eta</td>
+<td style="text-align:center">$H$</td>
+<td style="text-align:center">H</td>
+<td style="text-align:center">$\eta$</td>
+<td style="text-align:center">\eta</td>
+</tr>
+<tr>
+<td style="text-align:center">theta</td>
+<td style="text-align:center">$\Theta$</td>
+<td style="text-align:center">\Theta</td>
+<td style="text-align:center">$\theta$</td>
+<td style="text-align:center">\theta</td>
+</tr>
+<tr>
+<td style="text-align:center">iota</td>
+<td style="text-align:center">$I$</td>
+<td style="text-align:center">I</td>
+<td style="text-align:center">$\iota$</td>
+<td style="text-align:center">\iota</td>
+</tr>
+<tr>
+<td style="text-align:center">kappa</td>
+<td style="text-align:center">$K$</td>
+<td style="text-align:center">K</td>
+<td style="text-align:center">$\kappa$</td>
+<td style="text-align:center">\kappa</td>
+</tr>
+<tr>
+<td style="text-align:center">lambda</td>
+<td style="text-align:center">$\Lambda$</td>
+<td style="text-align:center">\Lambda</td>
+<td style="text-align:center">$\lambda$</td>
+<td style="text-align:center">\lambda</td>
+</tr>
+<tr>
+<td style="text-align:center">mu</td>
+<td style="text-align:center">$M$</td>
+<td style="text-align:center">M</td>
+<td style="text-align:center">$\mu$</td>
+<td style="text-align:center">\mu</td>
+</tr>
+<tr>
+<td style="text-align:center">nu</td>
+<td style="text-align:center">$N$</td>
+<td style="text-align:center">N</td>
+<td style="text-align:center">$\nu$</td>
+<td style="text-align:center">\nu</td>
+</tr>
+<tr>
+<td style="text-align:center">xi</td>
+<td style="text-align:center">$\Xi$</td>
+<td style="text-align:center">\Xi</td>
+<td style="text-align:center">$\xi$</td>
+<td style="text-align:center">\xi</td>
+</tr>
+<tr>
+<td style="text-align:center">omicron</td>
+<td style="text-align:center">$O$</td>
+<td style="text-align:center">O</td>
+<td style="text-align:center">$\omicron$</td>
+<td style="text-align:center">\omicron</td>
+</tr>
+<tr>
+<td style="text-align:center">pi</td>
+<td style="text-align:center">$\Pi$</td>
+<td style="text-align:center">\Pi</td>
+<td style="text-align:center">$\pi$</td>
+<td style="text-align:center">\pi</td>
+</tr>
+<tr>
+<td style="text-align:center">rho</td>
+<td style="text-align:center">$P$</td>
+<td style="text-align:center">P</td>
+<td style="text-align:center">$\rho$</td>
+<td style="text-align:center">\rho</td>
+</tr>
+<tr>
+<td style="text-align:center">sigma</td>
+<td style="text-align:center">$\Sigma$</td>
+<td style="text-align:center">\Sigma</td>
+<td style="text-align:center">$\sigma$</td>
+<td style="text-align:center">\sigma</td>
+</tr>
+<tr>
+<td style="text-align:center">tau</td>
+<td style="text-align:center">$T$</td>
+<td style="text-align:center">T</td>
+<td style="text-align:center">$\tau$</td>
+<td style="text-align:center">\tau</td>
+</tr>
+<tr>
+<td style="text-align:center">upsilon</td>
+<td style="text-align:center">$\Upsilon$</td>
+<td style="text-align:center">\Upsilon</td>
+<td style="text-align:center">$\upsilon$</td>
+<td style="text-align:center">\upsilon</td>
+</tr>
+<tr>
+<td style="text-align:center">phi</td>
+<td style="text-align:center">$\Phi$</td>
+<td style="text-align:center">\Phi</td>
+<td style="text-align:center">$\phi$</td>
+<td style="text-align:center">\phi</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">$\varphi$</td>
+<td style="text-align:center">\varphi</td>
+</tr>
+<tr>
+<td style="text-align:center">chi</td>
+<td style="text-align:center">$X$</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">$\chi$</td>
+<td style="text-align:center">\chi</td>
+</tr>
+<tr>
+<td style="text-align:center">psi</td>
+<td style="text-align:center">$\Psi$</td>
+<td style="text-align:center">\Psi</td>
+<td style="text-align:center">$\psi$</td>
+<td style="text-align:center">\psi</td>
+</tr>
+<tr>
+<td style="text-align:center">omega</td>
+<td style="text-align:center">$\Omega$</td>
+<td style="text-align:center">\Omega</td>
+<td style="text-align:center">$\omega$</td>
+<td style="text-align:center">\omega</td>
+</tr>
+</tbody>
+</table>
+<h2 id="空心字母与Fraktur字母"><a href="#空心字母与Fraktur字母" class="headerlink" title="空心字母与Fraktur字母"></a>空心字母与Fraktur字母</h2><p>A-Z皆可使用</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:center">markdown原文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$\mathbb{A}$</td>
+<td style="text-align:center">\mathbb{A}</td>
+</tr>
+<tr>
+<td style="text-align:center">$\mathfrak{B}$</td>
+<td style="text-align:center">\mathfrak{B}</td>
+</tr>
+</tbody>
+</table>
+<h2 id="括号"><a href="#括号" class="headerlink" title="括号"></a>括号</h2><p>小括号与中括号可直接使用。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:center">markdown原文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$\lbrace$</td>
+<td style="text-align:center">\lbrace</td>
+</tr>
+<tr>
+<td style="text-align:center">$\rbrace$</td>
+<td style="text-align:center">\rbrace</td>
+</tr>
+<tr>
+<td style="text-align:center">$\langle$</td>
+<td style="text-align:center">\langle</td>
+</tr>
+<tr>
+<td style="text-align:center">$\rangle$</td>
+<td style="text-align:center">\rangle</td>
+</tr>
+<tr>
+<td style="text-align:center">$\lceil$</td>
+<td style="text-align:center">\lceil</td>
+</tr>
+<tr>
+<td style="text-align:center">$\rceil$</td>
+<td style="text-align:center">\rceil</td>
+</tr>
+<tr>
+<td style="text-align:center">$\lfloor$</td>
+<td style="text-align:center">\lfloor</td>
+</tr>
+<tr>
+<td style="text-align:center">$\rfloor$</td>
+<td style="text-align:center">\rfloor</td>
+</tr>
+</tbody>
+</table>
+<h2 id="数学符号"><a href="#数学符号" class="headerlink" title="数学符号"></a>数学符号</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:center">markdown原文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$\sum$</td>
+<td style="text-align:center">\sum</td>
+</tr>
+<tr>
+<td style="text-align:center">$\prod$</td>
+<td style="text-align:center">\prod</td>
+</tr>
+<tr>
+<td style="text-align:center">$\int$</td>
+<td style="text-align:center">\int</td>
+</tr>
+<tr>
+<td style="text-align:center">$\iint$</td>
+<td style="text-align:center">\iint</td>
+</tr>
+<tr>
+<td style="text-align:center">$\iiint$</td>
+<td style="text-align:center">\iiint</td>
+</tr>
+<tr>
+<td style="text-align:center">$\oint$</td>
+<td style="text-align:center">\oint</td>
+</tr>
+<tr>
+<td style="text-align:center">$\partial$</td>
+<td style="text-align:center">\partial</td>
+</tr>
+<tr>
+<td style="text-align:center">$\nabla$</td>
+<td style="text-align:center">\nabla</td>
+</tr>
+<tr>
+<td style="text-align:center">$\infty$</td>
+<td style="text-align:center">\infty</td>
+</tr>
+<tr>
+<td style="text-align:center">$\times$</td>
+<td style="text-align:center">\times</td>
+</tr>
+<tr>
+<td style="text-align:center">$\ast$</td>
+<td style="text-align:center">\ast</td>
+</tr>
+<tr>
+<td style="text-align:center">$\div$</td>
+<td style="text-align:center">\div</td>
+</tr>
+<tr>
+<td style="text-align:center">$\leq$</td>
+<td style="text-align:center">\leq</td>
+</tr>
+<tr>
+<td style="text-align:center">$\geq$</td>
+<td style="text-align:center">\geq</td>
+</tr>
+<tr>
+<td style="text-align:center">$\neq$</td>
+<td style="text-align:center">\neq</td>
+</tr>
+<tr>
+<td style="text-align:center">$\approx$</td>
+<td style="text-align:center">\approx</td>
+</tr>
+<tr>
+<td style="text-align:center">$\equiv$</td>
+<td style="text-align:center">\equiv</td>
+</tr>
+<tr>
+<td style="text-align:center">$\ll$</td>
+<td style="text-align:center">\ll</td>
+</tr>
+<tr>
+<td style="text-align:center">$\gg$</td>
+<td style="text-align:center">\gg</td>
+</tr>
+<tr>
+<td style="text-align:center">$\propto$</td>
+<td style="text-align:center">\propto</td>
+</tr>
+<tr>
+<td style="text-align:center">$\parallel$</td>
+<td style="text-align:center">\parallel</td>
+</tr>
+<tr>
+<td style="text-align:center">$\pm$</td>
+<td style="text-align:center">\pm</td>
+</tr>
+<tr>
+<td style="text-align:center">$\mp$</td>
+<td style="text-align:center">\mp</td>
+</tr>
+<tr>
+<td style="text-align:center">$\emptyset$</td>
+<td style="text-align:center">\emptyset</td>
+</tr>
+<tr>
+<td style="text-align:center">$\in$</td>
+<td style="text-align:center">\in</td>
+</tr>
+<tr>
+<td style="text-align:center">$\notin$</td>
+<td style="text-align:center">\notin</td>
+</tr>
+<tr>
+<td style="text-align:center">$\subseteq$</td>
+<td style="text-align:center">\subseteq</td>
+</tr>
+<tr>
+<td style="text-align:center">$\supseteq$</td>
+<td style="text-align:center">\supseteq</td>
+</tr>
+<tr>
+<td style="text-align:center">$\subsetneqq$</td>
+<td style="text-align:center">\subsetneqq</td>
+</tr>
+<tr>
+<td style="text-align:center">$\supsetneqq$</td>
+<td style="text-align:center">\supsetneqq</td>
+</tr>
+<tr>
+<td style="text-align:center">$\bigcap$</td>
+<td style="text-align:center">\bigcap</td>
+</tr>
+<tr>
+<td style="text-align:center">$\bigcup$</td>
+<td style="text-align:center">\bigcup</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/markdown/" rel="tag">#markdown</a>
+          
+            <a href="/tags/mathjax/" rel="tag">#mathjax</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/17/自然语言处理之PLSA/" rel="next" title="自然语言处理之PLSA">
+                <i class="fa fa-chevron-left"></i> 自然语言处理之PLSA
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/06/18/markdown与mathjax的碰撞-markdown常用语法与LaTex公式编辑/"
+     data-title="markdown与mathjax的碰撞-markdown常用语法与LaTex公式编辑"
+     data-content=""
+     data-url="http://yoursite.com/2016/06/18/markdown与mathjax的碰撞-markdown常用语法与LaTex公式编辑/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/18/markdown与mathjax的碰撞-markdown常用语法与LaTex公式编辑/"
+           data-title="markdown与mathjax的碰撞-markdown常用语法与LaTex公式编辑" data-url="http://yoursite.com/2016/06/18/markdown与mathjax的碰撞-markdown常用语法与LaTex公式编辑/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/cat.png"
+               alt="zhikaizhang" />
+          <p class="site-author-name" itemprop="name">zhikaizhang</p>
+          <p class="site-description motion-element" itemprop="description">zhikaizhang的个人博客，分享学习算法、数据结构、机器学习、自然语言处理、android以及其他技术所思所想，热衷于实现具体问题来加深对理论的理解，努力中......</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#markdown常用语法"><span class="nav-number">1.</span> <span class="nav-text">markdown常用语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标题"><span class="nav-number">1.1.</span> <span class="nav-text">标题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#hahaha，我是五级标题"><span class="nav-number">1.1.0.0.1.</span> <span class="nav-text">hahaha，我是五级标题</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表"><span class="nav-number">1.2.</span> <span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有序列表"><span class="nav-number">1.2.1.</span> <span class="nav-text">有序列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无序列表"><span class="nav-number">1.2.2.</span> <span class="nav-text">无序列表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片"><span class="nav-number">1.3.</span> <span class="nav-text">图片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在引用图片处直接写url"><span class="nav-number">1.3.1.</span> <span class="nav-text">在引用图片处直接写url</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将url放在markdown文件末尾统一管理，在引用处标上数字编号"><span class="nav-number">1.3.2.</span> <span class="nav-text">将url放在markdown文件末尾统一管理，在引用处标上数字编号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链接"><span class="nav-number">1.4.</span> <span class="nav-text">链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表格"><span class="nav-number">1.5.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">1.6.</span> <span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#行内代码"><span class="nav-number">1.6.1.</span> <span class="nav-text">行内代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码块"><span class="nav-number">1.6.2.</span> <span class="nav-text">代码块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加空格"><span class="nav-number">1.7.</span> <span class="nav-text">添加空格</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mathjax公式编辑"><span class="nav-number">2.</span> <span class="nav-text">mathjax公式编辑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#行内公式"><span class="nav-number">2.1.</span> <span class="nav-text">行内公式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行间公式"><span class="nav-number">2.2.</span> <span class="nav-text">行间公式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几个特殊符号"><span class="nav-number">2.3.</span> <span class="nav-text">几个特殊符号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#表示上标"><span class="nav-number">2.3.1.</span> <span class="nav-text">^ 表示上标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表示下标"><span class="nav-number">2.3.2.</span> <span class="nav-text">\_ 表示下标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用于分组"><span class="nav-number">2.3.3.</span> <span class="nav-text">{} 用于分组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公式推导过程"><span class="nav-number">2.4.</span> <span class="nav-text">公式推导过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分段函数"><span class="nav-number">2.5.</span> <span class="nav-text">分段函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分数线的使用"><span class="nav-number">2.6.</span> <span class="nav-text">分数线的使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#公式编辑常用字母符号"><span class="nav-number">3.</span> <span class="nav-text">公式编辑常用字母符号</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#希腊字母"><span class="nav-number">3.1.</span> <span class="nav-text">希腊字母</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空心字母与Fraktur字母"><span class="nav-number">3.2.</span> <span class="nav-text">空心字母与Fraktur字母</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#括号"><span class="nav-number">3.3.</span> <span class="nav-text">括号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学符号"><span class="nav-number">3.4.</span> <span class="nav-text">数学符号</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  <span class="author" itemprop="copyrightHolder"><a href="http://www.miibeian.gov.cn/">苏ICP备16023782号</a></span>
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="author" itemprop="copyrightHolder"><a href="http://zhikaizhang.cn">zhikaizhang's blog</a></span>
+  <span class="author" itemprop="copyrightHolder">. All rights reserved.</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"laserwave"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("wv1vA5GMdT6r7Vi1AVpQNC0I-gzGzoHsz", "jt5O27A704yaLaJrddXok0jb");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
