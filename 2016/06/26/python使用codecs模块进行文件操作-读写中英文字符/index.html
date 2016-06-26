@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/06/26/python使用codecs模块进行文件操作-读写中英文字符/index.html">
 <meta property="og:site_name" content="zhikaizhang's Blog">
 <meta property="og:description" content="python文件读写">
-<meta property="og:updated_time" content="2016-06-26T05:42:37.633Z">
+<meta property="og:updated_time" content="2016-06-26T05:48:46.121Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python使用codecs模块进行文件操作-读写中英文字符">
 <meta name="twitter:description" content="python文件读写">
@@ -312,8 +312,66 @@
       
         <p>由于python中默认的编码是ascii，如果直接使用open方法得到文件对象然后进行文件的读写，都将无法使用包含中文字符（以及其他非ascii码字符），因此建议使用utf-8编码。</p>
 <h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><h2 id="读"><a href="#读" class="headerlink" title="读"></a>读</h2><p>下面的代码读取了文件，将每一行的内容组成了一个列表。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line">file = codecs.open(<span class="string">'test.txt'</span>,<span class="string">'r'</span>,<span class="string">'utf-8'</span>)</span><br><span class="line">lines = [line.strip() <span class="keyword">for</span> line <span class="keyword">in</span> file] </span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure></p>
-<h1 id="写"><a href="#写" class="headerlink" title="写"></a>写</h1><p>下面的代码写入了一行英文和一行中文到文件中。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line">file = codecs.open(<span class="string">'test.txt'</span>,<span class="string">'w'</span>,<span class="string">'utf-8'</span>)</span><br><span class="line">file.write(<span class="string">'Hello World!\n'</span>)</span><br><span class="line">file.write(<span class="string">'哈哈哈\n'</span>)</span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure></p>
-<h1 id="文件读写模式"><a href="#文件读写模式" class="headerlink" title="文件读写模式"></a>文件读写模式</h1><p>最为常见的三种模式，见下表，其中模式就是指获取文件对象时传入的参数，最常用的是前三个。<br>|模式|描述|<br>|:-:|:-:|<br>|r|仅读，待打开的文件必须存在|<br>|w|仅写，若文件已存在，内容将先被清空|<br>|a|仅写，若文件已存在，内容不会清空|<br>|r+|读写，待打开的文件必须存在|<br>|w+|读写，若文件已存在，内容将先被清空|<br>|a+|读写，若文件已存在，内容不会清空|<br>|rb|仅读，二进制，待打开的文件必须存在|<br>|wb|仅写，二进制，若文件已存在，内容将先被清空|<br>|ab|仅写，二进制，若文件已存在，内容不会清空|<br>|r+b|读写，二进制，待打开的文件必须存在|<br>|w+b|读写，二进制，若文件已存在，内容将先被清空|<br>|a+b|读写，二进制，若文件已存在，内容不会清空|</p>
+<h2 id="写"><a href="#写" class="headerlink" title="写"></a>写</h2><p>下面的代码写入了一行英文和一行中文到文件中。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line">file = codecs.open(<span class="string">'test.txt'</span>,<span class="string">'w'</span>,<span class="string">'utf-8'</span>)</span><br><span class="line">file.write(<span class="string">'Hello World!\n'</span>)</span><br><span class="line">file.write(<span class="string">'哈哈哈\n'</span>)</span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure></p>
+<h1 id="文件读写模式"><a href="#文件读写模式" class="headerlink" title="文件读写模式"></a>文件读写模式</h1><p>最为常见的三种模式，见下表，其中模式就是指获取文件对象时传入的参数，最常用的是前三个。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">模式</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">r</td>
+<td style="text-align:center">仅读，待打开的文件必须存在</td>
+</tr>
+<tr>
+<td style="text-align:center">w</td>
+<td style="text-align:center">仅写，若文件已存在，内容将先被清空</td>
+</tr>
+<tr>
+<td style="text-align:center">a</td>
+<td style="text-align:center">仅写，若文件已存在，内容不会清空</td>
+</tr>
+<tr>
+<td style="text-align:center">r+</td>
+<td style="text-align:center">读写，待打开的文件必须存在</td>
+</tr>
+<tr>
+<td style="text-align:center">w+</td>
+<td style="text-align:center">读写，若文件已存在，内容将先被清空</td>
+</tr>
+<tr>
+<td style="text-align:center">a+</td>
+<td style="text-align:center">读写，若文件已存在，内容不会清空</td>
+</tr>
+<tr>
+<td style="text-align:center">rb</td>
+<td style="text-align:center">仅读，二进制，待打开的文件必须存在</td>
+</tr>
+<tr>
+<td style="text-align:center">wb</td>
+<td style="text-align:center">仅写，二进制，若文件已存在，内容将先被清空</td>
+</tr>
+<tr>
+<td style="text-align:center">ab</td>
+<td style="text-align:center">仅写，二进制，若文件已存在，内容不会清空</td>
+</tr>
+<tr>
+<td style="text-align:center">r+b</td>
+<td style="text-align:center">读写，二进制，待打开的文件必须存在</td>
+</tr>
+<tr>
+<td style="text-align:center">w+b</td>
+<td style="text-align:center">读写，二进制，若文件已存在，内容将先被清空</td>
+</tr>
+<tr>
+<td style="text-align:center">a+b</td>
+<td style="text-align:center">读写，二进制，若文件已存在，内容不会清空</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
@@ -512,7 +570,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方法"><span class="nav-number">1.</span> <span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#读"><span class="nav-number">1.1.</span> <span class="nav-text">读</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#写"><span class="nav-number">2.</span> <span class="nav-text">写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件读写模式"><span class="nav-number">3.</span> <span class="nav-text">文件读写模式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方法"><span class="nav-number">1.</span> <span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#读"><span class="nav-number">1.1.</span> <span class="nav-text">读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写"><span class="nav-number">1.2.</span> <span class="nav-text">写</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件读写模式"><span class="nav-number">2.</span> <span class="nav-text">文件读写模式</span></a></li></ol></div>
             
           </div>
         </section>
