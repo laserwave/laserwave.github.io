@@ -1,0 +1,901 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="算法,python,NLP,variational inference,EM," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="python使用Variational EM实现LDA(Latent Dirichlet Allocation)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自然语言处理之LDA II-Variational EM实现">
+<meta property="og:url" content="http://yoursite.com/2016/07/09/自然语言处理之LDA II-Variational EM实现/index.html">
+<meta property="og:site_name" content="zhikaizhang's Blog">
+<meta property="og:description" content="python使用Variational EM实现LDA(Latent Dirichlet Allocation)">
+<meta property="og:image" content="http://yoursite.com/uploads/自然语言处理之LDA/graphical-model.png">
+<meta property="og:image" content="http://yoursite.com/uploads/自然语言处理之LDA/generate-process.png">
+<meta property="og:image" content="http://yoursite.com/uploads/自然语言处理之LDA-II/inference_graphic_model.png">
+<meta property="og:image" content="http://yoursite.com/uploads/自然语言处理之LDA-II/inference.png">
+<meta property="og:image" content="http://yoursite.com/uploads/自然语言处理之LDA-II/topics.png">
+<meta property="og:image" content="http://yoursite.com/uploads/自然语言处理之LDA-II/predict.png">
+<meta property="og:updated_time" content="2016-07-10T10:11:04.274Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自然语言处理之LDA II-Variational EM实现">
+<meta name="twitter:description" content="python使用Variational EM实现LDA(Latent Dirichlet Allocation)">
+<meta name="twitter:image" content="http://yoursite.com/uploads/自然语言处理之LDA/graphical-model.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 自然语言处理之LDA II-Variational EM实现 | zhikaizhang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">zhikaizhang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">算法、数据结构、机器学习、自然语言处理、android...</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                自然语言处理之LDA II-Variational EM实现
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发布于</span>
+            <time itemprop="dateCreated" datetime="2016-07-09T00:00:00+08:00" content="2016-07-09">
+              2016-07-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/自然语言处理/" itemprop="url" rel="index">
+                    <span itemprop="name">自然语言处理</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/09/自然语言处理之LDA II-Variational EM实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/09/自然语言处理之LDA II-Variational EM实现/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/09/自然语言处理之LDA II-Variational EM实现/" class="leancloud_visitors" data-flag-title="自然语言处理之LDA II-Variational EM实现">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>上一篇 <a href="http://zhikaizhang.cn/2016/06/29/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E4%B9%8BLDA/">自然语言处理之LDA</a> 使用Gibbs Sampling实现了LDA，本文使用Variational EM实现LDA。</p>
+<h1 id="LDA的概率图模型"><a href="#LDA的概率图模型" class="headerlink" title="LDA的概率图模型"></a>LDA的概率图模型</h1><p><img src="/uploads/自然语言处理之LDA/graphical-model.png" alt="graphical-model"><br>符号解释如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$N$</td>
+<td style="text-align:center">文档总数</td>
+</tr>
+<tr>
+<td style="text-align:center">$N_i$</td>
+<td style="text-align:center">第i篇文档单词数</td>
+</tr>
+<tr>
+<td style="text-align:center">$K$</td>
+<td style="text-align:center">topic总数</td>
+</tr>
+<tr>
+<td style="text-align:center">$M$</td>
+<td style="text-align:center">词表长度</td>
+</tr>
+<tr>
+<td style="text-align:center">$\vec{\alpha}$</td>
+<td style="text-align:center">document-topic分布的超参数，是一个K维向量</td>
+</tr>
+<tr>
+<td style="text-align:center">$\vec{\beta}$</td>
+<td style="text-align:center">topic-word分布的超参数，是一个M维向量</td>
+</tr>
+<tr>
+<td style="text-align:center">$\vec{\theta_i}$</td>
+<td style="text-align:center">$p(z{\vert}d=i)$组成的K维向量，其中$z\in[1,K]$</td>
+</tr>
+<tr>
+<td style="text-align:center">$\vec{\varphi_k}$</td>
+<td style="text-align:center">$p(w{\vert}z=k)$组成的M维向量，其中$w\in[1,M]$</td>
+</tr>
+<tr>
+<td style="text-align:center">$z_{i,j}$</td>
+<td style="text-align:center">第i篇文档的第j个单词的topic编号</td>
+</tr>
+<tr>
+<td style="text-align:center">$w_{i,j}$</td>
+<td style="text-align:center">第i篇文档的第j个单词在词表中的编号</td>
+</tr>
+</tbody>
+</table>
+<h1 id="文档生成过程"><a href="#文档生成过程" class="headerlink" title="文档生成过程"></a>文档生成过程</h1><p>LDA认为数据的生成过程如下图。在具体的实现中，会省略掉某些不重要的过程。比如文档长度$N_i$服从泊松分布的过程，在Gibbs Sampling以及本文Variational EM两种实现中都省略了。<br>此外，在本文Variational EM的实现中还将省略 ${\varphi_k}$ 的 $\beta$ 先验。<br><img src="/uploads/自然语言处理之LDA/generate-process.png" alt="generate-process"><br>那么先回忆一下，在PLSA的实现中使用到了EM算法，在随机的为模型的参数赋值之后就可以在E-Step计算出隐变量的后验概率，从而可以在M-Step优化模型参数，并不断迭代。<br>因此我们此时也应该尝试推出隐变量的后验概率的计算公式。<br>根据图模型，可以得到对于一篇文档来说隐变量的后验概率为：<br>$$<br>p(\vec{\theta}, \vec{z}|\vec{w},\vec{\alpha},\vec{\varphi})=\frac{p(\vec{\theta}, \vec{z},\vec{w}|\vec{\alpha},\vec{\varphi})}{p(\vec{w}|\vec{\alpha},\vec{\varphi})}<br>$$<br>其中分母部分通过引入模型参数可以表示为：<br>$$<br>\begin {aligned}<br>p(\vec{w}|\vec{\alpha},\vec{\varphi}) &amp;={\int}p(\vec{\theta}|\vec{\alpha})(\prod^{N_i}_{n=1}\sum^{K}_{k=1}p(z_n=k|\vec{\theta})p(w_n|z_n=k))d\vec{\theta} \\<br>&amp;={\int}p(\vec{\theta}|\vec{\alpha})(\prod^{N_i}_{n=1}\sum^{K}_{k=1}\prod^M_{j=1}(\theta_k\varphi_{kj})^{w_n^{j}})d\vec{\theta}<br>\end {aligned}<br>$$<br>这里出现了一个新的符号 $w_n^{j}$, 若该篇文档的第 $n$ 个词在词表中的编号为 $j$,则 $w_n^{j}=1$，否则$w_n^{j}=0$。<br>可以看到 $\theta$ 和 $\varphi$ 以乘积的形式结合在了隐变量的求和之中，因此无法直接根据上式计算出隐变量的后验概率。<br>因此我们在E-Step使用变分推断(Variational Inference)得到隐变量后验概率的近似值。<br>在介绍变分推断之前，先介绍一下在变分推断中要用到的Dirichlet分布的一些性质。</p>
+<h1 id="Dirichlet-distribution"><a href="#Dirichlet-distribution" class="headerlink" title="Dirichlet distribution"></a>Dirichlet distribution</h1><p>这里介绍Dirichlet分布的形式以及期望的计算公式。若 $\theta{\sim}Dirichlet(\alpha)$,则有：</p>
+<p>$$<br>\begin {aligned}<br>p(\theta|\alpha) &amp;=\frac{\Gamma(\sum^{K}_{i=1}\alpha_i)}{\sum^{K}_{i=1}\Gamma(\alpha_i)}\prod^{K}_{i=1}{\theta_i}^{\alpha_i-1} \\<br>&amp;=exp((\sum^{K}_{i=1}(\alpha_i-1)log\theta_i)+log\Gamma(\sum^{K}_{i=1}\alpha_i)-\sum^{K}_{i=1}log\Gamma(\alpha_i))<br>\end {aligned}<br>$$</p>
+<p>第二行将dirichlet分布化为了指数分布族的一般形式，可以得到:<br>sufficient statistics : $log\theta_i$<br>log normalizer : $\sum^{K}_{i=1}log\Gamma(\alpha_i)-log\Gamma(\sum^{K}_{i=1}\alpha_i)$<br>因此可以计算 $log\theta_i$的期望是：</p>
+<p>$$<br>\begin {aligned}<br>E(log\theta_i) &amp;=(\sum^{K}_{i=1}log\Gamma(\alpha_i)-log\Gamma(\sum^{K}_{i=1}\alpha_i))’ \\<br>&amp;=\psi(\alpha_i)-\psi(\sum^{K}_{j=1}\alpha_j)<br>\end {aligned}<br>$$</p>
+<p>这里的 $\Gamma$表示gamma函数; $\psi$ 表示digamma函数，是log Gamma函数的一阶导函数。</p>
+<h1 id="Variational-Inference"><a href="#Variational-Inference" class="headerlink" title="Variational Inference"></a>Variational Inference</h1><h2 id="变分推断的基本思想"><a href="#变分推断的基本思想" class="headerlink" title="变分推断的基本思想"></a>变分推断的基本思想</h2><p>变分推断要做的就是用分布q来近似隐变量的后验概率的分布。定义变分推断图模型如下。<br><img src="/uploads/自然语言处理之LDA-II/inference_graphic_model.png" alt="inference-graphical-model"></p>
+<p>根据图模型，可以得到对于隐变量的变分分布：<br>$$<br>q(\theta,z|\gamma,\phi)=q(\theta|\gamma)\prod^{N_i}_{n=1}q(z_n|\phi_n)<br>$$<br>那么如何来衡量这两个分布的差异性呢？我们使用KL散度（Kullback–Leibler divergence）,KL散度始终大于等于0，当且仅当两个分布相同时KL散度等于0。<br>我们的目标是找到参数 $\gamma$ 和 $\phi$ 使得KL散度越小越好。<br>即求解如下的优化问题：<br>$$<br>(\gamma^{\ast},\phi^{\ast})={arg}min_{\gamma,\phi}KL(q(\theta,z|\gamma,\phi)||p(\theta, z|w,\alpha,\varphi))<br>$$</p>
+<p>那么我们来计算KL散度。<br>$$<br>\begin {aligned}<br>KL(q(\theta,z|\gamma,\phi)||p(\theta, z|w,\alpha,\varphi)) &amp;=E_q(log\frac{q(\theta,z|\gamma,\phi)}{p(\theta, z|w,\alpha,\varphi)}) \\<br>&amp;=E_q[log(q(\theta,z|\gamma,\phi))]-E_q[log(p(\theta, z |w,\alpha,\varphi))] \\<br>&amp;=E_q[log(q(\theta,z|\gamma,\phi))]-E_q[log(p(\theta, z,w |\alpha,\varphi))]+log(p(w)) \\<br>&amp;=-(E_q[log(p(\theta, z,w |\alpha,\varphi))]-E_q[log(q(\theta,z|\gamma,\phi))])+log(p(w)) \\<br>&amp;=-\mathcal{L}(\gamma,\phi;\alpha,\varphi)+log(p(w))<br>\end {aligned}<br>$$<br>在上式中，令 $\mathcal{L}(\gamma,\phi;\alpha,\varphi)=E_q[log(p(\theta, z,w |\alpha,\varphi))]-E_q[log(q(\theta,z|\gamma,\phi))]$, 称为ELBO（Evidence Lower BOund）。<br>称其为ELBO是因为 $log(p(w))=\mathcal{L}(\gamma,\phi;\alpha,\varphi)+KL(q(\theta,z|\gamma,\phi)||p(\theta, z|w,\alpha,\varphi))\geq\mathcal{L}(\gamma,\phi;\alpha,\varphi)$。<br>根据上面的等式，$log(p(w))$是一个定值，因此要使 $KL(q(\theta,z|\gamma,\phi)||p(\theta, z|w,\alpha,\varphi))$最小，只要使得 $\mathcal{L}(\gamma,\phi;\alpha,\varphi)$最大即可。<br>之所以优化ELBO最大，是因为我们不知道隐变量的后验分布，无法直接优化KL散度最小。<br>下面计算ELBO。</p>
+<h2 id="推导-mathcal-L-gamma-phi-alpha-varphi"><a href="#推导-mathcal-L-gamma-phi-alpha-varphi" class="headerlink" title="推导$\mathcal{L}(\gamma,\phi;\alpha,\varphi)$"></a>推导$\mathcal{L}(\gamma,\phi;\alpha,\varphi)$</h2><p>$$<br>\begin {aligned}<br>\mathcal{L}(\gamma,\phi;\alpha,\varphi)&amp;=E_q[log(p(\theta, z,w |\alpha,\varphi))]-E_q[log(q(\theta,z|\gamma,\phi))] \\<br>&amp;=E_q[log(p(\theta|\alpha))]+E_q[log(p(z|\theta))]+E_q[log(p(w|z,\varphi))]-E_q[log(q(\theta|\gamma))]-E_q[log(q(z|\phi))]<br>\end {aligned}<br>$$<br>下面分别推导这5项。</p>
+<h3 id="E-q-log-p-theta-alpha"><a href="#E-q-log-p-theta-alpha" class="headerlink" title="$E_q[log(p(\theta|\alpha))]$"></a>$E_q[log(p(\theta|\alpha))]$</h3><p>$$<br>E_q[log(p(\theta|\alpha))]=\sum^{K}_{i=1}(\alpha_i-1)E_q[log\theta_i]+log\Gamma(\sum^{K}_{i=1}\alpha_i)-\sum^{K}_{i=1}log\Gamma(\alpha_i)<br>$$</p>
+<p>$\theta$ is generated from $Dir(\theta|\gamma)$, 因此有$E_q[log\theta_i]=\psi(\gamma_i)-\psi(\sum^{K}_{j=1}\gamma_j)$, 因此：</p>
+<p>$$<br>E_q[log(p(\theta|\alpha))]=\sum^{K}_{i=1}(\alpha_i-1)(\psi(\gamma_i)-\psi(\sum^{K}_{j=1}\gamma_j))+log\Gamma(\sum^{K}_{i=1}\alpha_i)-\sum^{K}_{i=1}log\Gamma(\alpha_i)<br>$$</p>
+<h3 id="E-q-log-p-z-theta"><a href="#E-q-log-p-z-theta" class="headerlink" title="$E_q[log(p(z|\theta))]$"></a>$E_q[log(p(z|\theta))]$</h3><p>$$<br>\begin {aligned}<br>E_q[log(p(z|\theta))]&amp;=E_q[\sum^{N_d}_{n=1}\sum^{K}_{i=1}z_{ni}log\theta_i] \\<br>&amp;=\sum^{N_d}_{n=1}\sum^{K}_{i=1}E_q[z_{ni}]E_q[log\theta_i] \\<br>&amp;=\sum^{N_d}_{n=1}\sum^{K}_{i=1}\phi_{ni}(\psi(\gamma_i)-\psi(\sum^{K}_{j=1}\gamma_j))<br>\end {aligned}<br>$$<br>$\theta$ is generated from $Dir(\theta|\gamma)$ and $z$ is generated from $Mult(z|\phi)$。$N_d$表示第d个文档的单词总数。</p>
+<h3 id="E-q-log-p-w-z-varphi"><a href="#E-q-log-p-w-z-varphi" class="headerlink" title="$E_q[log(p(w|z,\varphi))]$"></a>$E_q[log(p(w|z,\varphi))]$</h3><p>$$<br>\begin {aligned}<br>E_q[log(p(w|z,\varphi))]&amp;=E_q[\sum^{N_d}_{n=1}\sum^{K}_{i=1}\sum^{M}_{j=1}z_{ni}w^{j}_{n}log\varphi_{ij}] \\<br>&amp;=\sum^{N_d}_{n=1}\sum^{K}_{i=1}\sum^{M}_{j=1}E_q[z_{ni}]w^{j}_{n}log\varphi_{ij} \\<br>&amp;=\sum^{N_d}_{n=1}\sum^{K}_{i=1}\sum^{M}_{j=1}\phi_{ni}w^{j}_{n}log\varphi_{ij}<br>\end {aligned}<br>$$</p>
+<h3 id="E-q-log-q-theta-gamma"><a href="#E-q-log-q-theta-gamma" class="headerlink" title="$E_q[log(q(\theta|\gamma))]$"></a>$E_q[log(q(\theta|\gamma))]$</h3><p>$$<br>\begin {aligned}<br>E_q[log(q(\theta|\gamma))]&amp;=\sum^{K}_{i=1}(\gamma_i-1)E_q[log\theta_i]+log\Gamma(\sum^{K}_{i=1}\gamma_i)-\sum^{K}_{i=1}log\Gamma(\gamma_i) \\<br>&amp;= \sum^{K}_{i=1}(\gamma_i-1)(\psi(\gamma_i)-\psi(\sum^{K}_{j=1}\gamma_j))+log\Gamma(\sum^{K}_{i=1}\gamma_i)-\sum^{K}_{i=1}log\Gamma(\gamma_i)<br>\end {aligned}<br>$$</p>
+<h3 id="E-q-log-q-z-phi"><a href="#E-q-log-q-z-phi" class="headerlink" title="$E_q[log(q(z|\phi))]$"></a>$E_q[log(q(z|\phi))]$</h3><p>$$<br>\begin {aligned}<br>E_q[log(q(z|\phi))]&amp;=E_q[\sum^{N_d}_{n=1}\sum^{K}_{i=1}z_{ni}log\phi_{ni}] \\<br>&amp;=\sum^{N_d}_{n=1}\sum^{K}_{i=1}E_q[z_{ni}]log\phi_{ni} \\<br>&amp;=\sum^{N_d}_{n=1}\sum^{K}_{i=1}\phi_{ni}log\phi_{ni}<br>\end {aligned}<br>$$</p>
+<p>最终可以得到：<br>$$<br>\begin {aligned}<br>\mathcal{L}(\gamma,\phi;\alpha,\varphi)&amp;=\sum^{K}_{i=1}(\alpha_i-1)(\psi(\gamma_i)-\psi(\sum^{K}_{j=1}\gamma_j))+log\Gamma(\sum^{K}_{i=1}\alpha_i)-\sum^{K}_{i=1}log\Gamma(\alpha_i) \\<br>&amp;+\sum^{N_d}_{n=1}\sum^{K}_{i=1}\phi_{ni}(\psi(\gamma_i)-\psi(\sum^{K}_{j=1}\gamma_j)) \\<br>&amp;+\sum^{N_d}_{n=1}\sum^{K}_{i=1}\sum^{M}_{j=1}\phi_{ni}w^{j}_{n}log\varphi_{ij} \\<br>&amp;-(\sum^{K}_{i=1}(\gamma_i-1)(\psi(\gamma_i)-\psi(\sum^{K}_{j=1}\gamma_j))+log\Gamma(\sum^{K}_{i=1}\gamma_i)-\sum^{K}_{i=1}log\Gamma(\gamma_i)) \\<br>&amp;-(\sum^{N_d}_{n=1}\sum^{K}_{i=1}\phi_{ni}log\phi_{ni})<br>\end {aligned}<br>$$</p>
+<h2 id="变分参数的更新"><a href="#变分参数的更新" class="headerlink" title="变分参数的更新"></a>变分参数的更新</h2><h3 id="phi-的更新"><a href="#phi-的更新" class="headerlink" title="$\phi$的更新"></a>$\phi$的更新</h3><p>$\mathcal{L}(\gamma,\phi;\alpha,\varphi)$式中包含$\phi$参数的项表示为：</p>
+<p>$$<br>\mathcal{L}_{\phi_{ni}}=\phi_{ni}(\psi(\gamma_i)-\psi(\sum^{K}_{j=1}\gamma_j))+\phi_{ni}log\varphi_{iw}-\phi_{ni}log\phi_{ni}+\lambda(\sum^{K}_{j=1}\phi_{ni}-1)<br>$$<br>其中，$\phi_{ni}log\varphi_{iw}$项中的$w$表示该篇文档第$n$个词在词表中的编号，是对前面推导出的式子的等价变换。最后一项是为了使用拉格朗日乘子法加的一项，注意该项结果为0，目的是便于求导。</p>
+<p>求导，得到：<br>$$<br>\frac{\partial{\mathcal{L}}}{\partial{\phi_{ni}}}=(\psi(\gamma_i)-\psi(\sum^{K}_{j=1}\gamma_j))+log\varphi_{iw}-log\phi_{ni}-1+\lambda<br>$$<br>令导数为0，得到：<br>$$<br>\phi_{ni}\propto\varphi_{iw}exp(\psi(\gamma_i)-\psi(\sum^{K}_{j=1}\gamma_j))<br>$$<br>因此可以根据该式计算$\phi$，再归一化即可。</p>
+<h3 id="gamma-的更新"><a href="#gamma-的更新" class="headerlink" title="$\gamma$的更新"></a>$\gamma$的更新</h3><p>$\mathcal{L}(\gamma,\phi;\alpha,\varphi)$式中包含$\gamma$参数的项表示为：</p>
+<p>$$<br>\mathcal{L}_{\gamma}=\sum^{K}_{i=1}(\psi(\gamma_i)-\psi(\sum^{K}_{j=1}\gamma_j))(\alpha_i+\sum^{N_d}_{n=1}\phi_{ni}-\gamma_{i})-log\Gamma(\sum^{K}_{i=1}\gamma_i)+\sum^{K}_{i=1}log\Gamma(\gamma_i))<br>$$</p>
+<p>求导，得到：<br>$$<br>\frac{\partial{\mathcal{L}}}{\partial{\gamma_{i}}}=\psi{‘}(\gamma_i)(\alpha_i+\sum^{N_d}_{n=1}\phi_{ni}-\gamma_i)-\psi{‘’}(\sum^{K}_{j=1}\gamma_{j})\sum^{K}_{j=1}(\alpha_j+\sum^{N_d}_{n=1}\phi_{nj}-\gamma_j)<br>$$</p>
+<p>令导数为0，得到：<br>$$<br>\gamma_i=\alpha_i+\sum^{N_d}_{n=1}\phi_{ni}<br>$$<br>这样就得到了$\gamma$的更新公式。</p>
+<h2 id="变分推断算法流程"><a href="#变分推断算法流程" class="headerlink" title="变分推断算法流程"></a>变分推断算法流程</h2><p>LDA的变分推断算法流程如下图，用来计算变分参数$\phi$和$\gamma$。<br><img src="/uploads/自然语言处理之LDA-II/inference.png" alt="inference"></p>
+<h1 id="Variational-EM"><a href="#Variational-EM" class="headerlink" title="Variational EM"></a>Variational EM</h1><h2 id="变分EM算法流程"><a href="#变分EM算法流程" class="headerlink" title="变分EM算法流程"></a>变分EM算法流程</h2><p>1.初始化充分统计量，根据充分统计量初始化模型参数$\alpha$和$\varphi$。<br>2.迭代执行以下步骤直到收敛：<br>    (E-Step)对于每一篇文档，执行上述的变分推断算法，计算优化的变分参数$\phi$和$\gamma$，并根据变分参数计算充分统计量。<br>    (M-Step)根据充分统计量，更新模型参数$\alpha$和$\varphi$。</p>
+<h2 id="M-Step"><a href="#M-Step" class="headerlink" title="M-Step"></a>M-Step</h2><p>E-Step如何计算变分参数前面的变分推断算法已经介绍了，这里解释一下M-Step如何更新模型参数$\alpha$和$\varphi$。<br>同样是通过最大化ELBO来实现的。</p>
+<h3 id="varphi-的更新"><a href="#varphi-的更新" class="headerlink" title="$\varphi$的更新"></a>$\varphi$的更新</h3><p>$\mathcal{L}(\gamma,\phi;\alpha,\varphi)$式中包含$\varphi$参数的项表示为（对所有文档的值做了求和）,同样使用了拉格朗日乘子法：</p>
+<p>$$<br>\mathcal{L}_{\varphi}=\sum^{N}_{d=1}\sum^{N_d}_{n=1}\sum^{K}_{i=1}\sum^{M}_{j=1}\phi_{dni}w^{j}_{dn}log\varphi_{ij}+\sum^{K}_{i=1}\lambda_{i}(\sum^{M}_{j=1}\varphi_{ij}-1)<br>$$<br>该式对 $\varphi_{ij}$求导并令导数等于0，可以得到:<br>$$<br>\varphi_{ij}\propto\sum^{N}_{d=1}\sum^{N_d}_{n=1}\phi_{dni}w^{j}_{dn}<br>$$</p>
+<h3 id="alpha-的更新"><a href="#alpha-的更新" class="headerlink" title="$\alpha$的更新"></a>$\alpha$的更新</h3><p>$\mathcal{L}(\gamma,\phi;\alpha,\varphi)$式中包含$\alpha$参数的项表示为:<br>$$<br>\mathcal{L}_{\alpha}=\sum^{N}_{d=1}(log\Gamma(\sum^{K}_{j=1}\alpha_j)-\sum^{K}_{i=1}log\Gamma(\alpha_i))+\sum^{K}_{i=1}((\alpha_i-1)(\psi(\gamma_{di})-\psi(\sum^{K}_{j=1}\gamma_{dj})))<br>$$<br>求导，得到：<br>$$<br>\frac{\partial{\mathcal{L}}}{\partial{\alpha_{i}}}=N(\psi(\sum^{K}_{j=1}\alpha_j)-\psi\alpha_i)+\sum^{N}_{d=1}(\psi(\gamma_{di}-\psi(\sum^{K}_{j=1}\gamma_{dj}))<br>$$<br>无法直接令导数等于0计算出$\alpha_i$。<br>计算出Hessian矩阵：<br>$$<br>\frac{\partial^{2}\mathcal{L}}{\partial{\alpha_{i}}\partial{\alpha_{j}}}=N(\psi{‘}(\sum^{K}_{j=1})-\delta(i,j)\psi{‘}(\alpha_i))<br>$$<br>使用牛顿法来优化$\alpha$。</p>
+<h1 id="LDA的实现"><a href="#LDA的实现" class="headerlink" title="LDA的实现"></a>LDA的实现</h1><p>python实现的Variational EM LDA。用于训练和预测的数据集分别放在两个文本文件中，一行表示一篇文档，可处理中文和英文。<br>下面给出代码。本代码参考了David M.Blei的c语言源码。<br>变分推断以及EM的收敛条件可以通过计算likelihood来实现，这里设置了固定的循环次数。超参数alpha的更新被省略了，使用了初始值。<br>几个重要参数的对应关系见下表。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">公式符号</th>
+<th style="text-align:center">代码符号</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$\alpha$</td>
+<td style="text-align:center">alpha</td>
+<td style="text-align:center">模型参数，document-topic分布的超参数</td>
+</tr>
+<tr>
+<td style="text-align:center">$\varphi$</td>
+<td style="text-align:center">varphi</td>
+<td style="text-align:center">模型参数，topic-word分布，代码中取了对数</td>
+</tr>
+<tr>
+<td style="text-align:center">$\gamma$</td>
+<td style="text-align:center">gamma</td>
+<td style="text-align:center">变分参数，当前推断文档的topic分布</td>
+</tr>
+<tr>
+<td style="text-align:center">$\phi$</td>
+<td style="text-align:center">phi</td>
+<td style="text-align:center">变分参数，当前推断文档的每个词语的topic分布</td>
+</tr>
+</tbody>
+</table>
+<p>本代码先用训练数据训练得到一个模型，输出了得到的每个topic的top10的词语，然后对新来的测试文档进行了推断，通过$\gamma$参数得到预测的该文档属于的主题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">from</span> scipy.special <span class="keyword">import</span> psi</span><br><span class="line"></span><br><span class="line"><span class="comment"># itemIdList : the list of distinct terms in the document</span></span><br><span class="line"><span class="comment"># itemCountList : the list of number of the existence of corresponding terms</span></span><br><span class="line"><span class="comment"># wordCount : the number of total words (not terms)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Document</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, itemIdList, itemCountList, wordCount)</span>:</span></span><br><span class="line">        self.itemIdList = itemIdList</span><br><span class="line">        self.itemCountList = itemCountList</span><br><span class="line">        self.wordCount = wordCount</span><br><span class="line"></span><br><span class="line"><span class="comment"># preprocessing (segmentation, stopwords filtering, represent documents as objects of class Document)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">preprocessing</span><span class="params">()</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># read the list of stopwords</span></span><br><span class="line">    file = codecs.open(<span class="string">'stopwords.dic'</span>,<span class="string">'r'</span>,<span class="string">'utf-8'</span>)</span><br><span class="line">    stopwords = [line.strip() <span class="keyword">for</span> line <span class="keyword">in</span> file]</span><br><span class="line">    file.close()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># read the corpus for training</span></span><br><span class="line">    file = codecs.open(<span class="string">'dataset.txt'</span>,<span class="string">'r'</span>,<span class="string">'utf-8'</span>)</span><br><span class="line">    documents = [document.strip() <span class="keyword">for</span> document <span class="keyword">in</span> file] </span><br><span class="line">    file.close()</span><br><span class="line">    </span><br><span class="line">    docs = []</span><br><span class="line">    word2id = &#123;&#125;</span><br><span class="line">    id2word = &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    currentWordId = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> document <span class="keyword">in</span> documents:</span><br><span class="line">        word2Count = &#123;&#125;</span><br><span class="line">        <span class="comment"># segmentation</span></span><br><span class="line">        segList = jieba.cut(document)</span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> segList: </span><br><span class="line">            word = word.lower().strip()</span><br><span class="line">            <span class="comment"># filter the stopwords</span></span><br><span class="line">            <span class="keyword">if</span> len(word) &gt; <span class="number">1</span> <span class="keyword">and</span> <span class="keyword">not</span> re.search(<span class="string">'[0-9]'</span>, word) <span class="keyword">and</span> word <span class="keyword">not</span> <span class="keyword">in</span> stopwords:</span><br><span class="line">                <span class="keyword">if</span> word <span class="keyword">not</span> <span class="keyword">in</span> word2id:</span><br><span class="line">                    word2id[word] = currentWordId</span><br><span class="line">                    id2word[currentWordId] = word</span><br><span class="line">                    currentWordId += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> word <span class="keyword">in</span> word2Count:</span><br><span class="line">                    word2Count[word] += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    word2Count[word] = <span class="number">1</span></span><br><span class="line">        itemIdList = []</span><br><span class="line">        itemCountList = []</span><br><span class="line">        wordCount = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> word2Count.keys():</span><br><span class="line">            itemIdList.append(word2id[word])</span><br><span class="line">            itemCountList.append(word2Count[word])</span><br><span class="line">            wordCount += word2Count[word]</span><br><span class="line"></span><br><span class="line">        docs.append(Document(itemIdList, itemCountList, wordCount))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> docs, word2id, id2word</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">maxItemNum</span><span class="params">()</span>:</span></span><br><span class="line">    num = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> d <span class="keyword">in</span> range(<span class="number">0</span>, N):</span><br><span class="line">        <span class="keyword">if</span> len(docs[d].itemIdList) &gt; num:</span><br><span class="line">            num = len(docs[d].itemIdList)</span><br><span class="line">    <span class="keyword">return</span> num</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">initialLdaModel</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> z <span class="keyword">in</span> range(<span class="number">0</span>, K):</span><br><span class="line">        <span class="keyword">for</span> w <span class="keyword">in</span> range(<span class="number">0</span>, M):</span><br><span class="line">            nzw[z, w] += <span class="number">1.0</span>/M + random.random()</span><br><span class="line">            nz[z] += nzw[z, w]</span><br><span class="line">    updateVarphi()    </span><br><span class="line"></span><br><span class="line"><span class="comment"># update model parameters : varphi (the update of alpha is ommited)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">updateVarphi</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">for</span> z <span class="keyword">in</span> range(<span class="number">0</span>, K):</span><br><span class="line">        <span class="keyword">for</span> w <span class="keyword">in</span> range(<span class="number">0</span>, M):</span><br><span class="line">            <span class="keyword">if</span>(nzw[z, w] &gt; <span class="number">0</span>):</span><br><span class="line">                varphi[z, w] = math.log(nzw[z, w]) - math.log(nz[z])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                varphi[z, w] = <span class="number">-100</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># update variational parameters : gamma and phi</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">variationalInference</span><span class="params">(docs, d, gamma, phi)</span>:</span></span><br><span class="line">    phisum = <span class="number">0</span></span><br><span class="line">    oldphi = np.zeros([K])</span><br><span class="line">    digamma_gamma = np.zeros([K])</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> z <span class="keyword">in</span> range(<span class="number">0</span>, K):</span><br><span class="line">        gamma[d][z] = alpha + docs[d].wordCount * <span class="number">1.0</span> / K</span><br><span class="line">        digamma_gamma[z] = psi(gamma[d][z])</span><br><span class="line">        <span class="keyword">for</span> w <span class="keyword">in</span> range(<span class="number">0</span>, len(docs[d].itemIdList)):</span><br><span class="line">            phi[w, z] = <span class="number">1.0</span> / K</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> iteration <span class="keyword">in</span> range(<span class="number">0</span>, iterInference):</span><br><span class="line">        <span class="keyword">for</span> w <span class="keyword">in</span> range(<span class="number">0</span>, len(docs[d].itemIdList)):</span><br><span class="line">            phisum = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> z <span class="keyword">in</span> range(<span class="number">0</span>, K):</span><br><span class="line">                oldphi[z] = phi[w, z]</span><br><span class="line">                phi[w, z] = digamma_gamma[z] + varphi[z, docs[d].itemIdList[w]]</span><br><span class="line">                <span class="keyword">if</span> z &gt; <span class="number">0</span>:</span><br><span class="line">                    phisum = math.log(math.exp(phisum) + math.exp(phi[w, z]))</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    phisum = phi[w, z]</span><br><span class="line">            <span class="keyword">for</span> z <span class="keyword">in</span> range(<span class="number">0</span>, K):</span><br><span class="line">                phi[w, z] = math.exp(phi[w, z] - phisum)</span><br><span class="line">                gamma[d][z] =  gamma[d][z] + docs[d].itemCountList[w] * (phi[w, z] - oldphi[z])</span><br><span class="line">                digamma_gamma[z] = psi(gamma[d][z])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># calculate the gamma parameter of new document</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">inferTopicOfNewDocument</span><span class="params">()</span>:</span></span><br><span class="line">    testDocs = []</span><br><span class="line">    <span class="comment"># read the corpus to be inferred</span></span><br><span class="line">    file = codecs.open(<span class="string">'infer.txt'</span>,<span class="string">'r'</span>,<span class="string">'utf-8'</span>)</span><br><span class="line">    testDocuments = [document.strip() <span class="keyword">for</span> document <span class="keyword">in</span> file] </span><br><span class="line">    file.close()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> d <span class="keyword">in</span> range(<span class="number">0</span>, len(testDocuments)):</span><br><span class="line">        document = testDocuments[d]</span><br><span class="line">        word2Count = &#123;&#125;</span><br><span class="line">        <span class="comment"># segmentation</span></span><br><span class="line">        segList = jieba.cut(document)</span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> segList: </span><br><span class="line">            word = word.lower().strip()</span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">in</span> word2id:</span><br><span class="line">                <span class="keyword">if</span> word <span class="keyword">in</span> word2Count:</span><br><span class="line">                    word2Count[word] += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    word2Count[word] = <span class="number">1</span></span><br><span class="line">                      </span><br><span class="line">        itemIdList = []</span><br><span class="line">        itemCountList = []</span><br><span class="line">        wordCount = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> word2Count.keys():</span><br><span class="line">            itemIdList.append(word2id[word])</span><br><span class="line">            itemCountList.append(word2Count[word])</span><br><span class="line">            wordCount += word2Count[word]</span><br><span class="line"></span><br><span class="line">        testDocs.append(Document(itemIdList, itemCountList, wordCount))</span><br><span class="line">    </span><br><span class="line">    gamma = np.zeros([len(testDocuments), K])</span><br><span class="line">    <span class="keyword">for</span> d <span class="keyword">in</span> range(<span class="number">0</span>, len(testDocs)):</span><br><span class="line">        phi = np.zeros([len(testDocs[d].itemIdList), K])</span><br><span class="line">        variationalInference(testDocs, d, gamma, phi)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> gamma</span><br><span class="line">           </span><br><span class="line">docs, word2id, id2word = preprocessing() </span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="comment"># number of documents for training</span></span><br><span class="line">N = len(docs)</span><br><span class="line"><span class="comment"># number of distinct terms</span></span><br><span class="line">M = len(word2id)</span><br><span class="line"><span class="comment"># number of topic</span></span><br><span class="line">K = <span class="number">10</span></span><br><span class="line"><span class="comment"># iteration times of variational inference, judgment of the convergence by calculating likelihood is ommited</span></span><br><span class="line">iterInference = <span class="number">20</span> </span><br><span class="line"><span class="comment"># iteration times of variational EM algorithm, judgment of the convergence by calculating likelihood is ommited</span></span><br><span class="line">iterEM = <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># initial value of hyperparameter alpha</span></span><br><span class="line">alpha = <span class="number">5</span></span><br><span class="line"><span class="comment"># sufficient statistic of alpha</span></span><br><span class="line">alphaSS = <span class="number">0</span></span><br><span class="line"><span class="comment"># the topic-word distribution (beta in D. Blei's paper)</span></span><br><span class="line">varphi = np.zeros([K, M])</span><br><span class="line"><span class="comment"># topic-word count, this is a sufficient statistic to calculate varphi</span></span><br><span class="line">nzw = np.zeros([K, M])</span><br><span class="line"><span class="comment"># topic count, sum of nzw with w ranging from [0, M-1], for calculating varphi</span></span><br><span class="line">nz = np.zeros([K])</span><br><span class="line"></span><br><span class="line"><span class="comment"># inference parameter gamma</span></span><br><span class="line">gamma = np.zeros([N, K])</span><br><span class="line"><span class="comment"># inference parameter phi</span></span><br><span class="line">phi = np.zeros([maxItemNum(), K])</span><br><span class="line"></span><br><span class="line"><span class="comment"># initialization of the model parameter varphi, the update of alpha is ommited</span></span><br><span class="line">initialLdaModel()</span><br><span class="line"></span><br><span class="line"><span class="comment"># variational EM Algorithm</span></span><br><span class="line"><span class="keyword">for</span> iteration <span class="keyword">in</span> range(<span class="number">0</span>, iterEM): </span><br><span class="line">    nz = np.zeros([K])</span><br><span class="line">    nzw = np.zeros([K, M])</span><br><span class="line">    alphaSS = <span class="number">0</span></span><br><span class="line">    <span class="comment"># EStep</span></span><br><span class="line">    <span class="keyword">for</span> d <span class="keyword">in</span> range(<span class="number">0</span>, N):</span><br><span class="line">        variationalInference(docs, d, gamma, phi)</span><br><span class="line">        gammaSum = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> z <span class="keyword">in</span> range(<span class="number">0</span>, K):</span><br><span class="line">            gammaSum += gamma[d, z]</span><br><span class="line">            alphaSS += psi(gamma[d, z])</span><br><span class="line">        alphaSS -= K * psi(gammaSum)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> w <span class="keyword">in</span> range(<span class="number">0</span>, len(docs[d].itemIdList)):</span><br><span class="line">            <span class="keyword">for</span> z <span class="keyword">in</span> range(<span class="number">0</span>, K):</span><br><span class="line">                nzw[z][docs[d].itemIdList[w]] += docs[d].itemCountList[w] * phi[w, z]</span><br><span class="line">                nz[z] += docs[d].itemCountList[w] * phi[w, z]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># MStep</span></span><br><span class="line">    updateVarphi()</span><br><span class="line"></span><br><span class="line"><span class="comment"># calculate the top 10 terms of each topic</span></span><br><span class="line">topicwords = []</span><br><span class="line">maxTopicWordsNum = <span class="number">10</span></span><br><span class="line"><span class="keyword">for</span> z <span class="keyword">in</span> range(<span class="number">0</span>, K):</span><br><span class="line">	ids = varphi[z, :].argsort()</span><br><span class="line">	topicword = []</span><br><span class="line">	<span class="keyword">for</span> j <span class="keyword">in</span> ids:</span><br><span class="line">		topicword.insert(<span class="number">0</span>, id2word[j])</span><br><span class="line">	topicwords.append(topicword[<span class="number">0</span> : min(<span class="number">10</span>, len(topicword))])</span><br><span class="line"></span><br><span class="line"><span class="comment"># infer the topic of each new document</span></span><br><span class="line">inferGamma = inferTopicOfNewDocument()</span><br><span class="line">inferZ = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(inferGamma)):</span><br><span class="line">    inferZ.append(inferGamma[i, :].argmax())</span><br></pre></td></tr></table></figure>
+<h1 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h1><p>继续沿用了前面用过的数据集，英文数据集采用关于one piece的16个英文文档，来源于维基百科。<br>设置的参数为K=10，iterInference=20，iterEM=20。<br>实验结果如下图。给出了每个主题top10的词语。<br><img src="/uploads/自然语言处理之LDA-II/topics.png" alt="topics"><br>此外用于预测的两个文档见下图，这两句话不在训练集之中，是新写的两句话，分别被预测为了主题7和主题2，对比上面的图可以看出预测的十分正确。<br><img src="/uploads/自然语言处理之LDA-II/predict.png" alt="predict"><br>当然，如果需要预测主题的文档中的大多数词都没在训练集中出现过，比如你用英文文档来训练，用中文文档来预测，那么预测的结果肯定是不对的。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>1 Latent Dirichlet Allocation by David M. Blei et.al<br>2 Variational Inference by David M. Blei<br>3 Variational Inference for LDA by Zhao Zhou</p>
+<p>完整代码、停用词以及数据集已托管至 <a href="https://github.com/laserwave/LDA-Variational-EM">github</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag">#算法</a>
+          
+            <a href="/tags/python/" rel="tag">#python</a>
+          
+            <a href="/tags/NLP/" rel="tag">#NLP</a>
+          
+            <a href="/tags/variational-inference/" rel="tag">#variational inference</a>
+          
+            <a href="/tags/EM/" rel="tag">#EM</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/29/自然语言处理之LDA/" rel="next" title="自然语言处理之LDA">
+                <i class="fa fa-chevron-left"></i> 自然语言处理之LDA
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/07/09/自然语言处理之LDA II-Variational EM实现/"
+     data-title="自然语言处理之LDA II-Variational EM实现"
+     data-content=""
+     data-url="http://yoursite.com/2016/07/09/自然语言处理之LDA II-Variational EM实现/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/09/自然语言处理之LDA II-Variational EM实现/"
+           data-title="自然语言处理之LDA II-Variational EM实现" data-url="http://yoursite.com/2016/07/09/自然语言处理之LDA II-Variational EM实现/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/cat.png"
+               alt="zhikaizhang" />
+          <p class="site-author-name" itemprop="name">zhikaizhang</p>
+          <p class="site-description motion-element" itemprop="description">zhikaizhang个人博客，主要关注算法、数据结构、机器学习、自然语言处理。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/laserwave" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://heimingx.cn" title="胥海明博客" target="_blank">胥海明博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LDA的概率图模型"><span class="nav-number">1.</span> <span class="nav-text">LDA的概率图模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文档生成过程"><span class="nav-number">2.</span> <span class="nav-text">文档生成过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dirichlet-distribution"><span class="nav-number">3.</span> <span class="nav-text">Dirichlet distribution</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Variational-Inference"><span class="nav-number">4.</span> <span class="nav-text">Variational Inference</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#变分推断的基本思想"><span class="nav-number">4.1.</span> <span class="nav-text">变分推断的基本思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推导-mathcal-L-gamma-phi-alpha-varphi"><span class="nav-number">4.2.</span> <span class="nav-text">推导$\mathcal{L}(\gamma,\phi;\alpha,\varphi)$</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#E-q-log-p-theta-alpha"><span class="nav-number">4.2.1.</span> <span class="nav-text">$E_q[log(p(\theta|\alpha))]$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#E-q-log-p-z-theta"><span class="nav-number">4.2.2.</span> <span class="nav-text">$E_q[log(p(z|\theta))]$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#E-q-log-p-w-z-varphi"><span class="nav-number">4.2.3.</span> <span class="nav-text">$E_q[log(p(w|z,\varphi))]$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#E-q-log-q-theta-gamma"><span class="nav-number">4.2.4.</span> <span class="nav-text">$E_q[log(q(\theta|\gamma))]$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#E-q-log-q-z-phi"><span class="nav-number">4.2.5.</span> <span class="nav-text">$E_q[log(q(z|\phi))]$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变分参数的更新"><span class="nav-number">4.3.</span> <span class="nav-text">变分参数的更新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#phi-的更新"><span class="nav-number">4.3.1.</span> <span class="nav-text">$\phi$的更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gamma-的更新"><span class="nav-number">4.3.2.</span> <span class="nav-text">$\gamma$的更新</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变分推断算法流程"><span class="nav-number">4.4.</span> <span class="nav-text">变分推断算法流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Variational-EM"><span class="nav-number">5.</span> <span class="nav-text">Variational EM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#变分EM算法流程"><span class="nav-number">5.1.</span> <span class="nav-text">变分EM算法流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#M-Step"><span class="nav-number">5.2.</span> <span class="nav-text">M-Step</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#varphi-的更新"><span class="nav-number">5.2.1.</span> <span class="nav-text">$\varphi$的更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alpha-的更新"><span class="nav-number">5.2.2.</span> <span class="nav-text">$\alpha$的更新</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LDA的实现"><span class="nav-number">6.</span> <span class="nav-text">LDA的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验结果"><span class="nav-number">7.</span> <span class="nav-text">实验结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  <span class="author" itemprop="copyrightHolder">苏ICP备16023782号</span>
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="author" itemprop="copyrightHolder">zhikaizhang's blog</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"laserwave"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("wv1vA5GMdT6r7Vi1AVpQNC0I-gzGzoHsz", "jt5O27A704yaLaJrddXok0jb");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
