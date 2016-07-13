@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="算法,python,NLP,EM,variational inference," />
+  <meta name="keywords" content="算法,python,NLP,variational inference,EM," />
 
 
 
@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://yoursite.com/uploads/自然语言处理之LDA-II/predict.png">
 <meta property="og:image" content="http://yoursite.com/uploads/自然语言处理之LDA-II/topics2.png">
 <meta property="og:image" content="http://yoursite.com/uploads/自然语言处理之LDA-II/predict2.png">
-<meta property="og:updated_time" content="2016-07-11T00:58:51.302Z">
+<meta property="og:updated_time" content="2016-07-12T02:57:44.856Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自然语言处理之LDA II-Variational EM实现">
 <meta name="twitter:description" content="python使用Variational EM实现LDA(Latent Dirichlet Allocation)">
@@ -439,7 +439,7 @@
 <h1 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h1><p>继续沿用了前面用过的数据集。</p>
 <h2 id="English"><a href="#English" class="headerlink" title="English"></a>English</h2><p>英文数据集采用关于one piece的16个英文文档，来源于维基百科。<br>设置的参数为K=10，iterInference=20，iterEM=20。<br>实验结果如下图。给出了每个主题top10的词语。<br><img src="/uploads/自然语言处理之LDA-II/topics.png" alt="topics"><br>此外用于预测的两个文档见下图，这两句话不在训练集之中，是新写的两句话，分别被预测为了主题7和主题2，对比上面的图可以看出预测的十分正确。<br><img src="/uploads/自然语言处理之LDA-II/predict.png" alt="predict"><br>当然，如果需要预测主题的文档中的大多数词都没在训练集中出现过，比如你用英文文档来训练，用中文文档来预测，那么预测的结果肯定是不对的。</p>
 <h2 id="Chinese"><a href="#Chinese" class="headerlink" title="Chinese"></a>Chinese</h2><p>中文数据集采用5000篇新浪社会新闻。<br>设置的参数为K=30，iterInference=20，iterEM=20。<br>实验结果如下图。给出了每个主题top10的词语。<br><img src="/uploads/自然语言处理之LDA-II/topics2.png" alt="topics2"><br>此外用于预测的两个文档见下图，这两个新闻不在训练集之中，是另外的两条新闻，分别被预测为了主题25和主题9。<br><img src="/uploads/自然语言处理之LDA-II/predict2.png" alt="predict2"></p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>1 Latent Dirichlet Allocation by David M. Blei et.al<br>2 Variational Inference by David M. Blei<br>3 Variational Inference for LDA by Zhao Zhou</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>1 Latent Dirichlet Allocation by David M. Blei et al.<br>2 Variational Inference by David M. Blei<br>3 Variational Inference for LDA by Zhao Zhou</p>
 <p>完整代码、停用词以及数据集已托管至 <a href="https://github.com/laserwave/LDA-Variational-EM">github</a></p>
 
       
@@ -468,9 +468,9 @@
           
             <a href="/tags/NLP/" rel="tag">#NLP</a>
           
-            <a href="/tags/EM/" rel="tag">#EM</a>
-          
             <a href="/tags/variational-inference/" rel="tag">#variational inference</a>
+          
+            <a href="/tags/EM/" rel="tag">#EM</a>
           
         </div>
       
