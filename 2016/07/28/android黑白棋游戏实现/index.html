@@ -1,0 +1,813 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android,人工智能,算法,游戏," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="安卓实现黑白棋游戏，alpha-beta剪枝极小极大算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android黑白棋游戏实现">
+<meta property="og:url" content="http://yoursite.com/2016/07/28/android黑白棋游戏实现/index.html">
+<meta property="og:site_name" content="zhikaizhang's Blog">
+<meta property="og:description" content="安卓实现黑白棋游戏，alpha-beta剪枝极小极大算法">
+<meta property="og:image" content="http://yoursite.com/uploads/android黑白棋游戏实现/2.png">
+<meta property="og:image" content="http://yoursite.com/uploads/android黑白棋游戏实现/1.png">
+<meta property="og:image" content="http://yoursite.com/uploads/android黑白棋游戏实现/3.png">
+<meta property="og:image" content="http://yoursite.com/uploads/android黑白棋游戏实现/4.png">
+<meta property="og:image" content="http://yoursite.com/uploads/android黑白棋游戏实现/alpha.png">
+<meta property="og:updated_time" content="2016-07-28T12:02:05.372Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android黑白棋游戏实现">
+<meta name="twitter:description" content="安卓实现黑白棋游戏，alpha-beta剪枝极小极大算法">
+<meta name="twitter:image" content="http://yoursite.com/uploads/android黑白棋游戏实现/2.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> android黑白棋游戏实现 | zhikaizhang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">zhikaizhang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">算法、数据结构、机器学习、自然语言处理、android...</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                android黑白棋游戏实现
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发布于</span>
+            <time itemprop="dateCreated" datetime="2016-07-28T00:00:00+08:00" content="2016-07-28">
+              2016-07-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/算法与数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">算法与数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/28/android黑白棋游戏实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/28/android黑白棋游戏实现/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/07/28/android黑白棋游戏实现/" class="leancloud_visitors" data-flag-title="android黑白棋游戏实现">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="黑白棋"><a href="#黑白棋" class="headerlink" title="黑白棋"></a>黑白棋</h1><p>黑白棋，又叫苹果棋，最早流行于西方国家。游戏通过相互翻转对方的棋子，最后以棋盘上谁的棋子多来判断胜负。黑白棋非常易于上手，但精通则需要考虑许多因素，比如角边这样的特殊位置、稳定度、行动力等。本游戏取名为黑白棋大师，提供了8种难度等级的选择，从菜鸟、新手、入门、棋手到棋士、大师、宗师、棋圣，助你不断提升棋力。<br>本文将着重介绍黑白棋实现过程中用到的算法。</p>
+<h1 id="黑白棋游戏规则"><a href="#黑白棋游戏规则" class="headerlink" title="黑白棋游戏规则"></a>黑白棋游戏规则</h1><p>游戏规则见黑白棋大师中的截图。<br><img src="/uploads/android黑白棋游戏实现/2.png" alt="rule"></p>
+<h1 id="黑白棋大师游戏截图"><a href="#黑白棋大师游戏截图" class="headerlink" title="黑白棋大师游戏截图"></a>黑白棋大师游戏截图</h1><p>游戏启动界面。<br><img src="/uploads/android黑白棋游戏实现/1.png" alt="黑白棋游戏"><br>游戏过程中的一个截图。<br><img src="/uploads/android黑白棋游戏实现/3.png" alt="黑白棋游戏"><br>开新局时的选项，选择先后手以及AI的水平。<br><img src="/uploads/android黑白棋游戏实现/4.png" alt="黑白棋游戏"></p>
+<h1 id="几个关键的类"><a href="#几个关键的类" class="headerlink" title="几个关键的类"></a>几个关键的类</h1><h2 id="Rule"><a href="#Rule" class="headerlink" title="Rule"></a>Rule</h2><p>Rule类实现游戏规则相关的方法，包括</p>
+<ol>
+<li>判断某一步是否合法</li>
+<li>获取所有的合法走步</li>
+<li>走一步并翻转敌方棋子</li>
+<li>统计两方棋子个数</li>
+</ol>
+<h2 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h2><p>Algorithm类实现极小极大算法，包括</p>
+<ol>
+<li>局面评估函数，对当前局面打分，越高对max越有利，越低对min越有利</li>
+<li>min()方法</li>
+<li>max()方法</li>
+<li>获得一个好的走步</li>
+</ol>
+<h2 id="ReversiView"><a href="#ReversiView" class="headerlink" title="ReversiView"></a>ReversiView</h2><p>ReversiView继承自SurfaceView，实现棋盘的界面，在该类定义棋盘界面的绘制、更新等操作。</p>
+<h2 id="RenderThread"><a href="#RenderThread" class="headerlink" title="RenderThread"></a>RenderThread</h2><p>RenderThread继承自Thread，是控制ReversiView以一定fps更新、重绘界面的线程。</p>
+<h1 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h1><h2 id="棋盘表示"><a href="#棋盘表示" class="headerlink" title="棋盘表示"></a>棋盘表示</h2><p>byte[][]二维数组存储棋盘，-1表示有黑子，1表示有白子，0表示棋格为空</p>
+<h2 id="游戏规则类Rule的实现"><a href="#游戏规则类Rule的实现" class="headerlink" title="游戏规则类Rule的实现"></a>游戏规则类Rule的实现</h2><p>提供几个关于游戏规则的静态方法。</p>
+<h3 id="判断某一个位置是否位于棋盘内"><a href="#判断某一个位置是否位于棋盘内" class="headerlink" title="判断某一个位置是否位于棋盘内"></a>判断某一个位置是否位于棋盘内</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isLegal</span><span class="params">(<span class="keyword">int</span> row, <span class="keyword">int</span> col)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> row &gt;= <span class="number">0</span> &amp;&amp; row &lt; <span class="number">8</span> &amp;&amp; col &gt;= <span class="number">0</span> &amp;&amp; col &lt; <span class="number">8</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="判断某一方在某个位置落子是否合法"><a href="#判断某一方在某个位置落子是否合法" class="headerlink" title="判断某一方在某个位置落子是否合法"></a>判断某一方在某个位置落子是否合法</h3><p>即判断该子是否能与己方棋子在某个方向上夹住敌方棋子。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isLegalMove</span><span class="params">(<span class="keyword">byte</span>[][] chessBoard, Move move, <span class="keyword">byte</span> chessColor)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i, j, dirx, diry, row = move.row, col = move.col;</span><br><span class="line">        <span class="keyword">if</span> (!isLegal(row, col) || chessBoard[row][col] != Constant.NULL)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">for</span> (dirx = -<span class="number">1</span>; dirx &lt; <span class="number">2</span>; dirx++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (diry = -<span class="number">1</span>; diry &lt; <span class="number">2</span>; diry++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (dirx == <span class="number">0</span> &amp;&amp; diry == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line">                <span class="keyword">int</span> x = col + dirx, y = row + diry;</span><br><span class="line">                <span class="keyword">if</span> (isLegal(y, x) &amp;&amp; chessBoard[y][x] == (-chessColor)) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (i = row + diry * <span class="number">2</span>, j = col + dirx * <span class="number">2</span>; isLegal(i, j); i += diry, j += dirx) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (chessBoard[i][j] == (-chessColor)) &#123;</span><br><span class="line">                            <span class="keyword">continue</span>;</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (chessBoard[i][j] == chessColor) &#123;</span><br><span class="line">                            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="某一方走一步子"><a href="#某一方走一步子" class="headerlink" title="某一方走一步子"></a>某一方走一步子</h3><p>将各个方向上被翻转的棋子的颜色改变，并返回这些棋子在棋盘的位置，方便显示翻转动画。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Move&gt; <span class="title">move</span><span class="params">(<span class="keyword">byte</span>[][] chessBoard, Move move, <span class="keyword">byte</span> chessColor)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> row = move.row;</span><br><span class="line">	<span class="keyword">int</span> col = move.col;</span><br><span class="line">	<span class="keyword">int</span> i, j, temp, m, n, dirx, diry;</span><br><span class="line">	List&lt;Move&gt; moves = <span class="keyword">new</span> ArrayList&lt;Move&gt;();</span><br><span class="line">	<span class="keyword">for</span> (dirx = -<span class="number">1</span>; dirx &lt; <span class="number">2</span>; dirx++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (diry = -<span class="number">1</span>; diry &lt; <span class="number">2</span>; diry++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (dirx == <span class="number">0</span> &amp;&amp; diry == <span class="number">0</span>)</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			temp = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">int</span> x = col + dirx, y = row + diry;</span><br><span class="line">			<span class="keyword">if</span> (isLegal(y, x) &amp;&amp; chessBoard[y][x] == (-chessColor)) &#123;</span><br><span class="line">				temp++;</span><br><span class="line">				<span class="keyword">for</span> (i = row + diry * <span class="number">2</span>, j = col + dirx * <span class="number">2</span>; isLegal(i, j); i += diry, j += dirx) &#123;</span><br><span class="line">					<span class="keyword">if</span> (chessBoard[i][j] == (-chessColor)) &#123;</span><br><span class="line">						temp++;</span><br><span class="line">						<span class="keyword">continue</span>;</span><br><span class="line">					&#125; <span class="keyword">else</span> <span class="keyword">if</span> (chessBoard[i][j] == chessColor) &#123;</span><br><span class="line">						<span class="keyword">for</span> (m = row + diry, n = col + dirx; m &lt;= row + temp &amp;&amp; m &gt;= row - temp &amp;&amp; n &lt;= col + temp</span><br><span class="line">								&amp;&amp; n &gt;= col - temp; m += diry, n += dirx) &#123;</span><br><span class="line">							chessBoard[m][n] = chessColor;</span><br><span class="line">							moves.add(<span class="keyword">new</span> Move(m, n));</span><br><span class="line">						&#125;</span><br><span class="line">						<span class="keyword">break</span>;</span><br><span class="line">					&#125; <span class="keyword">else</span></span><br><span class="line">						<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	chessBoard[row][col] = chessColor;</span><br><span class="line">	<span class="keyword">return</span> moves;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="获取某一方当前全部合法的落子位置"><a href="#获取某一方当前全部合法的落子位置" class="headerlink" title="获取某一方当前全部合法的落子位置"></a>获取某一方当前全部合法的落子位置</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Move&gt; <span class="title">getLegalMoves</span><span class="params">(<span class="keyword">byte</span>[][] chessBoard, <span class="keyword">byte</span> chessColor)</span> </span>&#123;</span><br><span class="line">	List&lt;Move&gt; moves = <span class="keyword">new</span> ArrayList&lt;Move&gt;();</span><br><span class="line">	Move move = <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> row = <span class="number">0</span>; row &lt; <span class="number">8</span>; row++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> col = <span class="number">0</span>; col &lt; <span class="number">8</span>; col++) &#123;</span><br><span class="line">			move = <span class="keyword">new</span> Move(row, col);</span><br><span class="line">			<span class="keyword">if</span> (Rule.isLegalMove(chessBoard, move, chessColor)) &#123;</span><br><span class="line">				moves.add(move);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> moves;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="统计玩家和AI的棋子个数"><a href="#统计玩家和AI的棋子个数" class="headerlink" title="统计玩家和AI的棋子个数"></a>统计玩家和AI的棋子个数</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Statistic <span class="title">analyse</span><span class="params">(<span class="keyword">byte</span>[][] chessBoard, <span class="keyword">byte</span> playerColor)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> PLAYER = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> AI = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">8</span>; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (chessBoard[i][j] == playerColor)</span><br><span class="line">				PLAYER += <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (chessBoard[i][j] == (<span class="keyword">byte</span>)-playerColor)</span><br><span class="line">				AI += <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> Statistic(PLAYER, AI);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="游戏算法类Algorithm的实现"><a href="#游戏算法类Algorithm的实现" class="headerlink" title="游戏算法类Algorithm的实现"></a>游戏算法类Algorithm的实现</h2><h3 id="极大过程和极小过程"><a href="#极大过程和极小过程" class="headerlink" title="极大过程和极小过程"></a>极大过程和极小过程</h3><p>这两个过程的函数形式为：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> MinimaxResult <span class="title">max</span><span class="params">(<span class="keyword">byte</span>[][] chessBoard, <span class="keyword">int</span> depth, <span class="keyword">int</span> alpha, <span class="keyword">int</span> beta, <span class="keyword">byte</span> chessColor, <span class="keyword">int</span> difficulty)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> MinimaxResult <span class="title">min</span><span class="params">(<span class="keyword">byte</span>[][] chessBoard, <span class="keyword">int</span> depth, <span class="keyword">int</span> alpha, <span class="keyword">int</span> beta, <span class="keyword">byte</span> chessColor, <span class="keyword">int</span> difficulty)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>chessBoard为棋盘；depth为博弈树搜索深度；alpha和beta用于alpha-beta剪枝，在max方法中alpha不断更新为局面评分的较大值，在min方法中beta不断更新为局面评分的较小值，当alpha &gt;= beta时就进行剪枝；chessColor表示棋子颜色；difficulty表示游戏难度，对应于不同的AI水平。<br>由于黑子先行，黑子总是调用max()方法，白子调用min()方法。<br>下面以极大过程为例。<br>如果深度为0，只要返回当前局面评分即可。如果双方均没有步可走，表示已经达到最终局面，返回该局面评分。如果仅单方无处可走，调用min递归即可。<br>正常情况下有步可走，遍历每个合法的走步，如果alpha大于等于beta，剪枝直接break，否则走步并递归。<br>best是当前max节点维护的一个最佳值，调用的min方法的alpha是取得alpha和best的较大值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> MinimaxResult <span class="title">max</span><span class="params">(<span class="keyword">byte</span>[][] chessBoard, <span class="keyword">int</span> depth, <span class="keyword">int</span> alpha, <span class="keyword">int</span> beta, <span class="keyword">byte</span> chessColor, <span class="keyword">int</span> difficulty)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (depth == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> MinimaxResult(evaluate(chessBoard, difficulty), <span class="keyword">null</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	List&lt;Move&gt; legalMovesMe = Rule.getLegalMoves(chessBoard, chessColor);</span><br><span class="line">	<span class="keyword">if</span> (legalMovesMe.size() == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (Rule.getLegalMoves(chessBoard, (<span class="keyword">byte</span>)-chessColor).size() == <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> MinimaxResult(evaluate(chessBoard, difficulty), <span class="keyword">null</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> min(chessBoard, depth, alpha, beta, (<span class="keyword">byte</span>)-chessColor, difficulty);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">byte</span>[][] tmp = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">8</span>][<span class="number">8</span>];</span><br><span class="line">	Util.copyBinaryArray(chessBoard, tmp);</span><br><span class="line">	<span class="keyword">int</span> best = Integer.MIN_VALUE;</span><br><span class="line">	Move move = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; legalMovesMe.size(); i++) &#123;</span><br><span class="line">		alpha = Math.max(best, alpha);</span><br><span class="line">		<span class="keyword">if</span>(alpha &gt;= beta)&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		Rule.move(chessBoard, legalMovesMe.get(i), chessColor);</span><br><span class="line">		<span class="keyword">int</span> value = min(chessBoard, depth - <span class="number">1</span>, Math.max(best, alpha), beta, (<span class="keyword">byte</span>)-chessColor, difficulty).mark;</span><br><span class="line">		<span class="keyword">if</span> (value &gt; best) &#123;</span><br><span class="line">			best = value;</span><br><span class="line">			move = legalMovesMe.get(i);</span><br><span class="line">		&#125;</span><br><span class="line">		Util.copyBinaryArray(tmp, chessBoard);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> MinimaxResult(best, move);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> MinimaxResult <span class="title">min</span><span class="params">(<span class="keyword">byte</span>[][] chessBoard, <span class="keyword">int</span> depth, <span class="keyword">int</span> alpha, <span class="keyword">int</span> beta, <span class="keyword">byte</span> chessColor, <span class="keyword">int</span> difficulty)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (depth == <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> MinimaxResult(evaluate(chessBoard, difficulty), <span class="keyword">null</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		List&lt;Move&gt; legalMovesMe = Rule.getLegalMoves(chessBoard, chessColor);</span><br><span class="line">		<span class="keyword">if</span> (legalMovesMe.size() == <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">if</span> (Rule.getLegalMoves(chessBoard, (<span class="keyword">byte</span>)-chessColor).size() == <span class="number">0</span>) &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">new</span> MinimaxResult(evaluate(chessBoard, difficulty), <span class="keyword">null</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> max(chessBoard, depth, alpha, beta, (<span class="keyword">byte</span>)-chessColor, difficulty);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">byte</span>[][] tmp = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">8</span>][<span class="number">8</span>];</span><br><span class="line">		Util.copyBinaryArray(chessBoard, tmp);</span><br><span class="line">		<span class="keyword">int</span> best = Integer.MAX_VALUE;</span><br><span class="line">		Move move = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; legalMovesMe.size(); i++) &#123;</span><br><span class="line">            beta = Math.min(best, beta);</span><br><span class="line">            <span class="keyword">if</span>(alpha &gt;= beta)&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">			Rule.move(chessBoard, legalMovesMe.get(i), chessColor);</span><br><span class="line">			<span class="keyword">int</span> value = max(chessBoard, depth - <span class="number">1</span>, alpha, Math.min(best, beta), (<span class="keyword">byte</span>)-chessColor, difficulty).mark;</span><br><span class="line">			<span class="keyword">if</span> (value &lt; best) &#123;</span><br><span class="line">				best = value;</span><br><span class="line">				move = legalMovesMe.get(i);</span><br><span class="line">			&#125;</span><br><span class="line">			Util.copyBinaryArray(tmp, chessBoard);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> MinimaxResult(best, move);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="alpha-beta剪枝原理"><a href="#alpha-beta剪枝原理" class="headerlink" title="alpha-beta剪枝原理"></a>alpha-beta剪枝原理</h3><p>先解释下alpha和beta的物理含义，alpha表示max节点迄今为止的最佳局面评分，beta表示min节点迄今为止的最佳局面评分。<br>举个例子见下图（数值为虚构），假设深度是两层，每个结点有两行数字，上方的两个数分别是alpha和beta，表示作为参数传到该层的alpha和beta。下方的数表示了该节点best的更新过程。<br><img src="/uploads/android黑白棋游戏实现/alpha.png" alt="alpha-beta"><br>看图中第一个红色的叉号，该位置处会更新beta为正无穷和2的较小值，即2，导致alpha大于等于beta成立，发生剪枝，对应于min方法中相应位置处的break操作。</p>
+<h3 id="获得AI计算出的最佳走步"><a href="#获得AI计算出的最佳走步" class="headerlink" title="获得AI计算出的最佳走步"></a>获得AI计算出的最佳走步</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Move <span class="title">getGoodMove</span><span class="params">(<span class="keyword">byte</span>[][] chessBoard, <span class="keyword">int</span> depth, <span class="keyword">byte</span> chessColor, <span class="keyword">int</span> difficulty)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (chessColor == Constant.BLACK)</span><br><span class="line">            <span class="keyword">return</span> max(chessBoard, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, chessColor, difficulty).move;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> min(chessBoard, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, chessColor, difficulty).move;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="局面评估函数"><a href="#局面评估函数" class="headerlink" title="局面评估函数"></a>局面评估函数</h3><p>局面评估函数决定了AI水平的高低。对应于不同的AI等级，设计了不同的评估函数。<br>菜鸟级别只关注棋子个数，新手、入门、棋手3个级别不仅关注棋子的个数，而且关注特殊位置的棋子（边、角），棋士和大师级别在棋子个数、边角之外还考虑了行动力，即对方下轮可选的下子位置的个数，宗师和棋圣考虑稳定度和行动力。稳定度将在下一小节介绍。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">evaluate</span><span class="params">(<span class="keyword">byte</span>[][] chessBoard, <span class="keyword">int</span> difficulty)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> whiteEvaluate = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> blackEvaluate = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">switch</span> (difficulty) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">8</span>; j++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (chessBoard[i][j] == WHITE) &#123;</span><br><span class="line">                        whiteEvaluate += <span class="number">1</span>;</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (chessBoard[i][j] == BLACK) &#123;</span><br><span class="line">                        blackEvaluate += <span class="number">1</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">8</span>; j++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> ((i == <span class="number">0</span> || i == <span class="number">7</span>) &amp;&amp; (j == <span class="number">0</span> || j == <span class="number">7</span>)) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (chessBoard[i][j] == WHITE) &#123;</span><br><span class="line">                            whiteEvaluate += <span class="number">5</span>;</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (chessBoard[i][j] == BLACK) &#123;</span><br><span class="line">                            blackEvaluate += <span class="number">5</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (i == <span class="number">0</span> || i == <span class="number">7</span> || j == <span class="number">0</span> || j == <span class="number">7</span>) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (chessBoard[i][j] == WHITE) &#123;</span><br><span class="line">                            whiteEvaluate += <span class="number">2</span>;</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (chessBoard[i][j] == BLACK) &#123;</span><br><span class="line">                            blackEvaluate += <span class="number">2</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (chessBoard[i][j] == WHITE) &#123;</span><br><span class="line">                            whiteEvaluate += <span class="number">1</span>;</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (chessBoard[i][j] == BLACK) &#123;</span><br><span class="line">                            blackEvaluate += <span class="number">1</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">8</span>; j++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> ((i == <span class="number">0</span> || i == <span class="number">7</span>) &amp;&amp; (j == <span class="number">0</span> || j == <span class="number">7</span>)) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (chessBoard[i][j] == WHITE) &#123;</span><br><span class="line">                            whiteEvaluate += <span class="number">5</span>;</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (chessBoard[i][j] == BLACK) &#123;</span><br><span class="line">                            blackEvaluate += <span class="number">5</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (i == <span class="number">0</span> || i == <span class="number">7</span> || j == <span class="number">0</span> || j == <span class="number">7</span>) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (chessBoard[i][j] == WHITE) &#123;</span><br><span class="line">                            whiteEvaluate += <span class="number">2</span>;</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (chessBoard[i][j] == BLACK) &#123;</span><br><span class="line">                            blackEvaluate += <span class="number">2</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (chessBoard[i][j] == WHITE) &#123;</span><br><span class="line">                            whiteEvaluate += <span class="number">1</span>;</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (chessBoard[i][j] == BLACK) &#123;</span><br><span class="line">                            blackEvaluate += <span class="number">1</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            blackEvaluate = blackEvaluate * <span class="number">2</span> + Rule.getLegalMoves(chessBoard, BLACK).size();</span><br><span class="line">            whiteEvaluate = whiteEvaluate * <span class="number">2</span> + Rule.getLegalMoves(chessBoard, WHITE).size();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">7</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="number">8</span>:</span><br><span class="line">            <span class="comment">/**</span><br><span class="line">             * 稳定度</span><br><span class="line">             */</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">9</span>; j++) &#123;</span><br><span class="line">                    <span class="keyword">int</span> weight[] = <span class="keyword">new</span> <span class="keyword">int</span>[] &#123; <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">10</span>, <span class="number">15</span> &#125;;</span><br><span class="line">                    <span class="keyword">if</span> (chessBoard[i][j] == WHITE) &#123;</span><br><span class="line">                        whiteEvaluate += weight[getStabilizationDegree(chessBoard, <span class="keyword">new</span> Move(i, j))];</span><br><span class="line">                    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (chessBoard[i][j] == BLACK) &#123;</span><br><span class="line">                        blackEvaluate += weight[getStabilizationDegree(chessBoard, <span class="keyword">new</span> Move(i, j))];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">/**</span><br><span class="line">             * 行动力</span><br><span class="line">             */</span></span><br><span class="line">            blackEvaluate += Rule.getLegalMoves(chessBoard, BLACK).size();</span><br><span class="line">            whiteEvaluate += Rule.getLegalMoves(chessBoard, WHITE).size();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> blackEvaluate - whiteEvaluate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="稳定度计算"><a href="#稳定度计算" class="headerlink" title="稳定度计算"></a>稳定度计算</h3><p>我们知道，在黑白棋中，棋盘四角的位置一旦占据是不可能再被翻转的，因此这几个位置上的子必然是稳定子，而边上的子只有可能沿边的方向被翻转，稳定的程度高于中间的位置上的子。<br>因此，试图给每个子定义一个稳定度，描述该子不被翻转的稳定程度。<br>一共有四个方向，即左-右，上-下，左上-右下，右上-左下。举个例子，下面代码中的 <code>(drow[0][0], dcol[0][0])</code>表示向左移动一个单位的向量，<code>(drow[0][1], dcol[0][1])</code>表示向右移动一个单位的向量。<br>对于棋盘中某个子的位置，向左找到第一个不是该颜色的位置（可以是出界），再向右找到第一个不是该颜色的位置（可以是出界），如果这两个位置至少有一个出界，或者两个均为敌方棋子，稳定度加1。<br>对于另外三个方向作同样操作。可以看到，角上的棋子的稳定度必然为4，其他位置则根据具体情况并不恒定不变。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getStabilizationDegree</span><span class="params">(<span class="keyword">byte</span>[][] chessBoard, Move move)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> chessColor = chessBoard[move.row][move.col];</span><br><span class="line">        <span class="keyword">int</span> drow[][], dcol[][];</span><br><span class="line">        <span class="keyword">int</span> row[] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>], col[] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">int</span> degree = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        drow = <span class="keyword">new</span> <span class="keyword">int</span>[][] &#123; &#123; <span class="number">0</span>, <span class="number">0</span> &#125;, &#123; -<span class="number">1</span>, <span class="number">1</span> &#125;, &#123; -<span class="number">1</span>, <span class="number">1</span> &#125;, &#123; <span class="number">1</span>, -<span class="number">1</span> &#125; &#125;;</span><br><span class="line">        dcol = <span class="keyword">new</span> <span class="keyword">int</span>[][] &#123; &#123; -<span class="number">1</span>, <span class="number">1</span> &#125;, &#123; <span class="number">0</span>, <span class="number">0</span> &#125;, &#123; -<span class="number">1</span>, <span class="number">1</span> &#125;, &#123; -<span class="number">1</span>, <span class="number">1</span> &#125; &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">4</span>; k++) &#123;</span><br><span class="line">            row[<span class="number">0</span>] = row[<span class="number">1</span>] = move.row;</span><br><span class="line">            col[<span class="number">0</span>] = col[<span class="number">1</span>] = move.col;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">while</span> (Rule.isLegal(row[i] + drow[k][i], col[i] + dcol[k][i])</span><br><span class="line">                        &amp;&amp; chessBoard[row[i] + drow[k][i]][col[i] + dcol[k][i]] == chessColor) &#123;</span><br><span class="line">                    row[i] += drow[k][i];</span><br><span class="line">                    col[i] += dcol[k][i];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!Rule.isLegal(row[<span class="number">0</span>] + drow[k][<span class="number">0</span>], col[<span class="number">0</span>] + dcol[k][<span class="number">0</span>])</span><br><span class="line">                    || !Rule.isLegal(row[<span class="number">1</span>] + drow[k][<span class="number">1</span>], col[<span class="number">1</span>] + dcol[k][<span class="number">1</span>])) &#123;</span><br><span class="line">                degree += <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (chessBoard[row[<span class="number">0</span>] + drow[k][<span class="number">0</span>]][col[<span class="number">0</span>] + dcol[k][<span class="number">0</span>]] == (-chessColor)</span><br><span class="line">                    &amp;&amp; chessBoard[row[<span class="number">1</span>] + drow[k][<span class="number">1</span>]][col[<span class="number">1</span>] + dcol[k][<span class="number">1</span>]] == (-chessColor)) &#123;</span><br><span class="line">                degree += <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> degree;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="项目开源"><a href="#项目开源" class="headerlink" title="项目开源"></a>项目开源</h1><p>完整项目已经开源到github上。<br>github项目主页: <a href="https://github.com/laserwave/Reversi">Reversi</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag">#android</a>
+          
+            <a href="/tags/人工智能/" rel="tag">#人工智能</a>
+          
+            <a href="/tags/算法/" rel="tag">#算法</a>
+          
+            <a href="/tags/游戏/" rel="tag">#游戏</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/11/welcome to my blog/" rel="next" title="welcome to my blog">
+                <i class="fa fa-chevron-left"></i> welcome to my blog
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/07/28/android黑白棋游戏实现/"
+     data-title="android黑白棋游戏实现"
+     data-content=""
+     data-url="http://yoursite.com/2016/07/28/android黑白棋游戏实现/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/07/28/android黑白棋游戏实现/"
+           data-title="android黑白棋游戏实现" data-url="http://yoursite.com/2016/07/28/android黑白棋游戏实现/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/cat.png"
+               alt="zhikaizhang" />
+          <p class="site-author-name" itemprop="name">zhikaizhang</p>
+          <p class="site-description motion-element" itemprop="description">zhikaizhang个人博客，主要关注算法、数据结构、机器学习、自然语言处理。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/laserwave" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://heimingx.cn" title="胥海明博客" target="_blank">胥海明博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#黑白棋"><span class="nav-number">1.</span> <span class="nav-text">黑白棋</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#黑白棋游戏规则"><span class="nav-number">2.</span> <span class="nav-text">黑白棋游戏规则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#黑白棋大师游戏截图"><span class="nav-number">3.</span> <span class="nav-text">黑白棋大师游戏截图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#几个关键的类"><span class="nav-number">4.</span> <span class="nav-text">几个关键的类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Rule"><span class="nav-number">4.1.</span> <span class="nav-text">Rule</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Algorithm"><span class="nav-number">4.2.</span> <span class="nav-text">Algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReversiView"><span class="nav-number">4.3.</span> <span class="nav-text">ReversiView</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RenderThread"><span class="nav-number">4.4.</span> <span class="nav-text">RenderThread</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#具体实现"><span class="nav-number">5.</span> <span class="nav-text">具体实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#棋盘表示"><span class="nav-number">5.1.</span> <span class="nav-text">棋盘表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#游戏规则类Rule的实现"><span class="nav-number">5.2.</span> <span class="nav-text">游戏规则类Rule的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判断某一个位置是否位于棋盘内"><span class="nav-number">5.2.1.</span> <span class="nav-text">判断某一个位置是否位于棋盘内</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断某一方在某个位置落子是否合法"><span class="nav-number">5.2.2.</span> <span class="nav-text">判断某一方在某个位置落子是否合法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#某一方走一步子"><span class="nav-number">5.2.3.</span> <span class="nav-text">某一方走一步子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取某一方当前全部合法的落子位置"><span class="nav-number">5.2.4.</span> <span class="nav-text">获取某一方当前全部合法的落子位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#统计玩家和AI的棋子个数"><span class="nav-number">5.2.5.</span> <span class="nav-text">统计玩家和AI的棋子个数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#游戏算法类Algorithm的实现"><span class="nav-number">5.3.</span> <span class="nav-text">游戏算法类Algorithm的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#极大过程和极小过程"><span class="nav-number">5.3.1.</span> <span class="nav-text">极大过程和极小过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alpha-beta剪枝原理"><span class="nav-number">5.3.2.</span> <span class="nav-text">alpha-beta剪枝原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获得AI计算出的最佳走步"><span class="nav-number">5.3.3.</span> <span class="nav-text">获得AI计算出的最佳走步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#局面评估函数"><span class="nav-number">5.3.4.</span> <span class="nav-text">局面评估函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#稳定度计算"><span class="nav-number">5.3.5.</span> <span class="nav-text">稳定度计算</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目开源"><span class="nav-number">6.</span> <span class="nav-text">项目开源</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  <span class="author" itemprop="copyrightHolder">苏ICP备16023782号</span>
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="author" itemprop="copyrightHolder">zhikaizhang's blog</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"laserwave"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("wv1vA5GMdT6r7Vi1AVpQNC0I-gzGzoHsz", "jt5O27A704yaLaJrddXok0jb");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
