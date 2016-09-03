@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="python打印调试或结果日志到文件以及标准输出中">
+<meta name="description" content="python使用configparser模块读写配置文件">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python使用logging模块将日志打印到标准输出以及文件之中">
-<meta property="og:url" content="http://yoursite.com/2016/06/24/python使用logging模块将日志打印到标准输出以及文件之中/index.html">
+<meta property="og:title" content="python读写配置文件">
+<meta property="og:url" content="http://yoursite.com/2016/06/24/python读写配置文件/index.html">
 <meta property="og:site_name" content="zhikaizhang's Blog">
-<meta property="og:description" content="python打印调试或结果日志到文件以及标准输出中">
-<meta property="og:updated_time" content="2016-06-26T05:43:12.899Z">
+<meta property="og:description" content="python使用configparser模块读写配置文件">
+<meta property="og:updated_time" content="2016-09-03T03:37:59.722Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python使用logging模块将日志打印到标准输出以及文件之中">
-<meta name="twitter:description" content="python打印调试或结果日志到文件以及标准输出中">
+<meta name="twitter:title" content="python读写配置文件">
+<meta name="twitter:description" content="python使用configparser模块读写配置文件">
 
 
 
@@ -111,7 +111,7 @@
   };
 </script>
 
-  <title> python使用logging模块将日志打印到标准输出以及文件之中 | zhikaizhang's Blog </title>
+  <title> python读写配置文件 | zhikaizhang's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -235,7 +235,7 @@
             
             
               
-                python使用logging模块将日志打印到标准输出以及文件之中
+                python读写配置文件
               
             
           </h1>
@@ -277,8 +277,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/06/24/python使用logging模块将日志打印到标准输出以及文件之中/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/24/python使用logging模块将日志打印到标准输出以及文件之中/" itemprop="commentsCount"></span>
+                <a href="/2016/06/24/python读写配置文件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/24/python读写配置文件/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -288,7 +288,7 @@
 
           
           
-             <span id="/2016/06/24/python使用logging模块将日志打印到标准输出以及文件之中/" class="leancloud_visitors" data-flag-title="python使用logging模块将日志打印到标准输出以及文件之中">
+             <span id="/2016/06/24/python读写配置文件/" class="leancloud_visitors" data-flag-title="python读写配置文件">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -310,44 +310,8 @@
       
 
       
-        <h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><p>通过下面的方法就可以将之后输出的日志同时输出到标准输出以及文件中。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建日志对象</span></span><br><span class="line">logger = logging.getLogger()</span><br><span class="line">logger.setLevel(logging.DEBUG)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义日志格式</span></span><br><span class="line">formatter = logging.Formatter(<span class="string">'%(asctime)s - %(name)s - %(levelname)s - %(message)s'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建将日志写入文件的handler</span></span><br><span class="line">fileHandler = logging.FileHandler(<span class="string">'log.txt'</span>)</span><br><span class="line">fileHandler.setLevel(logging.DEBUG)</span><br><span class="line">fileHandler.setFormatter(formatter)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建将日志写入标准输出的handler</span></span><br><span class="line">stdHandler = logging.StreamHandler()</span><br><span class="line">stdHandler.setLevel(logging.DEBUG)</span><br><span class="line">stdHandler.setFormatter(formatter)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 给logger添加handler</span></span><br><span class="line">logger.addHandler(fileHandler)</span><br><span class="line">logger.addHandler(stdHandler)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出日志</span></span><br><span class="line">logger.info(<span class="string">"hello world"</span>)</span><br></pre></td></tr></table></figure></p>
-<h1 id="日志级别"><a href="#日志级别" class="headerlink" title="日志级别"></a>日志级别</h1><p>分为5个级别，从低到高顺序见下表，第二列表示 <code>logger.setLevel(logging.DEBUG)</code>中设置的常量，第三列表示 <code>logger.info(&quot;hello world&quot;)</code>中的方法名。 </p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">级别名称</th>
-<th style="text-align:center">常量名</th>
-<th style="text-align:center">方法名</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">调试</td>
-<td style="text-align:center">DEBUG</td>
-<td style="text-align:center">debug()</td>
-</tr>
-<tr>
-<td style="text-align:center">信息</td>
-<td style="text-align:center">INFO</td>
-<td style="text-align:center">info()</td>
-</tr>
-<tr>
-<td style="text-align:center">警告</td>
-<td style="text-align:center">WARNING</td>
-<td style="text-align:center">warning()</td>
-</tr>
-<tr>
-<td style="text-align:center">错误</td>
-<td style="text-align:center">ERROR</td>
-<td style="text-align:center">error()</td>
-</tr>
-<tr>
-<td style="text-align:center">致命错误</td>
-<td style="text-align:center">CRITICAL</td>
-<td style="text-align:center">critical()</td>
-</tr>
-</tbody>
-</table>
+        <h1 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h1><p>配置文件config.ini如下，其中文件名和文件后缀名可以自己定义，但是格式应与其一致，中括号中的表示section，用来对变量进行分组。<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[params]</span></span><br><span class="line"><span class="attr">integerVariable</span> = <span class="number">5</span></span><br><span class="line"><span class="section"></span><br><span class="line">[other]</span></span><br><span class="line"><span class="attr">floatVariable</span> = <span class="number">1.5</span></span><br><span class="line"><span class="attr">stringVariable</span> = hello world</span><br><span class="line"><span class="attr">booleanVariable</span> = <span class="literal">false</span></span><br></pre></td></tr></table></figure></p>
+<p>下面的代码演示了如何读写配置文件，详见注释。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> configparser  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取配置文件 </span></span><br><span class="line">config = configparser.ConfigParser()</span><br><span class="line">config.read(<span class="string">"config.ini"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取不同类型的变量</span></span><br><span class="line">integerVariable = config.getint(<span class="string">"params"</span>, <span class="string">"integerVariable"</span>)</span><br><span class="line">floatVariable = config.getfloat(<span class="string">"other"</span>, <span class="string">"floatVariable"</span>)</span><br><span class="line">booleanVariable = config.getboolean(<span class="string">"other"</span>, <span class="string">"booleanVariable"</span>)</span><br><span class="line">stringVariable = config.get(<span class="string">"other"</span>, <span class="string">"stringVariable"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加新的分组</span></span><br><span class="line">config.add_section(<span class="string">"new_section"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写变量</span></span><br><span class="line">config.set(<span class="string">"other"</span>, <span class="string">"m"</span>, <span class="string">'100'</span>)</span><br><span class="line">config.write(open(<span class="string">"config.ini"</span>, <span class="string">'w'</span>))</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -378,16 +342,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/18/markdown常用语法与LaTex公式编辑/" rel="next" title="markdown常用语法与LaTex公式编辑">
-                <i class="fa fa-chevron-left"></i> markdown常用语法与LaTex公式编辑
+              <a href="/2016/06/24/python日志管理/" rel="next" title="python日志管理">
+                <i class="fa fa-chevron-left"></i> python日志管理
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/06/24/python使用configparser模块读写配置文件/" rel="prev" title="python使用configparser模块读写配置文件">
-                python使用configparser模块读写配置文件 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/06/26/python文件操作/" rel="prev" title="python文件操作">
+                python文件操作 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -403,10 +367,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/06/24/python使用logging模块将日志打印到标准输出以及文件之中/"
-     data-title="python使用logging模块将日志打印到标准输出以及文件之中"
+        <div class="ds-share flat" data-thread-key="2016/06/24/python读写配置文件/"
+     data-title="python读写配置文件"
      data-content=""
-     data-url="http://yoursite.com/2016/06/24/python使用logging模块将日志打印到标准输出以及文件之中/">
+     data-url="http://yoursite.com/2016/06/24/python读写配置文件/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -433,8 +397,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/06/24/python使用logging模块将日志打印到标准输出以及文件之中/"
-           data-title="python使用logging模块将日志打印到标准输出以及文件之中" data-url="http://yoursite.com/2016/06/24/python使用logging模块将日志打印到标准输出以及文件之中/">
+      <div class="ds-thread" data-thread-key="2016/06/24/python读写配置文件/"
+           data-title="python读写配置文件" data-url="http://yoursite.com/2016/06/24/python读写配置文件/">
       </div>
     
   </div>
@@ -537,6 +501,10 @@
                   <a href="http://heimingx.cn" title="胥海明博客" target="_blank">胥海明博客</a>
                 </li>
               
+                <li class="links-of-blogroll-item">
+                  <a href="http://frankge.me/blog/" title="葛治文博客" target="_blank">葛治文博客</a>
+                </li>
+              
             </ul>
           </div>
         
@@ -550,7 +518,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方法"><span class="nav-number">1.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志级别"><span class="nav-number">2.</span> <span class="nav-text">日志级别</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Usage"><span class="nav-number">1.</span> <span class="nav-text">Usage</span></a></li></ol></div>
             
           </div>
         </section>

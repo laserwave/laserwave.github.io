@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="python读写配置文件">
+<meta name="description" content="python使用codecs模块进行文件操作">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python使用configparser模块读写配置文件">
-<meta property="og:url" content="http://yoursite.com/2016/06/24/python使用configparser模块读写配置文件/index.html">
+<meta property="og:title" content="python文件操作">
+<meta property="og:url" content="http://yoursite.com/2016/06/26/python文件操作/index.html">
 <meta property="og:site_name" content="zhikaizhang's Blog">
-<meta property="og:description" content="python读写配置文件">
-<meta property="og:updated_time" content="2016-06-26T04:49:35.270Z">
+<meta property="og:description" content="python使用codecs模块进行文件操作">
+<meta property="og:updated_time" content="2016-09-03T03:29:57.417Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python使用configparser模块读写配置文件">
-<meta name="twitter:description" content="python读写配置文件">
+<meta name="twitter:title" content="python文件操作">
+<meta name="twitter:description" content="python使用codecs模块进行文件操作">
 
 
 
@@ -111,7 +111,7 @@
   };
 </script>
 
-  <title> python使用configparser模块读写配置文件 | zhikaizhang's Blog </title>
+  <title> python文件操作 | zhikaizhang's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -235,7 +235,7 @@
             
             
               
-                python使用configparser模块读写配置文件
+                python文件操作
               
             
           </h1>
@@ -247,8 +247,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发布于</span>
-            <time itemprop="dateCreated" datetime="2016-06-24T00:00:00+08:00" content="2016-06-24">
-              2016-06-24
+            <time itemprop="dateCreated" datetime="2016-06-26T00:00:00+08:00" content="2016-06-26">
+              2016-06-26
             </time>
           </span>
 
@@ -277,8 +277,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/06/24/python使用configparser模块读写配置文件/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/24/python使用configparser模块读写配置文件/" itemprop="commentsCount"></span>
+                <a href="/2016/06/26/python文件操作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/26/python文件操作/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -288,7 +288,7 @@
 
           
           
-             <span id="/2016/06/24/python使用configparser模块读写配置文件/" class="leancloud_visitors" data-flag-title="python使用configparser模块读写配置文件">
+             <span id="/2016/06/26/python文件操作/" class="leancloud_visitors" data-flag-title="python文件操作">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -310,8 +310,68 @@
       
 
       
-        <h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><p>配置文件config.ini如下，其中文件名和文件后缀名可以自己定义，但是格式应与其一致，中括号中的表示section，用来对变量进行分组。<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[params]</span></span><br><span class="line"><span class="attr">integerVariable</span> = <span class="number">5</span></span><br><span class="line"><span class="section"></span><br><span class="line">[other]</span></span><br><span class="line"><span class="attr">floatVariable</span> = <span class="number">1.5</span></span><br><span class="line"><span class="attr">stringVariable</span> = hello world</span><br><span class="line"><span class="attr">booleanVariable</span> = <span class="literal">false</span></span><br></pre></td></tr></table></figure></p>
-<p>下面的代码演示了如何读写配置文件，详见注释。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> configparser  </span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取配置文件 </span></span><br><span class="line">config = configparser.ConfigParser()</span><br><span class="line">config.read(<span class="string">"config.ini"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取不同类型的变量</span></span><br><span class="line">integerVariable = config.getint(<span class="string">"params"</span>, <span class="string">"integerVariable"</span>)</span><br><span class="line">floatVariable = config.getfloat(<span class="string">"other"</span>, <span class="string">"floatVariable"</span>)</span><br><span class="line">booleanVariable = config.getboolean(<span class="string">"other"</span>, <span class="string">"booleanVariable"</span>)</span><br><span class="line">stringVariable = config.get(<span class="string">"other"</span>, <span class="string">"stringVariable"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加新的分组</span></span><br><span class="line">config.add_section(<span class="string">"new_section"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写变量</span></span><br><span class="line">config.set(<span class="string">"other"</span>, <span class="string">"m"</span>, <span class="string">'100'</span>)</span><br><span class="line">config.write(open(<span class="string">"config.ini"</span>, <span class="string">'w'</span>))</span><br></pre></td></tr></table></figure></p>
+        <p>为了支持读写非ASCII码字符，使用codecs模块读取UTF-8编码文件。</p>
+<h1 id="读"><a href="#读" class="headerlink" title="读"></a>读</h1><p>下面的代码读取了文件，将每一行的内容组成了一个列表。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line">file = codecs.open(<span class="string">'test.txt'</span>,<span class="string">'r'</span>,<span class="string">'utf-8'</span>)</span><br><span class="line">lines = [line.strip() <span class="keyword">for</span> line <span class="keyword">in</span> file] </span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure></p>
+<h1 id="写"><a href="#写" class="headerlink" title="写"></a>写</h1><p>下面的代码写入了一行英文和一行中文到文件中。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line">file = codecs.open(<span class="string">'test.txt'</span>,<span class="string">'w'</span>,<span class="string">'utf-8'</span>)</span><br><span class="line">file.write(<span class="string">'Hello World!\n'</span>)</span><br><span class="line">file.write(<span class="string">'哈哈哈\n'</span>)</span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure></p>
+<h1 id="文件读写模式"><a href="#文件读写模式" class="headerlink" title="文件读写模式"></a>文件读写模式</h1><p>最为常见的三种模式，见下表，其中模式就是指获取文件对象时传入的参数，最常用的是前三个。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">模式</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">r</td>
+<td style="text-align:center">仅读，待打开的文件必须存在</td>
+</tr>
+<tr>
+<td style="text-align:center">w</td>
+<td style="text-align:center">仅写，若文件已存在，内容将先被清空</td>
+</tr>
+<tr>
+<td style="text-align:center">a</td>
+<td style="text-align:center">仅写，若文件已存在，内容不会清空</td>
+</tr>
+<tr>
+<td style="text-align:center">r+</td>
+<td style="text-align:center">读写，待打开的文件必须存在</td>
+</tr>
+<tr>
+<td style="text-align:center">w+</td>
+<td style="text-align:center">读写，若文件已存在，内容将先被清空</td>
+</tr>
+<tr>
+<td style="text-align:center">a+</td>
+<td style="text-align:center">读写，若文件已存在，内容不会清空</td>
+</tr>
+<tr>
+<td style="text-align:center">rb</td>
+<td style="text-align:center">仅读，二进制，待打开的文件必须存在</td>
+</tr>
+<tr>
+<td style="text-align:center">wb</td>
+<td style="text-align:center">仅写，二进制，若文件已存在，内容将先被清空</td>
+</tr>
+<tr>
+<td style="text-align:center">ab</td>
+<td style="text-align:center">仅写，二进制，若文件已存在，内容不会清空</td>
+</tr>
+<tr>
+<td style="text-align:center">r+b</td>
+<td style="text-align:center">读写，二进制，待打开的文件必须存在</td>
+</tr>
+<tr>
+<td style="text-align:center">w+b</td>
+<td style="text-align:center">读写，二进制，若文件已存在，内容将先被清空</td>
+</tr>
+<tr>
+<td style="text-align:center">a+b</td>
+<td style="text-align:center">读写，二进制，若文件已存在，内容不会清空</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
@@ -342,16 +402,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/24/python使用logging模块将日志打印到标准输出以及文件之中/" rel="next" title="python使用logging模块将日志打印到标准输出以及文件之中">
-                <i class="fa fa-chevron-left"></i> python使用logging模块将日志打印到标准输出以及文件之中
+              <a href="/2016/06/24/python读写配置文件/" rel="next" title="python读写配置文件">
+                <i class="fa fa-chevron-left"></i> python读写配置文件
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/06/26/python使用codecs模块进行文件操作-读写中英文字符/" rel="prev" title="python使用codecs模块进行文件操作-读写中英文字符">
-                python使用codecs模块进行文件操作-读写中英文字符 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/06/29/自然语言处理之LDA/" rel="prev" title="自然语言处理之LDA">
+                自然语言处理之LDA <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -367,10 +427,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/06/24/python使用configparser模块读写配置文件/"
-     data-title="python使用configparser模块读写配置文件"
+        <div class="ds-share flat" data-thread-key="2016/06/26/python文件操作/"
+     data-title="python文件操作"
      data-content=""
-     data-url="http://yoursite.com/2016/06/24/python使用configparser模块读写配置文件/">
+     data-url="http://yoursite.com/2016/06/26/python文件操作/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -397,8 +457,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/06/24/python使用configparser模块读写配置文件/"
-           data-title="python使用configparser模块读写配置文件" data-url="http://yoursite.com/2016/06/24/python使用configparser模块读写配置文件/">
+      <div class="ds-thread" data-thread-key="2016/06/26/python文件操作/"
+           data-title="python文件操作" data-url="http://yoursite.com/2016/06/26/python文件操作/">
       </div>
     
   </div>
@@ -501,6 +561,10 @@
                   <a href="http://heimingx.cn" title="胥海明博客" target="_blank">胥海明博客</a>
                 </li>
               
+                <li class="links-of-blogroll-item">
+                  <a href="http://frankge.me/blog/" title="葛治文博客" target="_blank">葛治文博客</a>
+                </li>
+              
             </ul>
           </div>
         
@@ -514,7 +578,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方法"><span class="nav-number">1.</span> <span class="nav-text">使用方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#读"><span class="nav-number">1.</span> <span class="nav-text">读</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#写"><span class="nav-number">2.</span> <span class="nav-text">写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件读写模式"><span class="nav-number">3.</span> <span class="nav-text">文件读写模式</span></a></li></ol></div>
             
           </div>
         </section>

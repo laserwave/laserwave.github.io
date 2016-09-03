@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="python文件读写">
+<meta name="description" content="python使用logging模块将日志打印到标准输出以及文件之中">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python使用codecs模块进行文件操作-读写中英文字符">
-<meta property="og:url" content="http://yoursite.com/2016/06/26/python使用codecs模块进行文件操作-读写中英文字符/index.html">
+<meta property="og:title" content="python日志管理">
+<meta property="og:url" content="http://yoursite.com/2016/06/24/python日志管理/index.html">
 <meta property="og:site_name" content="zhikaizhang's Blog">
-<meta property="og:description" content="python文件读写">
-<meta property="og:updated_time" content="2016-06-26T05:48:46.121Z">
+<meta property="og:description" content="python使用logging模块将日志打印到标准输出以及文件之中">
+<meta property="og:updated_time" content="2016-09-03T03:38:16.298Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python使用codecs模块进行文件操作-读写中英文字符">
-<meta name="twitter:description" content="python文件读写">
+<meta name="twitter:title" content="python日志管理">
+<meta name="twitter:description" content="python使用logging模块将日志打印到标准输出以及文件之中">
 
 
 
@@ -111,7 +111,7 @@
   };
 </script>
 
-  <title> python使用codecs模块进行文件操作-读写中英文字符 | zhikaizhang's Blog </title>
+  <title> python日志管理 | zhikaizhang's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -235,7 +235,7 @@
             
             
               
-                python使用codecs模块进行文件操作-读写中英文字符
+                python日志管理
               
             
           </h1>
@@ -247,8 +247,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发布于</span>
-            <time itemprop="dateCreated" datetime="2016-06-26T00:00:00+08:00" content="2016-06-26">
-              2016-06-26
+            <time itemprop="dateCreated" datetime="2016-06-24T00:00:00+08:00" content="2016-06-24">
+              2016-06-24
             </time>
           </span>
 
@@ -277,8 +277,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/06/26/python使用codecs模块进行文件操作-读写中英文字符/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/26/python使用codecs模块进行文件操作-读写中英文字符/" itemprop="commentsCount"></span>
+                <a href="/2016/06/24/python日志管理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/24/python日志管理/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -288,7 +288,7 @@
 
           
           
-             <span id="/2016/06/26/python使用codecs模块进行文件操作-读写中英文字符/" class="leancloud_visitors" data-flag-title="python使用codecs模块进行文件操作-读写中英文字符">
+             <span id="/2016/06/24/python日志管理/" class="leancloud_visitors" data-flag-title="python日志管理">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -310,65 +310,41 @@
       
 
       
-        <p>由于python中默认的编码是ascii，如果直接使用open方法得到文件对象然后进行文件的读写，都将无法使用包含中文字符（以及其他非ascii码字符），因此建议使用utf-8编码。</p>
-<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><h2 id="读"><a href="#读" class="headerlink" title="读"></a>读</h2><p>下面的代码读取了文件，将每一行的内容组成了一个列表。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line">file = codecs.open(<span class="string">'test.txt'</span>,<span class="string">'r'</span>,<span class="string">'utf-8'</span>)</span><br><span class="line">lines = [line.strip() <span class="keyword">for</span> line <span class="keyword">in</span> file] </span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure></p>
-<h2 id="写"><a href="#写" class="headerlink" title="写"></a>写</h2><p>下面的代码写入了一行英文和一行中文到文件中。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line">file = codecs.open(<span class="string">'test.txt'</span>,<span class="string">'w'</span>,<span class="string">'utf-8'</span>)</span><br><span class="line">file.write(<span class="string">'Hello World!\n'</span>)</span><br><span class="line">file.write(<span class="string">'哈哈哈\n'</span>)</span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure></p>
-<h1 id="文件读写模式"><a href="#文件读写模式" class="headerlink" title="文件读写模式"></a>文件读写模式</h1><p>最为常见的三种模式，见下表，其中模式就是指获取文件对象时传入的参数，最常用的是前三个。</p>
+        <h1 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h1><p>通过下面的方法就可以将之后输出的日志同时输出到标准输出以及文件中。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建日志对象</span></span><br><span class="line">logger = logging.getLogger()</span><br><span class="line">logger.setLevel(logging.DEBUG)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义日志格式</span></span><br><span class="line">formatter = logging.Formatter(<span class="string">'%(asctime)s - %(name)s - %(levelname)s - %(message)s'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建将日志写入文件的handler</span></span><br><span class="line">fileHandler = logging.FileHandler(<span class="string">'log.txt'</span>)</span><br><span class="line">fileHandler.setLevel(logging.DEBUG)</span><br><span class="line">fileHandler.setFormatter(formatter)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建将日志写入标准输出的handler</span></span><br><span class="line">stdHandler = logging.StreamHandler()</span><br><span class="line">stdHandler.setLevel(logging.DEBUG)</span><br><span class="line">stdHandler.setFormatter(formatter)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 给logger添加handler</span></span><br><span class="line">logger.addHandler(fileHandler)</span><br><span class="line">logger.addHandler(stdHandler)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出日志</span></span><br><span class="line">logger.info(<span class="string">"hello world"</span>)</span><br></pre></td></tr></table></figure></p>
+<h1 id="日志级别"><a href="#日志级别" class="headerlink" title="日志级别"></a>日志级别</h1><p>分为5个级别，从低到高顺序见下表，第二列表示 <code>logger.setLevel(logging.DEBUG)</code>中设置的常量，第三列表示 <code>logger.info(&quot;hello world&quot;)</code>中的方法名。 </p>
 <table>
 <thead>
 <tr>
-<th style="text-align:center">模式</th>
-<th style="text-align:center">描述</th>
+<th style="text-align:center">级别名称</th>
+<th style="text-align:center">常量名</th>
+<th style="text-align:center">方法名</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center">r</td>
-<td style="text-align:center">仅读，待打开的文件必须存在</td>
+<td style="text-align:center">调试</td>
+<td style="text-align:center">DEBUG</td>
+<td style="text-align:center">debug()</td>
 </tr>
 <tr>
-<td style="text-align:center">w</td>
-<td style="text-align:center">仅写，若文件已存在，内容将先被清空</td>
+<td style="text-align:center">信息</td>
+<td style="text-align:center">INFO</td>
+<td style="text-align:center">info()</td>
 </tr>
 <tr>
-<td style="text-align:center">a</td>
-<td style="text-align:center">仅写，若文件已存在，内容不会清空</td>
+<td style="text-align:center">警告</td>
+<td style="text-align:center">WARNING</td>
+<td style="text-align:center">warning()</td>
 </tr>
 <tr>
-<td style="text-align:center">r+</td>
-<td style="text-align:center">读写，待打开的文件必须存在</td>
+<td style="text-align:center">错误</td>
+<td style="text-align:center">ERROR</td>
+<td style="text-align:center">error()</td>
 </tr>
 <tr>
-<td style="text-align:center">w+</td>
-<td style="text-align:center">读写，若文件已存在，内容将先被清空</td>
-</tr>
-<tr>
-<td style="text-align:center">a+</td>
-<td style="text-align:center">读写，若文件已存在，内容不会清空</td>
-</tr>
-<tr>
-<td style="text-align:center">rb</td>
-<td style="text-align:center">仅读，二进制，待打开的文件必须存在</td>
-</tr>
-<tr>
-<td style="text-align:center">wb</td>
-<td style="text-align:center">仅写，二进制，若文件已存在，内容将先被清空</td>
-</tr>
-<tr>
-<td style="text-align:center">ab</td>
-<td style="text-align:center">仅写，二进制，若文件已存在，内容不会清空</td>
-</tr>
-<tr>
-<td style="text-align:center">r+b</td>
-<td style="text-align:center">读写，二进制，待打开的文件必须存在</td>
-</tr>
-<tr>
-<td style="text-align:center">w+b</td>
-<td style="text-align:center">读写，二进制，若文件已存在，内容将先被清空</td>
-</tr>
-<tr>
-<td style="text-align:center">a+b</td>
-<td style="text-align:center">读写，二进制，若文件已存在，内容不会清空</td>
+<td style="text-align:center">致命错误</td>
+<td style="text-align:center">CRITICAL</td>
+<td style="text-align:center">critical()</td>
 </tr>
 </tbody>
 </table>
@@ -402,16 +378,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/24/python使用configparser模块读写配置文件/" rel="next" title="python使用configparser模块读写配置文件">
-                <i class="fa fa-chevron-left"></i> python使用configparser模块读写配置文件
+              <a href="/2016/06/18/markdown常用语法与LaTex公式编辑/" rel="next" title="markdown常用语法与LaTex公式编辑">
+                <i class="fa fa-chevron-left"></i> markdown常用语法与LaTex公式编辑
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/06/29/自然语言处理之LDA/" rel="prev" title="自然语言处理之LDA">
-                自然语言处理之LDA <i class="fa fa-chevron-right"></i>
+              <a href="/2016/06/24/python读写配置文件/" rel="prev" title="python读写配置文件">
+                python读写配置文件 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -427,10 +403,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/06/26/python使用codecs模块进行文件操作-读写中英文字符/"
-     data-title="python使用codecs模块进行文件操作-读写中英文字符"
+        <div class="ds-share flat" data-thread-key="2016/06/24/python日志管理/"
+     data-title="python日志管理"
      data-content=""
-     data-url="http://yoursite.com/2016/06/26/python使用codecs模块进行文件操作-读写中英文字符/">
+     data-url="http://yoursite.com/2016/06/24/python日志管理/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -457,8 +433,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/06/26/python使用codecs模块进行文件操作-读写中英文字符/"
-           data-title="python使用codecs模块进行文件操作-读写中英文字符" data-url="http://yoursite.com/2016/06/26/python使用codecs模块进行文件操作-读写中英文字符/">
+      <div class="ds-thread" data-thread-key="2016/06/24/python日志管理/"
+           data-title="python日志管理" data-url="http://yoursite.com/2016/06/24/python日志管理/">
       </div>
     
   </div>
@@ -561,6 +537,10 @@
                   <a href="http://heimingx.cn" title="胥海明博客" target="_blank">胥海明博客</a>
                 </li>
               
+                <li class="links-of-blogroll-item">
+                  <a href="http://frankge.me/blog/" title="葛治文博客" target="_blank">葛治文博客</a>
+                </li>
+              
             </ul>
           </div>
         
@@ -574,7 +554,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方法"><span class="nav-number">1.</span> <span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#读"><span class="nav-number">1.1.</span> <span class="nav-text">读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写"><span class="nav-number">1.2.</span> <span class="nav-text">写</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件读写模式"><span class="nav-number">2.</span> <span class="nav-text">文件读写模式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Usage"><span class="nav-number">1.</span> <span class="nav-text">Usage</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志级别"><span class="nav-number">2.</span> <span class="nav-text">日志级别</span></a></li></ol></div>
             
           </div>
         </section>
