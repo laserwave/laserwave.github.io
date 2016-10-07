@@ -1,0 +1,875 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="算法,java,javafx,数据结构," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="使用javafx实现简易计算器，支持加减乘除正负号以及括号">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javafx实现简易计算器">
+<meta property="og:url" content="http://yoursite.com/2016/10/07/javafx实现简易计算器/index.html">
+<meta property="og:site_name" content="zhikaizhang's Blog">
+<meta property="og:description" content="使用javafx实现简易计算器，支持加减乘除正负号以及括号">
+<meta property="og:image" content="http://yoursite.com/uploads/javafx实现简易计算器/1.png">
+<meta property="og:updated_time" content="2016-10-07T13:21:14.227Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javafx实现简易计算器">
+<meta name="twitter:description" content="使用javafx实现简易计算器，支持加减乘除正负号以及括号">
+<meta name="twitter:image" content="http://yoursite.com/uploads/javafx实现简易计算器/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> javafx实现简易计算器 | zhikaizhang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">zhikaizhang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">算法、数据结构、机器学习、自然语言处理、android...</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                javafx实现简易计算器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发布于</span>
+            <time itemprop="dateCreated" datetime="2016-10-07T00:00:00+08:00" content="2016-10-07">
+              2016-10-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/算法与数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">算法与数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/07/javafx实现简易计算器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/07/javafx实现简易计算器/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/10/07/javafx实现简易计算器/" class="leancloud_visitors" data-flag-title="javafx实现简易计算器">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="javafx"><a href="#javafx" class="headerlink" title="javafx?"></a>javafx?</h1><p>由Sun公司发布于2008年12月05日，多用于编写窗体程序。界面由xml文件设计完成，在java源码中使用注解获取xml文件定义的控件以及定义事件。相较于java swing提供了更多控件并且更易于使用。</p>
+<h1 id="运行效果"><a href="#运行效果" class="headerlink" title="运行效果"></a>运行效果</h1><p><img src="/uploads/javafx实现简易计算器/1.png" alt=""></p>
+<h1 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h1><h2 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h2><p>这是一个经典的用栈求解表达式的问题。这里将操作数和运算符统称为运算单元，并且会在表达式的两端分别添加一个<code>#</code>,表示表达式的开始与结束。首先建立操作数以及运算符两个栈，按照表达式的顺序，取一个运算单元，如果取到的是一个操作数，将其入栈并取下一个运算单元；如果取到的是一个运算符，将其与运算符栈的栈顶运算符的优先级进行比较，若栈顶运算符的优先级较低，将新运算符入栈并取下一个运算单元，若优先级相等，将栈顶运算符退栈并取下一个运算单元，若栈顶运算符的优先级较高，从操作数栈退栈两个数分别作为操作数2和操作数1，从运算符栈退栈一个运算符，对两个操作数作该运算，并入栈操作数栈。最终的运算结果就是操作数栈的栈顶元素。<br>表达式优先级表如下所示。叹号表示绝对不可能出现的对比，出现则可以认为表达式有误，倒数第三行和最后一行的叹号说明发生了小括号不匹配，而倒数第二行则是因为右括号绝对不可能入栈。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">op1/op2</th>
+<th style="text-align:center">+</th>
+<th style="text-align:center">-</th>
+<th style="text-align:center">×</th>
+<th style="text-align:center">÷</th>
+<th style="text-align:center">(</th>
+<th style="text-align:center">)</th>
+<th style="text-align:center">#</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">+</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&gt;</td>
+</tr>
+<tr>
+<td style="text-align:center">-</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&gt;</td>
+</tr>
+<tr>
+<td style="text-align:center">×</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&gt;</td>
+</tr>
+<tr>
+<td style="text-align:center">÷</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">&gt;</td>
+</tr>
+<tr>
+<td style="text-align:center">(</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">=</td>
+<td style="text-align:center">!</td>
+</tr>
+<tr>
+<td style="text-align:center">)</td>
+<td style="text-align:center">!</td>
+<td style="text-align:center">!</td>
+<td style="text-align:center">!</td>
+<td style="text-align:center">!</td>
+<td style="text-align:center">!</td>
+<td style="text-align:center">!</td>
+<td style="text-align:center">!</td>
+</tr>
+<tr>
+<td style="text-align:center">#</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">!</td>
+<td style="text-align:center">=</td>
+</tr>
+</tbody>
+</table>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><h3 id="1-定义Unit类表示运算单元"><a href="#1-定义Unit类表示运算单元" class="headerlink" title="1.定义Unit类表示运算单元"></a>1.定义Unit类表示运算单元</h3><p>运算单元，表示一个操作数或者一个运算符。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Unit</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> UnitType unitType;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">char</span> op;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> val;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Unit</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Unit</span><span class="params">(<span class="keyword">char</span> op)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.unitType = UnitType.OPERATOR;</span><br><span class="line">        <span class="keyword">this</span>.op = op;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Unit</span><span class="params">(<span class="keyword">double</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.unitType = UnitType.OPERAND;</span><br><span class="line">        <span class="keyword">this</span>.val = val;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">enum</span> UnitType&#123;OPERATOR, OPERAND&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Unit <span class="title">operate</span><span class="params">(Unit operand1, Unit operand2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(unitType != UnitType.OPERATOR || operand1.unitType != UnitType.OPERAND || operand2.unitType != UnitType.OPERAND)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(op == <span class="string">'+'</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Unit(operand1.val + operand2.val);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(op == <span class="string">'-'</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Unit(operand1.val - operand2.val);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(op == <span class="string">'×'</span> || op == <span class="string">'*'</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Unit(operand1.val * operand2.val);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Unit(operand1.val / operand2.val);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(unitType == UnitType.OPERATOR)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"运算符 "</span> + op + <span class="string">" "</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"操作数 "</span> + val + <span class="string">" "</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-表达式转为运算单元的列表"><a href="#2-表达式转为运算单元的列表" class="headerlink" title="2.表达式转为运算单元的列表"></a>2.表达式转为运算单元的列表</h3><p>之所以进行这一步，是因为操作数占得字符长度一般大于1，而且需要考虑可能存在的小数点以及正负号。在转运算单元时还考虑到了几种特殊的操作数，由非0数除以0得到的无穷，以及未定义结果NaN（比如0/0,正无穷加负无穷，结果均为NaN）。如果判断出表达式错误将抛出自定义异常。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;Unit&gt; <span class="title">parseUnits</span><span class="params">(String s)</span> <span class="keyword">throws</span> ExpressionIllegalException</span>&#123;</span><br><span class="line"></span><br><span class="line">	List&lt;Unit&gt; units = <span class="keyword">new</span> ArrayList&lt;Unit&gt;();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 当前操作数前面是否有负号</span><br><span class="line">	 * 若一个Unit是操作数，且hasSign为true，该操作数的值乘-1</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">boolean</span> hasSign = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span><br><span class="line">	 * 若一个Unit是乘号或除号或左括号，flag置为true，否则置为false</span><br><span class="line">	 * 若一个Unit是加号，且flag为true，说明该加号表示正号</span><br><span class="line">	 * 若一个Unit是减号，且flag为true，说明该减号表示负号，hasSign置为true</span><br><span class="line">	 * flag初始值为true，表示字符串开头的加减号一定为正负号</span><br><span class="line">	 */</span></span><br><span class="line">	<span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++)&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(s.charAt(i) == <span class="string">'.'</span>)&#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> ExpressionIllegalException();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">/**</span><br><span class="line">		 * 操作数，∞无穷,用于处理上次运算结果为无穷然后继续运算的情形</span><br><span class="line">		 */</span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(s.charAt(i) == <span class="string">'∞'</span>)&#123;</span><br><span class="line">			units.add(<span class="keyword">new</span> Unit(hasSign?Double.NEGATIVE_INFINITY:Double.POSITIVE_INFINITY));</span><br><span class="line">			hasSign = <span class="keyword">false</span>;</span><br><span class="line">			flag = <span class="keyword">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">/**</span><br><span class="line">		 * 操作数，NaN，表示未定义的运算结果，如0/0</span><br><span class="line">		 */</span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(s.charAt(i) == <span class="string">'N'</span>)&#123;</span><br><span class="line">			units.add(<span class="keyword">new</span> Unit(Double.NaN));</span><br><span class="line">			hasSign = <span class="keyword">false</span>;</span><br><span class="line">			flag = <span class="keyword">false</span>;</span><br><span class="line">			i += <span class="number">2</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">/**</span><br><span class="line">		 * 添加表示操作数的Unit</span><br><span class="line">		 */</span></span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(s.charAt(i) &gt;= <span class="string">'0'</span> &amp;&amp; s.charAt(i) &lt;= <span class="string">'9'</span>)&#123;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">double</span> val = s.charAt(i) - <span class="string">'0'</span>;</span><br><span class="line">			<span class="keyword">boolean</span> hasPoint = <span class="keyword">false</span>;   <span class="comment">//是否出现小数点</span></span><br><span class="line">			<span class="keyword">double</span> level = <span class="number">0.1</span>;        <span class="comment">//小数部分的单位</span></span><br><span class="line">			<span class="keyword">int</span> k;</span><br><span class="line">			<span class="keyword">for</span>(k = i+<span class="number">1</span>; k &lt; s.length(); k++)&#123;</span><br><span class="line">				<span class="keyword">if</span>(s.charAt(k) &gt;= <span class="string">'0'</span> &amp;&amp; s.charAt(k) &lt;= <span class="string">'9'</span>)&#123;</span><br><span class="line">					<span class="keyword">if</span>(hasPoint)&#123;</span><br><span class="line">						val = val + (s.charAt(k) - <span class="string">'0'</span>) * level;</span><br><span class="line">						level *= <span class="number">0.1</span>;</span><br><span class="line">					&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">						val = val * <span class="number">10</span> + (s.charAt(k) - <span class="string">'0'</span>);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;<span class="keyword">else</span> <span class="keyword">if</span>(s.charAt(k) == <span class="string">'.'</span>)&#123;</span><br><span class="line">					<span class="keyword">if</span>(hasPoint)&#123;</span><br><span class="line">						<span class="keyword">throw</span> <span class="keyword">new</span> ExpressionIllegalException();</span><br><span class="line">					&#125;</span><br><span class="line">					hasPoint = <span class="keyword">true</span>;</span><br><span class="line">				&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			i = k-<span class="number">1</span>;</span><br><span class="line">			units.add(<span class="keyword">new</span> Unit(hasSign?-val:val));</span><br><span class="line">			hasSign = <span class="keyword">false</span>;</span><br><span class="line">			flag = <span class="keyword">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">/**</span><br><span class="line">		 * 正负号或者加减乘除号或者括号</span><br><span class="line">		 * 若是正号，置flag为false</span><br><span class="line">		 * 若是负号，置hasSign为true，置flag为false</span><br><span class="line">		 * 不是正负号，就添加一个表示运算符的Unit</span><br><span class="line">		 */</span></span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(s.charAt(i) == <span class="string">'-'</span> &amp;&amp; flag)&#123;</span><br><span class="line">				hasSign = <span class="keyword">true</span>;</span><br><span class="line">				flag = <span class="keyword">false</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(s.charAt(i) == <span class="string">'+'</span> &amp;&amp; flag)&#123;</span><br><span class="line">				flag = <span class="keyword">false</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="keyword">char</span> c = s.charAt(i);</span><br><span class="line">				units.add(<span class="keyword">new</span> Unit(c));</span><br><span class="line">				flag = (c == <span class="string">'*'</span> || c == <span class="string">'/'</span> || c == <span class="string">'×'</span> || c == <span class="string">'÷'</span> || c == <span class="string">'('</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> units;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-计算"><a href="#3-计算" class="headerlink" title="3.计算"></a>3.计算</h3><p>运算符优先级的比较。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 根据优先级矩阵返回两个运算符优先级比较的结果</span><br><span class="line"> * !表示不可能出现比较这两个运算符的情形，可认为输入有误</span><br><span class="line"> * 乘法接受*或×两种符号</span><br><span class="line"> * 除法接受/或÷两种符号</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">char</span> <span class="title">compareOperator</span><span class="params">(<span class="keyword">char</span> op1, <span class="keyword">char</span> op2)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	Map&lt;Character, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;Character, Integer&gt;();</span><br><span class="line">	map.put(<span class="string">'+'</span>, <span class="number">0</span>);</span><br><span class="line">	map.put(<span class="string">'-'</span>, <span class="number">1</span>);</span><br><span class="line">	map.put(<span class="string">'×'</span>, <span class="number">2</span>);</span><br><span class="line">	map.put(<span class="string">'*'</span>, <span class="number">2</span>);</span><br><span class="line">	map.put(<span class="string">'÷'</span>, <span class="number">3</span>);</span><br><span class="line">	map.put(<span class="string">'/'</span>, <span class="number">3</span>);</span><br><span class="line">	map.put(<span class="string">'('</span>, <span class="number">4</span>);</span><br><span class="line">	map.put(<span class="string">')'</span>, <span class="number">5</span>);</span><br><span class="line">	map.put(<span class="string">'#'</span>, <span class="number">6</span>);</span><br><span class="line">	String[] compare = <span class="keyword">new</span> String[]&#123;<span class="string">"&gt;&gt;&lt;&lt;&lt;&gt;&gt;"</span>, <span class="string">"&gt;&gt;&lt;&lt;&lt;&gt;&gt;"</span>, <span class="string">"&gt;&gt;&gt;&gt;&lt;&gt;&gt;"</span>, <span class="string">"&gt;&gt;&gt;&gt;&lt;&gt;&gt;"</span>, <span class="string">"&lt;&lt;&lt;&lt;&lt;=!"</span>, <span class="string">"!!!!!!!"</span>, <span class="string">"&lt;&lt;&lt;&lt;&lt;!="</span>&#125;;</span><br><span class="line">	<span class="keyword">return</span> compare[map.get(op1)].charAt(map.get(op2));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>表达式的求值。若判断出表达式错误统一抛出自定义异常。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">_calculate</span><span class="params">(String s)</span> <span class="keyword">throws</span> ExpressionIllegalException</span>&#123;</span><br><span class="line"></span><br><span class="line">	List&lt;Unit&gt; units = <span class="keyword">new</span> ArrayList&lt;Unit&gt;();</span><br><span class="line">	units.add(<span class="keyword">new</span> Unit(<span class="string">'#'</span>));</span><br><span class="line">	units.addAll(parseUnits(s));</span><br><span class="line">	units.add(<span class="keyword">new</span> Unit(<span class="string">'#'</span>));</span><br><span class="line"></span><br><span class="line">	Stack&lt;Unit&gt; operators = <span class="keyword">new</span> Stack&lt;Unit&gt;();</span><br><span class="line">	Stack&lt;Unit&gt; operands = <span class="keyword">new</span> Stack&lt;Unit&gt;();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(index &lt; units.size() || operators.size() != <span class="number">0</span>)&#123;</span><br><span class="line">		Unit unit = units.get(index);</span><br><span class="line">		<span class="keyword">if</span>(unit.getUnitType() == Unit.UnitType.OPERAND)&#123;</span><br><span class="line">			operands.push(unit);</span><br><span class="line">			index += <span class="number">1</span>;</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(unit.getUnitType() == Unit.UnitType.OPERATOR)&#123;</span><br><span class="line">			<span class="keyword">if</span>(operators.empty() || compareOperator(operators.peek().getOp(), unit.getOp()) == <span class="string">'&lt;'</span>)&#123;</span><br><span class="line">				operators.push(unit);</span><br><span class="line">				index += <span class="number">1</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(compareOperator(operators.peek().getOp(), unit.getOp()) == <span class="string">'='</span>)&#123;</span><br><span class="line">				Unit tmp = operators.pop();</span><br><span class="line">				index += <span class="number">1</span>;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(compareOperator(operators.peek().getOp(), unit.getOp()) == <span class="string">'&gt;'</span>)&#123;</span><br><span class="line">				<span class="keyword">if</span>(operands.size() &lt; <span class="number">2</span>)&#123;</span><br><span class="line">					<span class="keyword">throw</span> <span class="keyword">new</span> ExpressionIllegalException();</span><br><span class="line">				&#125;</span><br><span class="line">				Unit operand2 = operands.pop();</span><br><span class="line">				Unit operand1 = operands.pop();</span><br><span class="line">				Unit operator = operators.pop();</span><br><span class="line">				Unit res = operator.operate(operand1, operand2);</span><br><span class="line">				operands.push(res);</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> ExpressionIllegalException();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">double</span> res = operands.peek().getVal();</span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="4-格式化输出"><a href="#4-格式化输出" class="headerlink" title="4.格式化输出"></a>4.格式化输出</h3><p>之所以特地判断是否NaN是因为后面的函数对于NaN的结果是一个奇怪的字符，而对于正负无穷可以正确的输出。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">calculate</span><span class="params">(String s)</span> <span class="keyword">throws</span> ExpressionIllegalException</span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">double</span> res = _calculate(s);</span><br><span class="line">	<span class="keyword">return</span> Double.isNaN(res)?<span class="string">"NaN"</span>:<span class="keyword">new</span> DecimalFormat(<span class="string">"#.##############"</span>).format(res);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="github"><a href="#github" class="headerlink" title="github"></a>github</h1><p>完整的项目已经开源到github上，项目由Intellij IDEA创建。<br>github项目主页: <a href="https://github.com/laserwave/Calculator">Calculator</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag">#算法</a>
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/javafx/" rel="tag">#javafx</a>
+          
+            <a href="/tags/数据结构/" rel="tag">#数据结构</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/23/O(n^2)时间复杂度的排序算法实现/" rel="next" title="O(n^2)时间复杂度的排序算法实现">
+                <i class="fa fa-chevron-left"></i> O(n^2)时间复杂度的排序算法实现
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/10/07/javafx实现简易计算器/"
+     data-title="javafx实现简易计算器"
+     data-content=""
+     data-url="http://yoursite.com/2016/10/07/javafx实现简易计算器/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/07/javafx实现简易计算器/"
+           data-title="javafx实现简易计算器" data-url="http://yoursite.com/2016/10/07/javafx实现简易计算器/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/cat.png"
+               alt="zhikaizhang" />
+          <p class="site-author-name" itemprop="name">zhikaizhang</p>
+          <p class="site-description motion-element" itemprop="description">zhikaizhang个人博客，主要关注算法、数据结构、机器学习、自然语言处理。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">29</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/laserwave" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://heimingx.cn" title="heimingx's blog" target="_blank">heimingx's blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://frankge.me/blog/" title="franky's blog" target="_blank">franky's blog</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#javafx"><span class="nav-number">1.</span> <span class="nav-text">javafx?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行效果"><span class="nav-number">2.</span> <span class="nav-text">运行效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现原理"><span class="nav-number">3.</span> <span class="nav-text">实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#整体思路"><span class="nav-number">3.1.</span> <span class="nav-text">整体思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体实现"><span class="nav-number">3.2.</span> <span class="nav-text">具体实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-定义Unit类表示运算单元"><span class="nav-number">3.2.1.</span> <span class="nav-text">1.定义Unit类表示运算单元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-表达式转为运算单元的列表"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.表达式转为运算单元的列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-计算"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-格式化输出"><span class="nav-number">3.2.4.</span> <span class="nav-text">4.格式化输出</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#github"><span class="nav-number">4.</span> <span class="nav-text">github</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  <span class="author" itemprop="copyrightHolder">苏ICP备16023782号</span>
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="author" itemprop="copyrightHolder">zhikaizhang's blog</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"laserwave"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("wv1vA5GMdT6r7Vi1AVpQNC0I-gzGzoHsz", "jt5O27A704yaLaJrddXok0jb");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
