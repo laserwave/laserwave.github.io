@@ -1,0 +1,848 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="算法,java,javafx,数据结构," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="支持加减乘除、正负号、括号、乘方阶乘、三角函数、指数函数、对数函数等，界面使用了javafx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从简易计算器到科学计算器">
+<meta property="og:url" content="http://yoursite.com/2016/11/02/从简易计算器到科学计算器/index.html">
+<meta property="og:site_name" content="zhikaizhang's Blog">
+<meta property="og:description" content="支持加减乘除、正负号、括号、乘方阶乘、三角函数、指数函数、对数函数等，界面使用了javafx">
+<meta property="og:image" content="http://yoursite.com/uploads/javafx实现简易计算器/2.png">
+<meta property="og:updated_time" content="2016-11-02T03:52:12.565Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从简易计算器到科学计算器">
+<meta name="twitter:description" content="支持加减乘除、正负号、括号、乘方阶乘、三角函数、指数函数、对数函数等，界面使用了javafx">
+<meta name="twitter:image" content="http://yoursite.com/uploads/javafx实现简易计算器/2.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 从简易计算器到科学计算器 | zhikaizhang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?6736c3fb75ceafd419f719095127fe47";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">zhikaizhang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">算法、数据结构、机器学习、自然语言处理、android...</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            时间轴
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                从简易计算器到科学计算器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发布于</span>
+            <time itemprop="dateCreated" datetime="2016-11-02T00:00:00+08:00" content="2016-11-02">
+              2016-11-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/算法与数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">算法与数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/02/从简易计算器到科学计算器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/02/从简易计算器到科学计算器/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/02/从简易计算器到科学计算器/" class="leancloud_visitors" data-flag-title="从简易计算器到科学计算器">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h1><p>整体思路保持不变，先对表达式分析，将其转化为若干运算单元（运算单元表示一个广义运算符或者一个操作数），然后根据运算单元的列表对表达式求值。</p>
+<h1 id="变化点"><a href="#变化点" class="headerlink" title="变化点"></a>变化点</h1><h2 id="一元运算符的处理"><a href="#一元运算符的处理" class="headerlink" title="一元运算符的处理"></a>一元运算符的处理</h2><p>先前的简易计算器表示运算的运算符只有加减乘除、正负号，正负号虽然是一元运算符，但做了特殊处理（直接将紧跟其后的操作数的正负性做出相应的改变，当引入高于正负号优先级的乘方阶乘后就变为了错误的做法）。<br>科学计算器新引入了阶乘、sin、cos、tan、ln、log、sqrt这些一元运算符，也要求能够更好的处理一元运算符。</p>
+<h2 id="运算符数量大大增加"><a href="#运算符数量大大增加" class="headerlink" title="运算符数量大大增加"></a>运算符数量大大增加</h2><p>运算符数量增加，将会加大修改运算符优先级比较矩阵的难度，如果每新增支持一种新的运算就去修改这个矩阵，显然过于繁琐，因此采用了一种基于规则的比较方式。</p>
+<h2 id="代码量增加"><a href="#代码量增加" class="headerlink" title="代码量增加"></a>代码量增加</h2><p>随着代码量的增加，需要对项目重构。</p>
+<h1 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h1><p>主要代码位于cn.zhikaizhang.algorithm和cn.zhikaizhang.main两个包下。前者是算法，后者是界面与交互。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">package</th>
+<th style="text-align:center">class</th>
+<th style="text-align:center">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">cn.zhikaizhang.algorithm</td>
+<td style="text-align:center">Calculator</td>
+<td style="text-align:center">表达式求值</td>
+</tr>
+<tr>
+<td style="text-align:center">cn.zhikaizhang.algorithm</td>
+<td style="text-align:center">ExpressionIllegalException</td>
+<td style="text-align:center">表达式不合法异常类</td>
+</tr>
+<tr>
+<td style="text-align:center">cn.zhikaizhang.algorithm</td>
+<td style="text-align:center">ExpressionParser</td>
+<td style="text-align:center">表达式分析器，将表达式转化为运算单元列表</td>
+</tr>
+<tr>
+<td style="text-align:center">cn.zhikaizhang.algorithm</td>
+<td style="text-align:center">Operation</td>
+<td style="text-align:center">运算</td>
+</tr>
+<tr>
+<td style="text-align:center">cn.zhikaizhang.algorithm</td>
+<td style="text-align:center">OperatorComparator</td>
+<td style="text-align:center">运算符优先级比较器</td>
+</tr>
+<tr>
+<td style="text-align:center">cn.zhikaizhang.algorithm</td>
+<td style="text-align:center">Unit</td>
+<td style="text-align:center">运算单元，使用一个枚举型变量标识操作数以及每种运算符</td>
+</tr>
+<tr>
+<td style="text-align:center">cn.zhikaizhang.main</td>
+<td style="text-align:center">FxCalcApplication</td>
+<td style="text-align:center">继承自Application,fx-Calc启动类</td>
+</tr>
+<tr>
+<td style="text-align:center">cn.zhikaizhang.main</td>
+<td style="text-align:center">FxCalcLookAndFeel</td>
+<td style="text-align:center">控制fx-Calc的外观</td>
+</tr>
+<tr>
+<td style="text-align:center">cn.zhikaizhang.main</td>
+<td style="text-align:center">FxCalcMainController</td>
+<td style="text-align:center">交互，界面上按钮的点击事件</td>
+</tr>
+</tbody>
+</table>
+<h1 id="运行效果"><a href="#运行效果" class="headerlink" title="运行效果"></a>运行效果</h1><p><img src="/uploads/javafx实现简易计算器/2.png" alt=""></p>
+<p>上面的有些运算是基于其他的基本运算的，如倒数利用乘方的基本运算，EE（1.0E3表示1.0乘10的三次方）使用乘法和乘方。</p>
+<h1 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h1><h2 id="Unit类"><a href="#Unit类" class="headerlink" title="Unit类"></a>Unit类</h2><p>运算单元（操作数或广义的运算符），将可运算的运算符、左右括号、起止符并称为广义运算符。<br>type变量标识着一个运算单元的类型。可运算的运算符使用priority表示优先级，操作数使用val表示值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> Type&#123;ADD, SUBSTRACT, SIN, COS, TAN, LN, LOG, SQRT, MULTIPLY, DIVIDE, EE, POSITIVE, NEGATIVE, POWER, FACTORIAL, LEFT_BRACKET, RIGHT_BRACKET, START_STOP_SIGN, OPERAND&#125;;</span><br><span class="line"><span class="keyword">private</span> Type type;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> priority;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">double</span> val;</span><br></pre></td></tr></table></figure></p>
+<p>可运算运算符对传入的操作数进行运算。不合法抛异常。通过可变长参数列表可以对一元和二元运算符作统一的处理。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Unit <span class="title">operate</span><span class="params">(Unit ...operands)</span> <span class="keyword">throws</span> ExpressionIllegalException</span>;</span><br></pre></td></tr></table></figure></p>
+<p>可运算的运算符的优先级设置。优先级设置为6的运算符作为函数进行特殊处理，后面必须紧跟着括号，由ExpressionParser处理，因此不会与其他运算冲突。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span>(type)&#123;</span><br><span class="line">	<span class="keyword">case</span> ADD:</span><br><span class="line">	<span class="keyword">case</span> SUBSTRACT:</span><br><span class="line">		<span class="keyword">this</span>.priority = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> MULTIPLY:</span><br><span class="line">	<span class="keyword">case</span> DIVIDE:</span><br><span class="line">	<span class="keyword">case</span> EE:</span><br><span class="line">		<span class="keyword">this</span>.priority = <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> POSITIVE:</span><br><span class="line">	<span class="keyword">case</span> NEGATIVE:</span><br><span class="line">		<span class="keyword">this</span>.priority = <span class="number">3</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> POWER:</span><br><span class="line">		<span class="keyword">this</span>.priority = <span class="number">4</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> FACTORIAL:</span><br><span class="line">		<span class="keyword">this</span>.priority = <span class="number">5</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> SIN:</span><br><span class="line">	<span class="keyword">case</span> COS:</span><br><span class="line">	<span class="keyword">case</span> TAN:</span><br><span class="line">	<span class="keyword">case</span> LN:</span><br><span class="line">	<span class="keyword">case</span> LOG:</span><br><span class="line">	<span class="keyword">case</span> SQRT:</span><br><span class="line">		<span class="keyword">this</span>.priority = <span class="number">6</span>;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="OperatorComparator类"><a href="#OperatorComparator类" class="headerlink" title="OperatorComparator类"></a>OperatorComparator类</h2><p>基于规则比较优先级，isOperator()表示是否广义运算符，isNormalOperator()表示是否可运算运算符，分别考虑两个都是可运算运算符以及存在左右括号、起止符的情形。<br>如果两个都是可运算运算符，只要前者的优先级大于等于后者的优先级，就认为前者大，唯一一个例外是前者是乘方符号，后者是负号，虽然乘方的priority大于负号，此时应该先计算负号，因此返回小于。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OperatorComparator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">char</span> <span class="title">compareOperator</span><span class="params">(Unit u1, Unit u2)</span> <span class="keyword">throws</span> ExpressionIllegalException</span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(!(u1.isOperator() &amp;&amp; u2.isOperator()))&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ExpressionIllegalException();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(u1.isNormalOperator() &amp;&amp; u2.isNormalOperator())&#123;</span><br><span class="line">            <span class="keyword">if</span>(u1.getType() == Unit.Type.POWER &amp;&amp; u2.getType() == Unit.Type.NEGATIVE)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">'&lt;'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> u1.getPriority()&gt;=u2.getPriority()?<span class="string">'&gt;'</span>:<span class="string">'&lt;'</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(u2.getType() == Unit.Type.LEFT_BRACKET)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'&lt;'</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(u1.getType() == Unit.Type.LEFT_BRACKET)&#123;</span><br><span class="line">            <span class="keyword">if</span>(u2.isNormalOperator())&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">'&lt;'</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(u2.getType() == Unit.Type.RIGHT_BRACKET)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">'='</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(u1.getType() == Unit.Type.START_STOP_SIGN)&#123;</span><br><span class="line">            <span class="keyword">if</span>(u2.isNormalOperator())&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">'&lt;'</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(u2.getType() == Unit.Type.START_STOP_SIGN)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">'='</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(u1.isNormalOperator())&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'&gt;'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ExpressionIllegalException();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Operation类"><a href="#Operation类" class="headerlink" title="Operation类"></a>Operation类</h2><p>此类中实现了所有的基本运算，为了避免double类型运算时的精度损失，如果结果不是无穷或者NaN就使用BigDecimal类型进行计算，以加法为例。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 加</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">add</span><span class="params">(<span class="keyword">double</span> n1, <span class="keyword">double</span> n2)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(Double.isInfinite(n1 + n2) || Double.isNaN(n1 + n2))&#123;</span><br><span class="line">		<span class="keyword">return</span> n1 + n2;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> BigDecimal(String.valueOf(n1)).add(<span class="keyword">new</span> BigDecimal(String.valueOf(n2))).doubleValue();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="github"><a href="#github" class="headerlink" title="github"></a>github</h1><p>github项目主页: <a href="https://github.com/laserwave/Calculator">Calculator</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag">#算法</a>
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/javafx/" rel="tag">#javafx</a>
+          
+            <a href="/tags/数据结构/" rel="tag">#数据结构</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/07/javafx实现简易计算器/" rel="next" title="javafx实现简易计算器">
+                <i class="fa fa-chevron-left"></i> javafx实现简易计算器
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/11/02/从简易计算器到科学计算器/"
+     data-title="从简易计算器到科学计算器"
+     data-content=""
+     data-url="http://yoursite.com/2016/11/02/从简易计算器到科学计算器/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/02/从简易计算器到科学计算器/"
+           data-title="从简易计算器到科学计算器" data-url="http://yoursite.com/2016/11/02/从简易计算器到科学计算器/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/cat.png"
+               alt="zhikaizhang" />
+          <p class="site-author-name" itemprop="name">zhikaizhang</p>
+          <p class="site-description motion-element" itemprop="description">zhikaizhang个人博客，主要关注算法、数据结构、机器学习、自然语言处理。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/laserwave" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://heimingx.cn" title="heimingx's blog" target="_blank">heimingx's blog</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://frankge.me/blog/" title="franky's blog" target="_blank">franky's blog</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#整体思路"><span class="nav-number">1.</span> <span class="nav-text">整体思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变化点"><span class="nav-number">2.</span> <span class="nav-text">变化点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一元运算符的处理"><span class="nav-number">2.1.</span> <span class="nav-text">一元运算符的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运算符数量大大增加"><span class="nav-number">2.2.</span> <span class="nav-text">运算符数量大大增加</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码量增加"><span class="nav-number">2.3.</span> <span class="nav-text">代码量增加</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目结构"><span class="nav-number">3.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行效果"><span class="nav-number">4.</span> <span class="nav-text">运行效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现细节"><span class="nav-number">5.</span> <span class="nav-text">实现细节</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Unit类"><span class="nav-number">5.1.</span> <span class="nav-text">Unit类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OperatorComparator类"><span class="nav-number">5.2.</span> <span class="nav-text">OperatorComparator类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Operation类"><span class="nav-number">5.3.</span> <span class="nav-text">Operation类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#github"><span class="nav-number">6.</span> <span class="nav-text">github</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  <span class="author" itemprop="copyrightHolder">苏ICP备16023782号</span>
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="author" itemprop="copyrightHolder">zhikaizhang's blog</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"laserwave"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("wv1vA5GMdT6r7Vi1AVpQNC0I-gzGzoHsz", "jt5O27A704yaLaJrddXok0jb");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
